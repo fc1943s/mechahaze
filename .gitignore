@@ -1,0 +1,21 @@
+### Local settings
+# IDE settings
+.idea/
+# User configurations
+*.user
+
+### .NET
+bin/
+obj/
+.paket/
+paket-files/
+
+### DevOps
+.fake/
+
+### JS
+node_modules/
+
+### Output
+dist/
+

@@ -1,0 +1,7 @@
+group MechaHaze.UI.Frontend
+
+FSharp.Core
+
+Fable.FontAwesome.Free
+Fulma.Extensions.Wikiki.PageLoader
+Fulma.Extensions.Wikiki.Slider

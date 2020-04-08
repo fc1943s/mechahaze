@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ExtTypes.fs" />
+    <Compile Include="Element.fs" />
+    <Compile Include="Ext.fs" />
+    <Compile Include="TabManager.fs" />
+    <Compile Include="ModalManager.fs" />
+    <Compile Include="PeaksComponent.fs" />
+    <Compile Include="StormDiagramComponent.fs" />
+    <Compile Include="JitterChartComponent.fs" />
+    <Compile Include="ToggleBindingsDestinationInputComponent.fs" />
+    <Compile Include="AddBindingsPresetInputComponent.fs" />
+    <Compile Include="BindingsSettingsDropdownComponent.fs" />
+    <Compile Include="HomePageComponent.fs" />
+    <Compile Include="MainView.fs" />
+    <Compile Include="Client.fs" />
+    <Content Include="paket.references" />
+    <Content Include="package.json" />
+    <Content Include="webpack.config.js" />
+    <Content Include="public\index.js" />
+    <Content Include="public\index.scss" />
+    <Content Include="public\index.html" />
+    <Content Include="public\index.jsx" />
+    <Content Include="public\index.ts" />
+    <Content Include="public\index.tsx" />
+    <Content Include="public\storm-diagrams\CreateLinkState.ts" />
+    <Content Include="public\storm-diagrams\DefaultState.ts" />
+    <Content Include="public\apexcharts\timeline-multiseries.jsx" />
+    <Content Include="public\apexcharts\temp1.jsx" />
+    <Content Include="public\apexcharts\temp2.jsx" />
+    <None Include="build.fsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MechaHaze.UI\MechaHaze.UI.fsproj" />
+    <ProjectReference Include="..\..\paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.UI.Frontend.ElmishBridge\Suigetsu.UI.Frontend.ElmishBridge.fsproj" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

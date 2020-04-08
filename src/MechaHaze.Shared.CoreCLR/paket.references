@@ -1,0 +1,8 @@
+group MechaHaze.Shared.CoreCLR
+
+FSharp.Core
+
+FSharp.Data
+Tomlyn
+MathNet.Numerics.FSharp
+

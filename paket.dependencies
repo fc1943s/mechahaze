@@ -1,0 +1,83 @@
+version 5.226.0
+
+framework: netcoreapp5.0, netstandard2.1
+
+group Main
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget FSharp.Core ~> 4.7
+    git https://github.com/fc1943s/Suigetsu.git master build: "powershell –ExecutionPolicy Bypass ./build.ps1"
+
+
+group MechaHaze.AudioListener.Daemon
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget Elmish ~> 4.0 prerelease
+    nuget NAudio ~> 1.10
+
+
+group MechaHaze.FeatureDispatcher.Daemon
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    git https://github.com/dastevens/CoreOSC.git master
+
+
+group MechaHaze.Shared
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+
+group MechaHaze.Shared.CoreCLR
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget FSharp.Data ~> 3.3
+    nuget Tomlyn ~> 0.1
+    nuget MathNet.Numerics.FSharp ~> 4.9
+
+
+group MechaHaze.TrackIngest.Daemon
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget NAudio ~> 1.10
+
+
+group MechaHaze.UI
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+
+group MechaHaze.UI.Backend
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget Saturn ~> 0.11
+
+
+group MechaHaze.UI.Frontend
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget Fable.FontAwesome.Free ~> 2.0
+    nuget Zanaptak.TypedCssClasses ~> 0.2
+    nuget Fulma.Extensions.Wikiki.PageLoader ~> 2.0
+    nuget Fulma.Extensions.Wikiki.Slider ~> 2.0
+
+
+group Testing
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+
+group Build
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget Fake.Core.Target prerelease
+    nuget Fake.DotNet.Cli prerelease
+    nuget Fake.IO.FileSystem prerelease 
+

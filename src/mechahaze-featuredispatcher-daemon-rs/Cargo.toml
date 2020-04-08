@@ -1,0 +1,12 @@
+[package]
+name = "mechahaze-featuredispatcher-daemon"
+version = "0.1.0"
+authors = ["Filipe <fc1943s@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rosc = "~0.3"
+amiquip = "~0.3"
+genawaiter = "~0.2"
+byteorder = "~1.3"
+itertools = "~0.8"

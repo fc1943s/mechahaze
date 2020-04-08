@@ -1,0 +1,9 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "concurrently": "concurrently"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.2"
+  }
+}
