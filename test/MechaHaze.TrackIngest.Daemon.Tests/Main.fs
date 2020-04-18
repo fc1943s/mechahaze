@@ -4,7 +4,7 @@ open System.Diagnostics.CodeAnalysis
 
 open Expecto
 
-module Program =
+module Main =
 
     [<ExcludeFromCodeCoverage>]
     [<EntryPoint>]

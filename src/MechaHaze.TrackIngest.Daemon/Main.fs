@@ -5,7 +5,7 @@ open Suigetsu.CoreCLR
 open MechaHaze.TrackIngest.Daemon
 open NAudio.MediaFoundation
 
-module Program =
+module Main =
 
     [<EntryPoint>]
     let main _ =

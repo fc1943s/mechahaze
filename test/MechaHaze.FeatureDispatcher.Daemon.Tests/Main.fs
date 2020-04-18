@@ -1,10 +1,10 @@
-namespace MechaHaze.Shared
+namespace MechaHaze.FeatureDispatcher.Daemon
 
 open System.Diagnostics.CodeAnalysis
 
 open Expecto
 
-module Program =
+module Main =
 
     [<ExcludeFromCodeCoverage>]
     [<EntryPoint>]

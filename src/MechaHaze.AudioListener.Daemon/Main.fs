@@ -11,7 +11,7 @@ open Elmish
 open MechaHaze.Shared.CoreCLR
 open Newtonsoft.Json
 
-module Program =
+module Main =
     let startAsync = async {
         let configToml = SharedConfig.loadTomlIo ()
         

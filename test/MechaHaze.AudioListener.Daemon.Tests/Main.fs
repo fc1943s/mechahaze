@@ -1,10 +1,10 @@
-namespace MechaHaze.UI.Backend
+namespace MechaHaze.AudioListener.Daemon
 
 open System.Diagnostics.CodeAnalysis
 
 open Expecto
 
-module Program =
+module Main =
 
     [<ExcludeFromCodeCoverage>]
     [<EntryPoint>]

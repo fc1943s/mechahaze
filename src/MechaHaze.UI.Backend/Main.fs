@@ -10,7 +10,7 @@ open Suigetsu.Core
 open Suigetsu.Bus
 open Suigetsu.UI.Backend.ElmishBridge
 
-module Program =
+module Main =
     let startAsync = async {
         let configToml = SharedConfig.loadTomlIo ()
         

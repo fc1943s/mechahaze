@@ -8,7 +8,7 @@ open Suigetsu.Bus
 open Suigetsu.Core
 open Suigetsu.CoreCLR
 
-module Program =
+module Main =
     let startAsync = async {
         let configToml = SharedConfig.loadTomlIo ()
         

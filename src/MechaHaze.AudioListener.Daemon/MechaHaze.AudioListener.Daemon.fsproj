@@ -12,7 +12,7 @@
     <Compile Include="TrackMatcher.fs" />
     <Compile Include="TrackLocker.fs" />
     <Compile Include="StatePersistence.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="Main.fs" />
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
