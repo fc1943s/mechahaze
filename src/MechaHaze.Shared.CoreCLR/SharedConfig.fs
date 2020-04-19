@@ -17,7 +17,7 @@ module SharedConfig =
         fun () -> 
             let rootPath =
                 CoreConfig.getRequiredEnvVarIo envVars.RootPath
-                |> Result.value
+                |> Result.okOrThrow
                 
             let paths =
                 {| configToml = Path.Combine (rootPath, "config.toml")

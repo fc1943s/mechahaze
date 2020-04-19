@@ -10,6 +10,7 @@ open MechaHaze.AudioListener.Daemon
 open Elmish
 open MechaHaze.Shared.CoreCLR
 open Newtonsoft.Json
+open FSharpPlus
 
 module Main =
     let startAsync = async {
@@ -77,7 +78,7 @@ module Main =
                         match state.RecordingMode, state.Track.Locked with
                         | false, _ | _, false -> 
                             AudioRecorder.recordIoAsync
-                            |> Async.map (Result.mapFn LocalQueue.Recording LocalQueue.Error)
+                            |> Async.map (Result.either LocalQueue.Recording LocalQueue.Error)
                             |> Cmd.OfAsync.result
                         | _ -> Cmd.none
                         

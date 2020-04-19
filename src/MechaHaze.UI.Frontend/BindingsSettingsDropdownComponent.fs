@@ -1,11 +1,11 @@
 namespace MechaHaze.UI.Frontend
 
 open Fable.FontAwesome
+open FSharpPlus
 open Fable.React
 open Fable.React.Props
 open Fulma
 open MechaHaze.Shared
-open Suigetsu.Core
 
 module BindingsSettingsDropdownComponent =
 
