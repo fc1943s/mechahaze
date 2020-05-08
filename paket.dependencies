@@ -1,6 +1,6 @@
 version 5.226.0
 
-framework: netcoreapp5.0, netstandard2.1
+framework: netcoreapp5.0
 
 group Main
     storage: none
