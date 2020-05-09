@@ -1,12 +1,16 @@
 STORAGE: NONE
-RESTRICTION: || (== netcoreapp5.0) (== netstandard2.1)
+RESTRICTION: == netcoreapp5.0
 NUGET
   remote: https://api.nuget.org/v3/index.json
     FSharp.Core (4.7.1)
 GIT
   remote: https://github.com/fc1943s/Suigetsu.git
-     (d78e79419f09fd4086606ef613f0a78ecc07a917)
+     (47ce976825b20d0f936cecddb823cbb5d3ff757c)
       build: powershell –ExecutionPolicy Bypass ./build.ps1
+  remote: https://github.com/fc1943s/soundfingerprinting.audio.bass.git
+     (5066a6178385d92247210c64008b6bd7d878cd4f)
+  remote: https://github.com/fc1943s/SoundFingerprinting.Extensions.LMDB.git
+     (451829a8a71ad9c07a647f9ee959dd41d9ce8b5b)
 GROUP Build
 STORAGE: NONE
 NUGET

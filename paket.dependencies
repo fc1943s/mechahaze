@@ -8,6 +8,8 @@ group Main
 
     nuget FSharp.Core ~> 4.7
     git https://github.com/fc1943s/Suigetsu.git master build: "powershell –ExecutionPolicy Bypass ./build.ps1"
+    git https://github.com/fc1943s/soundfingerprinting.audio.bass.git develop
+    git https://github.com/fc1943s/SoundFingerprinting.Extensions.LMDB.git master
 
 
 group MechaHaze.AudioListener.Daemon
