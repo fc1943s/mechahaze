@@ -33,7 +33,6 @@
     <Content Include="public\apexcharts\timeline-multiseries.jsx" />
     <Content Include="public\apexcharts\temp1.jsx" />
     <Content Include="public\apexcharts\temp2.jsx" />
-    <None Include="build.fsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MechaHaze.UI\MechaHaze.UI.fsproj" />
