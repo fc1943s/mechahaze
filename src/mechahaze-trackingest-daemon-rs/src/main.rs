@@ -1,38 +1,43 @@
-use std::env::VarError;
-use std::path::{PathBuf};
+/*
+# Notes
 
+- id format:
+    - hashxxxxxxxx-mp3-320
+    - hashxxxxxxxx-wav-32
+*/
+
+fn load(home_path: std::path::PathBuf) -> Result<(), std::io::Error> {
+    let db_tracks_path = home_path.join("db-tracks");
     
-fn get_home_path() -> Result<PathBuf, VarError> {
-    return std::env::var("MECHAHAZE_HOME").map(PathBuf::from);
-}
-
-fn load(home_path: PathBuf) {
+    std::fs::create_dir_all(db_tracks_path.as_path())?;
+    
+    
     println!("HOME_PATH: {:?}", home_path);
-
+    
+    Ok(())
 }
 
 #[cfg(test)]
 mod test {
-    use super::*;
-
     #[test]
-    fn test1() {
+    fn load() {
         let temp_dir = std::env::temp_dir();
         let home_path = temp_dir.join("test1");
         
         std::fs::create_dir_all(home_path.as_path()).unwrap();
         
-        load(home_path.to_path_buf());
+        super::load(home_path.to_path_buf()).unwrap();
         
         std::fs::remove_dir_all(home_path.as_path()).unwrap();
-        // panic!();
     }
 }
 
+fn get_home_path() -> Result<std::path::PathBuf, std::env::VarError> {
+    return std::env::var("MECHAHAZE_HOME").map(std::path::PathBuf::from);
+}
 
 fn main() {
     let home_path = get_home_path().unwrap();
     
-    load(home_path);
-    
+    load(home_path).unwrap();
 }

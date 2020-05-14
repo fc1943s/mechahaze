@@ -72,7 +72,7 @@ module TrackMatcher =
         if queryResult.ContainsMatches then
             let elapsed = float (DateTime.UtcNow.Ticks - sample.Timestamp) / 10000. / 1000.
             
-            if elapsed < 10. then
+            if elapsed < SharedState.sampleLengthSeconds * 2. then
                 let id = queryResult.BestMatch.Track.Id
                 let position = queryResult.BestMatch.TrackMatchStartsAt
                 
