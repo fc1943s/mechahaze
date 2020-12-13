@@ -48,11 +48,7 @@ module RecJob =
 
             let! exitCode, _ =
                 Runtime.executePowerShellAsync [
-                    sprintf
-                        """ %s -i "%s" -o "%s" -b 8 --split-channels """
-                        (SharedConfig.pathsLazyIo ()).extAudiowaveformExe
-                        sourcePath
-                        destPath
+                    $""" {(SharedConfig.pathsLazyIo ()).extAudiowaveformExe} -i "{sourcePath}" -o "{destPath}" -b 8 --split-channels """
                 ]
 
             if exitCode <> 0 then
@@ -117,7 +113,7 @@ module RecJob =
 
                 File.Move (destination, destinationBad)
 
-                do use destinationFillerWriter = new WaveFileWriter(destinationFiller, sourceReader.WaveFormat)
+                use destinationFillerWriter = new WaveFileWriter(destinationFiller, sourceReader.WaveFormat)
 
                 sourceReader.Position <- destinationLength
 
@@ -152,8 +148,7 @@ module RecJob =
                 if Regexxer.hasMatch (id, "\[id=(\d+)\]") then
                     id
                 else
-                    id
-                    + (sprintf " [id=%s]" (DateTime.Now.ToString "yyyyMMddHHmmssfff"))
+                    $"{id} [id={Core.getTimestamp DateTime.Now}]"
 
             let tempFolder = FileSystem.ensureTempSessionDirectory ()
 
@@ -162,7 +157,7 @@ module RecJob =
 
             let (tempMp3Path, tempWavPath) =
                 ("mp3", "wav")
-                |> Tuple2.map (fun ext -> Path.Combine (tempFolder, sprintf "all.%s" ext))
+                |> Tuple2.map (fun ext -> Path.Combine (tempFolder, $"all.{ext}"))
 
             try
                 try
@@ -201,10 +196,9 @@ module RecJob =
 
                                 getOffset i, min reader.Length (getOffset (i + 1))
 
-                            let newPath =
-                                Path.Combine (Path.GetDirectoryName path, sprintf "%d.%s" i (Path.GetFileName path))
+                            let newPath = Path.Combine (Path.GetDirectoryName path, $"{i}.{Path.GetFileName path}")
 
-                            do use reader = new AudioFileReader(path)
+                            use reader = new AudioFileReader(path)
                             use writer = new WaveFileWriter(newPath, reader.WaveFormat)
 
                             reader.Position <- startPos
@@ -233,15 +227,13 @@ module RecJob =
 
                                 try
                                     let destPeaksLevelsPath =
-                                        Path.Combine
-                                            (trackPath, sprintf "%s.%s.peaks.%s.dat" id layer Bindings.sources.Levels)
+                                        Path.Combine (trackPath, $"{id}.{layer}.peaks.{Bindings.sources.Levels}.dat")
 
                                     let destPeaksPitchPath =
-                                        Path.Combine
-                                            (trackPath, sprintf "%s.%s.peaks.%s.dat" id layer Bindings.sources.Pitch)
+                                        Path.Combine (trackPath, $"{id}.{layer}.peaks.{Bindings.sources.Pitch}.dat")
 
                                     let destPitchPath =
-                                        Path.Combine (trackPath, sprintf "%s.%s.%s.csv" id layer Bindings.sources.Pitch)
+                                        Path.Combine (trackPath, $"{id}.{layer}.{Bindings.sources.Pitch}.csv")
 
                                     let destPeaksLevelsPathExists = File.Exists destPeaksLevelsPath
                                     let destPitchPathExists = File.Exists destPitchPath
@@ -257,8 +249,7 @@ module RecJob =
                                                     else
                                                         let openUnmixSeparationAsync i path =
                                                             async {
-                                                                let modelId =
-                                                                    sprintf "insanebrothers_%s_warm%s_v1" layer warm
+                                                                let modelId = $"insanebrothers_{layer}_warm{warm}_v1"
 
                                                                 let modelPath =
                                                                     Path.Combine
@@ -274,13 +265,11 @@ module RecJob =
                                                                 let! unmixedPath =
                                                                     async {
                                                                         let cmd =
-                                                                            sprintf
-                                                                                """python "%s" --model "%s" --outdir "%s" "%s" --targets %s"""
-                                                                                inferenceScript
-                                                                                modelPath
-                                                                                tempOutDir
-                                                                                path
-                                                                                layer
+                                                                            $"""python "{inferenceScript}" --model "{
+                                                                                                                         modelPath
+                                                                            }" --outdir "{tempOutDir}" "{path}" --targets {
+                                                                                                                               layer
+                                                                            }"""
 
                                                                         let! errorCode, _ =
                                                                             Runtime.executeCondaAsync
@@ -292,9 +281,7 @@ module RecJob =
                                                                         if errorCode <> 0 then
                                                                             failwith "Error executing open unmix"
 
-                                                                        return
-                                                                            Path.Combine
-                                                                                (tempOutDir, sprintf "%d.wav" i)
+                                                                        return Path.Combine (tempOutDir, $"{i}.wav")
                                                                     }
 
                                                                 do! ensureSameWavLengthAsync path unmixedPath
@@ -309,13 +296,13 @@ module RecJob =
                                                 }
 
                                             if not destPitchPathExists then
-                                                let extractPitchAsync path =
+                                                let extractPitchAsync (path: string) =
                                                     async {
                                                         let cmd =
-                                                            sprintf
-                                                                """crepe "%s" --step-size 5 --model-capacity full --output "%s" """
-                                                                path
-                                                                tempOutDir
+                                                            $"""crepe "{path}" --step-size 5 --model-capacity full --output "{
+                                                                                                                                  tempOutDir
+                                                            }" """
+
 
                                                         let! errorCode, _ =
                                                             Runtime.executeCondaAsync
@@ -340,7 +327,7 @@ module RecJob =
 
                                                 do! Waveform.recombineCsvAsync pitchSlices destPitchPath
 
-                                            let combinedPath = Path.Combine (tempFolder, sprintf "%s.wav" layer)
+                                            let combinedPath = Path.Combine (tempFolder, $"{layer}.wav")
 
                                             recombineAudio16 slices combinedPath
 
@@ -360,7 +347,7 @@ module RecJob =
 
                     do! persistFingerprintAsync tempWavPath id
 
-                    let destFileName = sprintf "%s.mp3" id
+                    let destFileName = $"{id}.mp3"
 
                     let destPath = Path.Combine (trackPath, destFileName)
 

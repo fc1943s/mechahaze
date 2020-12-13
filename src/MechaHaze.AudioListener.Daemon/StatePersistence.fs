@@ -26,7 +26,8 @@ module StatePersistence =
             |> JsonConvert.DeserializeObject<SharedState.SharedState>
             |> Ok
         with ex ->
-            File.Copy (statePath, sprintf "%s.%s.error.json" statePath (DateTime.Now.ToString "yyyyMMddHHmmssfff"))
+            File.Copy (statePath, $"{statePath}.{Core.getTimestamp DateTime.Now}.error.json")
+
             Error ex
 
     let writeIo (newState: SharedState.SharedState) =
@@ -42,7 +43,7 @@ module StatePersistence =
 
             File.WriteAllText (statePath, json)
 
-            File.Copy (statePath, sprintf "%s.%s.event.json" statePath (DateTime.Now.ToString "yyyyMMddHHmmssfff"))
+            File.Copy (statePath, $"{statePath}.{Core.getTimestamp DateTime.Now}.event.json")
 
             Ok ()
         with ex -> Error ex

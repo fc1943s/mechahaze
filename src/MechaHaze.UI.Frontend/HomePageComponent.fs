@@ -564,7 +564,7 @@ module HomePageComponent =
                                 str props.PrivateState.User.Id
                                 br []
                                 str "Connection: "
-                                str (sprintf "%A" props.PrivateState.Connection)
+                                str $"%A{props.PrivateState.Connection}"
                                 br []
 
                                 br []

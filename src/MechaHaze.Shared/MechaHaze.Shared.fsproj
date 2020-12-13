@@ -5,6 +5,7 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core.fs" />
     <Compile Include="Bindings.fs" />
     <Compile Include="SharedState.fs" />
     <Content Include="paket.references" />

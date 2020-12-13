@@ -46,7 +46,7 @@ module OscDispatcher =
                                     Path.Combine
                                         ((SharedConfig.pathsLazyIo ()).dbTracks,
                                          state.Track.Id,
-                                         sprintf "%s.%s.peaks.%s.dat" state.Track.Id layer format))
+                                         $"{state.Track.Id}.{layer}.peaks.{format}.dat"))
 
                             if File.Exists peaksLevelsPath then
                                 let peaksLevels = Waveform.readPeaks peaksLevelsPath

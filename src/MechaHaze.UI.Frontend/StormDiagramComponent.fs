@@ -55,7 +55,7 @@ module StormDiagramComponent =
                                      + (if warm = "" then
                                          ""
                                         else
-                                            (sprintf "\u00A0\u00A0->\u00A0\u00A0(%s)" warm)))
+                                            ($"\u00A0\u00A0->\u00A0\u00A0({warm})")))
 
                             name + string Bindings.separator + layer, port)
 
@@ -108,7 +108,7 @@ module StormDiagramComponent =
                     let ports =
                         features
                         |> List.map (fun (fullFeature, feature) ->
-                            let port = node.addInPort (sprintf "%s" feature)
+                            let port = node.addInPort feature
                             fullFeature, port)
 
                     model.addNode node

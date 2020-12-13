@@ -49,10 +49,10 @@ module PeaksComponent =
 
         let ids =
             {|
-                waveformContainer = sprintf "waveform-container-%d" id
-                zoomviewContainer = sprintf "zoomview-container-%d" id
-                overviewContainer = sprintf "overview-container-%d" id
-                audio = sprintf "audio-%d" id
+                waveformContainer = $"waveform-container-{id}"
+                zoomviewContainer = $"zoomview-container-{id}"
+                overviewContainer = $"overview-container-{id}"
+                audio = $"audio-{id}"
             |}
 
         do
@@ -76,11 +76,12 @@ module PeaksComponent =
 
             let duration = this.props.Track.DurationSeconds / 60.
 
-            JS.encodeURIComponent
-                (seconds
-                 |> List.tryFind (fun x -> float x > duration)
-                 |> Option.defaultValue (seconds |> List.last)
-                 |> sprintf "root/dataset-mp3silence/%i.mp3")
+            let newSeconds =
+                seconds
+                |> List.tryFind (fun x -> float x > duration)
+                |> Option.defaultValue (seconds |> List.last)
+
+            JS.encodeURIComponent $"root/dataset-mp3silence/{newSeconds}.mp3"
 
         member this.GetTrackDataUri () =
             if this.props.Track.Id = "" then
@@ -89,13 +90,12 @@ module PeaksComponent =
                 {|
                     arraybuffer =
                         JS.encodeURIComponent
-                            (sprintf
-                                "root/db-tracks/%s/%s.%s.peaks.%s.dat"
-                                 this.props.Track.Id
-                                 this.props.Track.Id
-                                 this.props.Layer
-                                 this.props.BindingSource)
+                            $"root/db-tracks/{this.props.Track.Id}/{this.props.Track.Id}.{this.props.Layer}.peaks.{this.props.BindingSource}.dat"
                 |}
+
+
+
+
 
         member this.Init () =
             if this.state.PeaksHandle = null

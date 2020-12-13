@@ -79,7 +79,7 @@ module TimeSync =
                 match message with
                 | Align (clientReqId, T1, T2) ->
                     Finish (T1, T2, DateTime.UtcNow.Ticks)
-                    |> exchange.Post (sprintf "server.finish.%s" clientReqId)
+                    |> exchange.Post ($"server.finish.{clientReqId}")
                 | _ -> ()
             }
 
@@ -125,7 +125,7 @@ module TimeSync =
             let bindingKeys =
                 [
                     "server.*"
-                    sprintf "server.*.%s" pid
+                    $"server.*.{pid}"
                 ]
 
             exchange.RegisterConsumer bindingKeys (handlerAsync onOffset)

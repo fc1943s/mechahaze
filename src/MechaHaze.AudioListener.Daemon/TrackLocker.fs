@@ -24,8 +24,7 @@ module TrackLocker =
                / 10000.
                / 1000.)
 
-        Log.Verbose
-            ("PosDiff: {PosDiff}. TicksDiff: {TicksDiff}", sprintf "%.4f" posDiff, sprintf "%.4f" ticksDiff) (*** // ***)
+        Log.Verbose ("PosDiff: {PosDiff}. TicksDiff: {TicksDiff}", $"%.4f{posDiff}", $"%.4f{ticksDiff}") (*** // ***)
 
         noiseCache.Push (posDiff, ticksDiff)
 
@@ -42,19 +41,19 @@ module TrackLocker =
         Log.Verbose
             ("count: {Count}. Offset: {Offset} SUM pos {SumPos}. Sum ticks {SumTicks}. Noise: {Noise}",
              noiseCache.Count,
-             sprintf "%.4f" offset,
-             sprintf "%.4f" sumPos,
-             sprintf "%.4f" sumTicks,
+             $"%.4f{offset}",
+             $"%.4f{sumPos}",
+             $"%.4f{sumTicks}",
              recentNoise
-             |> List.map (fun (sum, ticks) -> (sprintf "%.4f" sum, sprintf "%.4f" ticks))) (*** // ***)
+             |> List.map (fun (sum, ticks) -> ($"%.4f{sum}", $"%.4f{ticks}"))) (*** // ***)
 
-        Log.Verbose ("Offset2: {Offset}; Ceiling: {Ceiling}", sprintf "%.4f" offset2, _offsetCeiling) (*** // ***)
+        Log.Verbose ("Offset2: {Offset}; Ceiling: {Ceiling}", $"%.4f{offset2}", _offsetCeiling) (*** // ***)
 
         let limit = 0.2
 
         if recentNoise.Length
            <> SharedState.lockingNoiseCount
-           || not (sumPos >< (-limit, limit)) then  //  && (_offsetCeiling = 0. || abs offset < _offsetCeiling)
+           || not (sumPos >< (-limit, limit)) then //  && (_offsetCeiling = 0. || abs offset < _offsetCeiling)
             state.Track.Locked, 0.
         else
             if state.AutoLock then

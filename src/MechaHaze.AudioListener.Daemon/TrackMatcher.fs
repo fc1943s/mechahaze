@@ -62,7 +62,7 @@ module TrackMatcher =
 
     let private createDebugInfo (queryResult: QueryResult) =
         {
-            SharedState.Name = sprintf "%s - %s" queryResult.BestMatch.Track.Artist queryResult.BestMatch.Track.Title
+            SharedState.Name = $"{queryResult.BestMatch.Track.Artist} - {queryResult.BestMatch.Track.Title}"
             SharedState.TrackStartsAt = queryResult.BestMatch.TrackStartsAt
             SharedState.TotalTracksAnalyzed = queryResult.Stats.TotalTracksAnalyzed
             SharedState.TotalFingerprintsAnalyzed = queryResult.Stats.TotalFingerprintsAnalyzed
@@ -92,11 +92,7 @@ module TrackMatcher =
                     let id = queryResult.BestMatch.Track.Id
                     let position = queryResult.BestMatch.TrackMatchStartsAt
 
-                    Log.Debug
-                        (sprintf "Match Found. Id: {Id}. Position: {Position}. Elapsed: {Elapsed}",
-                         id,
-                         position,
-                         elapsed)
+                    Log.Debug ("Match Found. Id: {Id}. Position: {Position}. Elapsed: {Elapsed}", id, position, elapsed)
 
                     return
                         {

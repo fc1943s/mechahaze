@@ -159,7 +159,7 @@ module UIServer =
                         use_router router'
                         disable_diagnostics
                         app_config Giraffe.useWebSockets
-                        url (sprintf "http://0.0.0.0:%s/" port)
+                        url ($"http://0.0.0.0:{port}/")
                     }
 
                 run app

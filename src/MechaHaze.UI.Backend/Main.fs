@@ -48,7 +48,13 @@ module Main =
                         | _ -> ()
                     })
 
-            use rabbitBus = RabbitQueue.createBus configToml.RabbitMqAddress "root" "root"
+            use rabbitBus =
+                RabbitQueue.createBus
+                    "mechahaze"
+                    configToml.RabbitMqAddress
+                    configToml.RabbitMqUsername
+                    configToml.RabbitMqPassword
+
             let rabbitExchange = RabbitQueue.Exchange rabbitBus
 
             let rabbitHandlerAsync message __exchange =
