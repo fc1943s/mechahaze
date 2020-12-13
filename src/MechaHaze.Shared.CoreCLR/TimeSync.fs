@@ -15,20 +15,24 @@ module TimeSync =
             timeSync.Offsets
             |> Seq.rev
             |> Seq.truncate 50
-            |> Seq.append [ (float DateTime.UtcNow.Ticks, float offset) |> SharedState.TimeSyncOffset ]
+            |> Seq.append [
+                (float DateTime.UtcNow.Ticks, float offset)
+                |> SharedState.TimeSyncOffset
+               ]
             |> Seq.rev
             |> Seq.toArray
-            
+
         let x, y =
             offsets
             |> Array.map SharedState.ofTimeSyncOffset
             |> Array.unzip
-            
+
         let y' =
-            if x.Length < 2
-            then y
-            else x |> Array.map (Fit.lineFunc x y)
-            
+            if x.Length < 2 then
+                y
+            else
+                x |> Array.map (Fit.lineFunc x y)
+
         (*
     let print =
     sprintf "Scoring: R2=%.2f R=%.2f PSE=%.2f SE=%.2f SAD=%.2f SSD=%.2f MAE=%.2f MSE=%.2f"
@@ -41,16 +45,17 @@ module TimeSync =
     (Distance.MAE (y', y))
     (Distance.MSE (y', y))
         *)
-            
+
         let stableOffsets =
             Array.zip x y'
             |> Array.map SharedState.TimeSyncOffset
-        
+
         let newSelfTimeSync =
             { SharedState.TimeSync.Default with
-                  Offsets = offsets
-                  StableOffsets = stableOffsets }
-            
+                Offsets = offsets
+                StableOffsets = stableOffsets
+            }
+
         newSelfTimeSync
 
 
@@ -60,59 +65,69 @@ module TimeSync =
 
 
     type Message =
-        | Init of T1:int64
-        | Align of clientReqId:string * T1:int64 * T2:int64
-        | Finish of T1:int64 * T2:int64 * T3:int64
+        | Init of T1: int64
+        | Align of clientReqId: string * T1: int64 * T2: int64
+        | Finish of T1: int64 * T2: int64 * T3: int64
 
 
     let pid = Random().Next() |> string
 
-        
+
     module Server =
-        let handlerAsync message (exchange: RabbitQueue.Exchange<_>) = async {
-            match message with
-            | Align (clientReqId, T1, T2) ->
-                Finish (T1, T2, DateTime.UtcNow.Ticks)
-                |> exchange.Post (sprintf "server.finish.%s" clientReqId)
-            | _ -> ()
-        }
-        
+        let handlerAsync message (exchange: RabbitQueue.Exchange<_>) =
+            async {
+                match message with
+                | Align (clientReqId, T1, T2) ->
+                    Finish (T1, T2, DateTime.UtcNow.Ticks)
+                    |> exchange.Post (sprintf "server.finish.%s" clientReqId)
+                | _ -> ()
+            }
+
         let start bus =
             let exchange = RabbitQueue.Exchange bus
-            
-            exchange.RegisterConsumer [ "client.*" ] handlerAsync
-            
-            let timerEventAsync = async {
-                Init DateTime.UtcNow.Ticks
-                |> exchange.Post "server.init"
-            }
-            
+
+            exchange.RegisterConsumer
+                [
+                    "client.*"
+                ]
+                handlerAsync
+
+            let timerEventAsync =
+                async {
+                    Init DateTime.UtcNow.Ticks
+                    |> exchange.Post "server.init"
+                }
+
             timerEventAsync
             |> Timer.hangAsync 1000
             |> Async.Start
-        
+
     module Client =
-        let handlerAsync (onOffset: int64 -> unit) message (exchange: RabbitQueue.Exchange<_>)  = async {
-            match message with
-            | Init T1 ->
-                Align (pid, T1, DateTime.UtcNow.Ticks)
-                |> exchange.Post "client.align"
-                
-            | Finish (T1, T2, T3) ->
-                let offset = (T2 - T1 - T3 + T2) / 2L
-                    
-                Log.Debug ("Stabilized Time Sync. Offset: {A}", offset)
-                
-                onOffset offset
-            | _ -> ()
-        }
+        let handlerAsync (onOffset: int64 -> unit) message (exchange: RabbitQueue.Exchange<_>) =
+            async {
+                match message with
+                | Init T1 ->
+                    Align (pid, T1, DateTime.UtcNow.Ticks)
+                    |> exchange.Post "client.align"
+
+                | Finish (T1, T2, T3) ->
+                    let offset = (T2 - T1 - T3 + T2) / 2L
+
+                    Log.Debug ("Stabilized Time Sync. Offset: {A}", offset)
+
+                    onOffset offset
+                | _ -> ()
+            }
 
         let start bus (onOffset: int64 -> unit) =
             let exchange = RabbitQueue.Exchange bus
+
             let bindingKeys =
-                [ "server.*"
-                  sprintf "server.*.%s" pid ]
-            
+                [
+                    "server.*"
+                    sprintf "server.*.%s" pid
+                ]
+
             exchange.RegisterConsumer bindingKeys (handlerAsync onOffset)
 
 
@@ -121,27 +136,24 @@ module TimeSync =
         |> SharedState.ofTimeSyncMap
         |> Map.tryFind pid
         |> function
+        | None -> 0.
+        | Some timeSync ->
+            timeSync.StableOffsets
+            |> Array.tryItem (timeSync.StableOffsets.Length / 2)
+            |> function
             | None -> 0.
-            | Some timeSync ->
-                timeSync.StableOffsets
-                |> Array.tryItem (timeSync.StableOffsets.Length / 2)
-                |> function
-                    | None -> 0.
-                    | Some offset -> offset |> SharedState.ofTimeSyncOffset |> snd
-        
+            | Some offset -> offset |> SharedState.ofTimeSyncOffset |> snd
+
 
     let saveOffset offset timeSyncMap =
-        let timeSyncMap =
-            timeSyncMap
-            |> SharedState.ofTimeSyncMap
-            
+        let timeSyncMap = timeSyncMap |> SharedState.ofTimeSyncMap
+
         let timeSync =
             timeSyncMap
             |> Map.tryFind pid
             |> Option.defaultValue SharedState.TimeSync.Default
             |> withOffset offset
-            
+
         timeSyncMap
         |> Map.add pid timeSync
         |> SharedState.TimeSyncMap
-

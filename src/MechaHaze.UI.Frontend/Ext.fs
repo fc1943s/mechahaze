@@ -24,27 +24,27 @@ module Ext =
     JsInterop.importAll "./public/index.jsx"
 
 
-    let peaks : ExtTypes.IPeaks = importAll "peaks.js"
-    let flatted : ExtTypes.IFlatted = importAll "flatted/esm"
+    let peaks: ExtTypes.IPeaks = importAll "peaks.js"
+    let flatted: ExtTypes.IFlatted = importAll "flatted/esm"
 
-    let stormDiagrams : ExtTypes.IStormDiagrams = importAll "@projectstorm/react-diagrams"
-    let createStormDiagram : unit -> ExtTypes.IStormDiagramEngine = importDefault "@projectstorm/react-diagrams"
-    let stormCanvas : ExtTypes.IStormCanvas = importAll "@projectstorm/react-canvas-core"
-    let stormDefaultState : unit -> obj = import "DefaultState" "./public/storm-diagrams/DefaultState.ts"
+    let stormDiagrams: ExtTypes.IStormDiagrams = importAll "@projectstorm/react-diagrams"
+    let createStormDiagram: unit -> ExtTypes.IStormDiagramEngine = importDefault "@projectstorm/react-diagrams"
+    let stormCanvas: ExtTypes.IStormCanvas = importAll "@projectstorm/react-canvas-core"
+    let stormDefaultState: unit -> obj = import "DefaultState" "./public/storm-diagrams/DefaultState.ts"
 
 
     let plotly: obj = importDefault "react-plotly.js"
 
-    let moment : obj -> ExtTypes.IMoment = importAll "moment"
+    let moment: obj -> ExtTypes.IMoment = importAll "moment"
 
 
-    Dom.window?Ext <-
-        {| peaks = peaks
-           flatted = flatted
-           stormDiagrams = stormDiagrams
-           createStormDiagram = createStormDiagram
-           stormCanvas = stormCanvas
-           stormDefaultState = stormDefaultState
-           plotly = plotly
-           moment = moment |}
-
+    Dom.window?Ext <- {|
+                          peaks = peaks
+                          flatted = flatted
+                          stormDiagrams = stormDiagrams
+                          createStormDiagram = createStormDiagram
+                          stormCanvas = stormCanvas
+                          stormDefaultState = stormDefaultState
+                          plotly = plotly
+                          moment = moment
+                      |}

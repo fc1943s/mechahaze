@@ -8,6 +8,4 @@ module Main =
 
     [<ExcludeFromCodeCoverage>]
     [<EntryPoint>]
-    let main args =
-        runTestsWithArgs defaultConfig args Tests.tests
-
+    let main args = runTestsWithArgs defaultConfig args Tests.tests

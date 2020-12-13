@@ -4,8 +4,9 @@ open Expecto
 open Expecto.Flip
 
 module Tests =
-    let tests = testList "Tests" [
-        test "Empty" {
-            ()
-        }
-    ]
+    let tests =
+        testList
+            "Tests"
+            [
+                test "Empty" { () }
+            ]

@@ -6,12 +6,12 @@ open Fable.FontAwesome
 
 module Element =
     let icon (icon: Fa.IconOption) (label: string) =
-       span [][
-           Icon.icon [][
-              Fa.i [ icon ] []
-           ]
-           if label <> "" then
-               span [][
-                   str label
-               ]
-       ]
+        span [] [
+            Icon.icon [] [
+                Fa.i [
+                         icon
+                     ] []
+            ]
+            if label <> "" then
+                span [] [ str label ]
+        ]

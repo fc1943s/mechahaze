@@ -16,13 +16,14 @@ module StatePersistence =
 
     let readIo () =
         let statePath = statePathLazyIo ()
+
         try
             let json = File.ReadAllText statePath
 
-            let settings = JsonSerializerSettings(ContractResolver = Json.contractResolvers.RequireObjectProperties)
+            let settings = JsonSerializerSettings (ContractResolver = Json.contractResolvers.RequireObjectProperties)
 
             (json, settings)
-            |> JsonConvert.DeserializeObject<SharedState.SharedState> 
+            |> JsonConvert.DeserializeObject<SharedState.SharedState>
             |> Ok
         with ex ->
             File.Copy (statePath, sprintf "%s.%s.error.json" statePath (DateTime.Now.ToString "yyyyMMddHHmmssfff"))
@@ -33,16 +34,15 @@ module StatePersistence =
             let json = JsonConvert.SerializeObject (newState, Formatting.Indented)
 
             let statePath = statePathLazyIo ()
-            
+
             statePath
             |> Path.GetDirectoryName
             |> Directory.CreateDirectory
             |> ignore
-            
+
             File.WriteAllText (statePath, json)
-            
+
             File.Copy (statePath, sprintf "%s.%s.event.json" statePath (DateTime.Now.ToString "yyyyMMddHHmmssfff"))
-            
+
             Ok ()
-        with ex ->
-            Error ex
+        with ex -> Error ex

@@ -11,15 +11,19 @@ module Main =
     let main _ =
         Logging.addLoggingSink Logging.consoleSink true
         MediaFoundationApi.Startup ()
-        
+
         try
-            [ RecJob.listenAsync; RecJob.listenTracksHealthAsync ]
+            [
+                RecJob.listenAsync
+                RecJob.listenTracksHealthAsync
+            ]
             |> Async.handleParallel
             |> Async.Parallel
             |> Async.Ignore
             |> Async.RunSynchronously
-            
-            Log.Information ("End"); 0
-        with ex ->
-            Log.Error (ex, "Program error"); 1
 
+            Log.Information ("End")
+            0
+        with ex ->
+            Log.Error (ex, "Program error")
+            1
