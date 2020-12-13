@@ -1,12 +1,12 @@
 version 5.226.0
 
-framework: netcoreapp5.0
+framework: net5.0
 
 group Main
     storage: none
     source https://api.nuget.org/v3/index.json
 
-    nuget FSharp.Core ~> 4.7
+    nuget FSharp.Core ~> 5.0
     git https://github.com/fc1943s/Suigetsu.git master build: "powershell –ExecutionPolicy Bypass ./build.ps1"
     git https://github.com/fc1943s/soundfingerprinting.audio.bass.git develop
     git https://github.com/fc1943s/SoundFingerprinting.Extensions.LMDB.git master
@@ -57,7 +57,7 @@ group MechaHaze.UI.Backend
     storage: none
     source https://api.nuget.org/v3/index.json
 
-    nuget Saturn ~> 0.11
+    nuget Saturn ~> 0.14
 
 
 group MechaHaze.UI.Frontend
@@ -81,5 +81,5 @@ group Build
 
     nuget Fake.Core.Target prerelease
     nuget Fake.DotNet.Cli prerelease
-    nuget Fake.IO.FileSystem prerelease 
+    nuget Fake.IO.FileSystem prerelease
 

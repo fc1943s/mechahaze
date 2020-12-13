@@ -37,7 +37,7 @@ module Main =
             | _ -> ()
         })
         
-        use rabbitBus = RabbitQueue.createBus configToml.RabbitAddress "root" "root"
+        use rabbitBus = RabbitQueue.createBus configToml.RabbitMqAddress "root" "root"
         let rabbitExchange = RabbitQueue.Exchange rabbitBus
         
         let rabbitHandlerAsync message __exchange = async {

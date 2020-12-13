@@ -20,11 +20,11 @@ module ToggleBindingsDestinationInputComponent =
         static member inline Default =
             { Text = ""
               Error = false }
-        
+
     type Message =
         | SetError of bool
         | SetText of string
-        
+
     let ``default`` = FunctionComponent.Of (fun props ->
         let state =
             Hooks.useReducer ((fun state dispatch ->
@@ -32,14 +32,14 @@ module ToggleBindingsDestinationInputComponent =
                 | SetError error -> { state with Error = error }
                 | SetText text -> { state with Text = text }
             ), State.Default)
-            
+
         let events = {|
             OnKeyDown = fun (e: KeyboardEvent) ->
                 if e.key = "Enter" then
                     let valid =
                         [ Bindings.destinations.Resolume
                           Bindings.destinations.Magic ]
-                        |> Seq.map (flip (+) (string Bindings.separator))
+                        |> Seq.map ((+) (string Bindings.separator))
                         |> Seq.filter state.current.Text.StartsWith
                         |> Seq.map String.length
                         |> Seq.exists ((>) state.current.Text.Length)
@@ -50,7 +50,7 @@ module ToggleBindingsDestinationInputComponent =
                         state.update (SetError false)
                     else
                         state.update (SetError true)
-                                                                     
+
             OnChange = fun (e: Event) ->
                 state.update (SetText e.Value)
         |}
