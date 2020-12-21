@@ -5,7 +5,7 @@ open MechaHaze.Shared
 open Fable.React
 open Fable.React.Props
 open Fulma
-open Suigetsu.Core
+
 
 module ToggleBindingsDestinationInputComponent =
 

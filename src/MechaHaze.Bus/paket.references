@@ -1,0 +1,7 @@
+FSharp.Core
+
+group MechaHaze.Bus
+    EasyNetQ
+
+group MechaHaze.Serilog
+    Serilog

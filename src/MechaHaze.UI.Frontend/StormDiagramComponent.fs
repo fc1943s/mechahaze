@@ -5,7 +5,7 @@ open MechaHaze.UI.Frontend
 open MechaHaze.Shared
 open Fable.Core
 open Fable.React
-open Suigetsu.Core
+
 
 module StormDiagramComponent =
 

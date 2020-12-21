@@ -5,14 +5,11 @@ open System.Collections.Concurrent
 open System.IO
 open System.Net.Sockets
 open System.Threading
-open CoreOSC
-open CoreOSC.IO
-open CoreOSC.Types
 open MechaHaze.Shared
 open FSharp.Control
 open MechaHaze.Shared.CoreCLR
 open Serilog
-open Suigetsu.Core
+
 
 module OscDispatcher =
     let mutable private _state: SharedState.SharedState option = None

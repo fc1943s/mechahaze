@@ -9,11 +9,10 @@ open SoundFingerprinting.Audio.Bass
 open SoundFingerprinting.Builder
 open SoundFingerprinting.Data
 open SoundFingerprinting.Extensions.LMDB
-open Suigetsu.Core
-open Suigetsu.CoreCLR
 open System
 open System.IO
 open System.Linq
+
 
 module RecJob =
     let private persistFingerprintAsync (path: string) id =
@@ -48,7 +47,7 @@ module RecJob =
 
             let! exitCode, _ =
                 Runtime.executePowerShellAsync [
-                    $""" {(SharedConfig.pathsLazyIo ()).extAudiowaveformExe} -i "{sourcePath}" -o "{destPath}" -b 8 --split-channels """
+                    $" {(SharedConfig.pathsLazyIo ()).extAudiowaveformExe} -i \"{sourcePath}\" -o \"{destPath}\" -b 8 --split-channels "
                 ]
 
             if exitCode <> 0 then

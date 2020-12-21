@@ -7,9 +7,29 @@ group Main
     source https://api.nuget.org/v3/index.json
 
     nuget FSharp.Core ~> 5.0
-    git https://github.com/fc1943s/Suigetsu.git master build: "powershell –ExecutionPolicy Bypass ./build.ps1"
-    git https://github.com/fc1943s/soundfingerprinting.audio.bass.git develop
-    git https://github.com/fc1943s/SoundFingerprinting.Extensions.LMDB.git master
+
+group MechaHaze.Core
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget FSharpPlus ~> 1.2 prerelease
+
+
+group MechaHaze.Serilog
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget Serilog ~> 2.10 prerelease
+    nuget Serilog.Sinks.Console ~> 4.0 prerelease
+    nuget Serilog.Extensions.Logging ~> 3.0 prerelease
+    nuget Giraffe.SerilogExtensions ~> 1.3
+
+
+group MechaHaze.Bus
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget EasyNetQ ~> 6.4 prerelease
 
 
 group MechaHaze.AudioListener.Daemon
@@ -17,14 +37,12 @@ group MechaHaze.AudioListener.Daemon
     source https://api.nuget.org/v3/index.json
 
     nuget Elmish ~> 4.0 prerelease
-    nuget NAudio ~> 1.10
+    nuget NAudio ~> 2.0.0-beta1
 
 
 group MechaHaze.FeatureDispatcher.Daemon
     storage: none
     source https://api.nuget.org/v3/index.json
-
-    git https://github.com/dastevens/CoreOSC.git master
 
 
 group MechaHaze.Shared
@@ -45,7 +63,7 @@ group MechaHaze.TrackIngest.Daemon
     storage: none
     source https://api.nuget.org/v3/index.json
 
-    nuget NAudio ~> 1.10
+    nuget NAudio ~> 2.0.0-beta1
 
 
 group MechaHaze.UI
@@ -73,6 +91,8 @@ group MechaHaze.UI.Frontend
 group Testing
     storage: none
     source https://api.nuget.org/v3/index.json
+
+    nuget Expecto ~> 9.0
 
 
 group Build

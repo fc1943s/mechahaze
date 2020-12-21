@@ -5,10 +5,7 @@ open MechaHaze.Shared.CoreCLR
 open MechaHaze.UI
 open MechaHaze.UI.Backend
 open Serilog
-open Suigetsu.CoreCLR
-open Suigetsu.Core
-open Suigetsu.Bus
-open Suigetsu.UI.Backend.ElmishBridge
+
 
 module Main =
     let startAsync =

@@ -4,7 +4,7 @@ open System
 open Expecto
 open Expecto.Flip
 open MechaHaze.Shared
-open Suigetsu.Core
+
 
 module Tests =
     let tests =

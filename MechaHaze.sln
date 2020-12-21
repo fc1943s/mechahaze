@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{48AEB5EC-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ext", "ext", "{658CE79C-0BA7-4E15-A40D-0D65038F4298}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreOSC", "paket-files\mechahaze.featuredispatcher.daemon\github.com\dastevens\CoreOSC\CoreOSC\CoreOSC.csproj", "{2DDB874F-F795-42ED-BF2F-BD2847F33726}"
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Shared.Tests", "test\MechaHaze.Shared.Tests\MechaHaze.Shared.Tests.fsproj", "{5BE2B456-60E9-4DBF-A28D-35BCFBAB61B2}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Shared", "src\MechaHaze.Shared\MechaHaze.Shared.fsproj", "{737C7D7E-5B71-4EE6-9948-EBC63E1F77FA}"
@@ -41,29 +39,13 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Backend", "src
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Frontend", "src\MechaHaze.UI.Frontend\MechaHaze.UI.Frontend.fsproj", "{2A6486AC-BEDC-4E61-9E50-5E9B74D13D25}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Suigetsu.Core", "paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.Core\Suigetsu.Core.fsproj", "{BBEDFB06-311E-4250-B0DB-AB5409DF8CD4}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Core", "src\MechaHaze.Core\MechaHaze.Core.fsproj", "{7E04F948-B9A7-4E27-A11A-29AA006E2054}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Suigetsu.Testing", "paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.Testing\Suigetsu.Testing.fsproj", "{86337BD5-A8FE-4739-8546-56A5C213B7B9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Serilog", "src\MechaHaze.Serilog\MechaHaze.Serilog.fsproj", "{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Suigetsu.CoreCLR", "paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.CoreCLR\Suigetsu.CoreCLR.fsproj", "{9D950E4C-5DCA-4767-AAE3-DB805DFCBD43}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Bus", "src\MechaHaze.Bus\MechaHaze.Bus.fsproj", "{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Suigetsu.Bus", "paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.Bus\Suigetsu.Bus.fsproj", "{0EC7C13C-EA31-42B6-B420-2DA137812E35}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Suigetsu.UI.Frontend.ElmishBridge", "paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.UI.Frontend.ElmishBridge\Suigetsu.UI.Frontend.ElmishBridge.fsproj", "{58FB260D-99B9-45F3-97ED-071F48AACA49}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Suigetsu.UI.Backend.ElmishBridge", "paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.UI.Backend.ElmishBridge\Suigetsu.UI.Backend.ElmishBridge.fsproj", "{77703A69-A72A-4E8F-B78E-577AA15EA4D1}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Suigetsu.UI", "paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.UI\Suigetsu.UI.fsproj", "{6B9C1C64-6AE3-43E0-8E29-C249B667216B}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Elmish.Bridge.Client", "paket-files\github.com\fc1943s\Suigetsu\paket-files\github.com\fc1943s\Elmish.Bridge\src\Client\Elmish.Bridge.Client.fsproj", "{F27B6507-21A9-41BC-800B-DEBF55FCFAB9}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Elmish.Bridge.Giraffe", "paket-files\github.com\fc1943s\Suigetsu\paket-files\github.com\fc1943s\Elmish.Bridge\src\Giraffe\Elmish.Bridge.Giraffe.fsproj", "{85D9E5E1-5650-4BD5-94EB-6D9E2969A60A}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Elmish.Bridge.Server", "paket-files\github.com\fc1943s\Suigetsu\paket-files\github.com\fc1943s\Elmish.Bridge\src\Server\Elmish.Bridge.Server.fsproj", "{1B3DC27D-687F-4E7C-8410-FBBDF7DE7430}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundFingerprinting.Audio.Bass", "paket-files\github.com\fc1943s\soundfingerprinting.audio.bass\src\SoundFingerprinting.Audio.Bass\SoundFingerprinting.Audio.Bass.csproj", "{8FA76BC0-1461-4548-A962-B3BEFA8B1089}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundFingerprinting.Extensions.LMDB", "paket-files\github.com\fc1943s\SoundFingerprinting.Extensions.LMDB\src\SoundFingerprinting.Extensions.LMDB\SoundFingerprinting.Extensions.LMDB.csproj", "{55E970B5-ADF6-493B-AD7A-98793DAF27E9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Testing", "src\MechaHaze.Testing\MechaHaze.Testing.fsproj", "{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -175,6 +157,22 @@ Global
 		{55E970B5-ADF6-493B-AD7A-98793DAF27E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55E970B5-ADF6-493B-AD7A-98793DAF27E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55E970B5-ADF6-493B-AD7A-98793DAF27E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E04F948-B9A7-4E27-A11A-29AA006E2054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E04F948-B9A7-4E27-A11A-29AA006E2054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E04F948-B9A7-4E27-A11A-29AA006E2054}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E04F948-B9A7-4E27-A11A-29AA006E2054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2DDB874F-F795-42ED-BF2F-BD2847F33726} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
@@ -203,5 +201,9 @@ Global
 		{1B3DC27D-687F-4E7C-8410-FBBDF7DE7430} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
 		{8FA76BC0-1461-4548-A962-B3BEFA8B1089} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
 		{55E970B5-ADF6-493B-AD7A-98793DAF27E9} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
+		{7E04F948-B9A7-4E27-A11A-29AA006E2054} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 	EndGlobalSection
 EndGlobal

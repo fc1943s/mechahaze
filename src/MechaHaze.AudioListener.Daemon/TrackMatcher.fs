@@ -3,15 +3,11 @@ namespace MechaHaze.AudioListener.Daemon
 open System
 open NAudio.Wave
 open Serilog
-open Suigetsu.Core
 open System.Collections.Concurrent
 open System.IO
-open SoundFingerprinting.Builder
 open MechaHaze.Shared
 open MechaHaze.Shared.CoreCLR
-open SoundFingerprinting.Audio.Bass
-open SoundFingerprinting.Extensions.LMDB
-open SoundFingerprinting.Query
+
 
 module TrackMatcher =
     let private saveTempSampleIoAsync (sample: LocalQueue.Sample) =

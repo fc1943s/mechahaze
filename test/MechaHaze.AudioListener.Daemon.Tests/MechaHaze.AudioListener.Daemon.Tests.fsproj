@@ -12,7 +12,6 @@
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.Testing\Suigetsu.Testing.fsproj" />
     <ProjectReference Include="..\..\src\MechaHaze.AudioListener.Daemon\MechaHaze.AudioListener.Daemon.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

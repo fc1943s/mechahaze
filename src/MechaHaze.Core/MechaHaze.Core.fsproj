@@ -1,17 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="OscDispatcher.fs" />
-    <Compile Include="Main.fs" />
+    <Compile Include="Core\Tuple2.fs" />
+    <Compile Include="Core\Environment.fs" />
+    <Compile Include="Core\Extensions.fs" />
+    <Compile Include="Core\Core.fs" />
+    <Compile Include="Core\Timer.fs" />
     <Content Include="paket.references" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.Shared.CoreCLR\MechaHaze.Shared.CoreCLR.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

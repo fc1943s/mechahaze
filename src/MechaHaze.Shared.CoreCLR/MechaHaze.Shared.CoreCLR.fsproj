@@ -11,8 +11,8 @@
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MechaHaze.Bus\MechaHaze.Bus.fsproj" />
     <ProjectReference Include="..\MechaHaze.Shared\MechaHaze.Shared.fsproj" />
-    <ProjectReference Include="..\..\paket-files\github.com\fc1943s\Suigetsu\src\Suigetsu.Bus\Suigetsu.Bus.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -2,8 +2,7 @@ namespace MechaHaze.UI.Frontend
 
 open MechaHaze.Shared
 open MechaHaze.UI
-open MechaHaze.UI.Frontend
-open Suigetsu.UI.Frontend.ElmishBridge
+
 
 module Client =
     let inline handleClientMessage (message: SharedState.SharedServerMessage) (state: UIState.State) =

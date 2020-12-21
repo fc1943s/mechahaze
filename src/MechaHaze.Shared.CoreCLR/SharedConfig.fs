@@ -1,8 +1,8 @@
 namespace MechaHaze.Shared.CoreCLR
 
 
+open MechaHaze.Core
 open Serilog
-open Suigetsu.Core
 open System.IO
 open System.Reflection
 open Tomlyn
@@ -16,7 +16,7 @@ module SharedConfig =
 
         fun () ->
             let rootPath =
-                CoreConfig.getRequiredEnvVarIo envVars.RootPath
+                Environment.getRequiredEnvVar envVars.RootPath
                 |> Result.okOrThrow
 
             let paths =

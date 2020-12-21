@@ -1,11 +1,12 @@
 namespace MechaHaze.Shared.CoreCLR
 
 open MathNet.Numerics
+open MechaHaze.Core
 open MechaHaze.Shared
 open Serilog
-open Suigetsu.Bus
-open Suigetsu.Core
 open System
+open Suigetsu.Bus
+
 
 module TimeSync =
     let withOffset (offset: int64) (timeSync: SharedState.TimeSync) =

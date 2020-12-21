@@ -2,8 +2,8 @@ namespace MechaHaze.Shared.CoreCLR
 
 open FSharp.Data
 open System.IO
-open Suigetsu.Core
 open FSharpPlus
+
 
 module Waveform =
 

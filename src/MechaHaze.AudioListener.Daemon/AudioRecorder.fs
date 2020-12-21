@@ -7,8 +7,8 @@ open NAudio.CoreAudioApi
 open System.IO
 open System.Threading
 open Serilog
-open Suigetsu.Core
 open NAudio.Wave.SampleProviders
+
 
 module SilentSinePlayer =
     let private hangIoAsync =

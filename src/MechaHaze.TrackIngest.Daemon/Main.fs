@@ -1,9 +1,9 @@
 ﻿namespace MechaHaze.TrackIngest.Daemon
 
 open Serilog
-open Suigetsu.CoreCLR
 open MechaHaze.TrackIngest.Daemon
 open NAudio.MediaFoundation
+
 
 module Main =
 

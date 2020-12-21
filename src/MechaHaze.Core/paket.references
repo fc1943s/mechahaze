@@ -1,0 +1,8 @@
+FSharp.Core
+
+group MechaHaze.Core
+    FSharpPlus
+
+group MechaHaze.Serilog
+    Serilog
+

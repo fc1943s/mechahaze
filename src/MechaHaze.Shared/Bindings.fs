@@ -1,6 +1,7 @@
 namespace MechaHaze.Shared
 
-open Suigetsu.Core
+open MechaHaze.Core
+
 
 module Bindings =
     let separator = '|'

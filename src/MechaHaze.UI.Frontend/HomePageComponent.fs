@@ -1,13 +1,10 @@
 namespace MechaHaze.UI.Frontend
 
-open Suigetsu.Core
 open Browser.Types
 open MechaHaze.UI.Frontend
 open MechaHaze.Shared
 open Fable.Core
-open Suigetsu.UI.Frontend.ElmishBridge
 open Fable.FontAwesome
-open FSharpPlus
 open Fable.React
 open Fable.React.Props
 open Fulma

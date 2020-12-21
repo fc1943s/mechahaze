@@ -2,8 +2,8 @@ namespace MechaHaze.AudioListener.Daemon
 
 open MechaHaze.Shared
 open Serilog
-open Suigetsu.Core
 open System.Collections.Concurrent
+
 
 module TrackLocker =
     let noiseCache = ConcurrentStack<float * float> ()
