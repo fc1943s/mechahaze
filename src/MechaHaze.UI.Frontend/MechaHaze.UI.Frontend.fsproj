@@ -35,8 +35,8 @@
     <Content Include="public\apexcharts\temp2.jsx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MechaHaze.Interop.JavaScript\MechaHaze.Interop.JavaScript.fsproj" />
     <ProjectReference Include="..\MechaHaze.UI.Frontend.ElmishBridge\MechaHaze.UI.Frontend.ElmishBridge.fsproj" />
-    <ProjectReference Include="..\MechaHaze.UI.Interop.JavaScript\MechaHaze.UI.Interop.JavaScript.fsproj" />
     <ProjectReference Include="..\MechaHaze.UI\MechaHaze.UI.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

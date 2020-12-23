@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Model.fs" />
+    <Compile Include="Tests.fs" />
+    <Compile Include="Main.fs" />
+    <Content Include="paket.references" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MechaHaze.Daemon.AudioListener\MechaHaze.Daemon.AudioListener.fsproj" />
+      <ProjectReference Include="..\..\src\MechaHaze.Testing\MechaHaze.Testing.fsproj" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

@@ -1,5 +1,6 @@
 namespace MechaHaze.UI.Backend
 
+open MechaHaze.UI.Backend.ElmishBridge
 open Serilog
 open MechaHaze.Shared
 open Saturn

@@ -25,19 +25,19 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Shared.CoreCLR", 
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI", "src\MechaHaze.UI\MechaHaze.UI.fsproj", "{DD765D1C-01FE-4A7F-BE68-9ABCAA26F221}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.AudioListener.Daemon.Tests", "test\MechaHaze.AudioListener.Daemon.Tests\MechaHaze.AudioListener.Daemon.Tests.fsproj", "{02D5519E-39CC-4445-9213-57B9883699EE}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Daemon.AudioListener.Tests", "test\MechaHaze.Daemon.AudioListener.Tests\MechaHaze.Daemon.AudioListener.Tests.fsproj", "{02D5519E-39CC-4445-9213-57B9883699EE}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.FeatureDispatcher.Daemon.Tests", "test\MechaHaze.FeatureDispatcher.Daemon.Tests\MechaHaze.FeatureDispatcher.Daemon.Tests.fsproj", "{DD4BE371-5C71-4D02-A78B-E6CEA97962BD}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Daemon.FeatureDispatcher.Tests", "test\MechaHaze.Daemon.FeatureDispatcher.Tests\MechaHaze.Daemon.FeatureDispatcher.Tests.fsproj", "{DD4BE371-5C71-4D02-A78B-E6CEA97962BD}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.TrackIngest.Daemon.Tests", "test\MechaHaze.TrackIngest.Daemon.Tests\MechaHaze.TrackIngest.Daemon.Tests.fsproj", "{2F6536D1-5509-4484-A133-280F57DB2A4A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Daemon.TrackIngest.Tests", "test\MechaHaze.Daemon.TrackIngest.Tests\MechaHaze.Daemon.TrackIngest.Tests.fsproj", "{2F6536D1-5509-4484-A133-280F57DB2A4A}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Backend.Tests", "test\MechaHaze.UI.Backend.Tests\MechaHaze.UI.Backend.Tests.fsproj", "{96106AD4-3678-4C1C-9088-FBDE8396D0E4}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.AudioListener.Daemon", "src\MechaHaze.AudioListener.Daemon\MechaHaze.AudioListener.Daemon.fsproj", "{60E04B53-E483-4694-BDCF-F537C8A23056}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Daemon.AudioListener", "src\MechaHaze.Daemon.AudioListener\MechaHaze.Daemon.AudioListener.fsproj", "{60E04B53-E483-4694-BDCF-F537C8A23056}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.FeatureDispatcher.Daemon", "src\MechaHaze.FeatureDispatcher.Daemon\MechaHaze.FeatureDispatcher.Daemon.fsproj", "{E8EECFFB-849B-4A73-985F-54CF0D5E62C6}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Daemon.FeatureDispatcher", "src\MechaHaze.Daemon.FeatureDispatcher\MechaHaze.Daemon.FeatureDispatcher.fsproj", "{E8EECFFB-849B-4A73-985F-54CF0D5E62C6}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.TrackIngest.Daemon", "src\MechaHaze.TrackIngest.Daemon\MechaHaze.TrackIngest.Daemon.fsproj", "{6C6851CF-57D8-4255-9313-74DE4790D41A}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Daemon.TrackIngest", "src\MechaHaze.Daemon.TrackIngest\MechaHaze.Daemon.TrackIngest.fsproj", "{6C6851CF-57D8-4255-9313-74DE4790D41A}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Backend", "src\MechaHaze.UI.Backend\MechaHaze.UI.Backend.fsproj", "{91A2AC01-0FF9-4AB7-BBA0-FFA89A0AC09F}"
 EndProject
@@ -45,21 +45,35 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Frontend", "sr
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Core", "src\MechaHaze.Core\MechaHaze.Core.fsproj", "{7E04F948-B9A7-4E27-A11A-29AA006E2054}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Serilog", "src\MechaHaze.Serilog\MechaHaze.Serilog.fsproj", "{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}"
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.IO", "src\MechaHaze.IO\MechaHaze.IO.fsproj", "{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Testing", "src\MechaHaze.Testing\MechaHaze.Testing.fsproj", "{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Frontend.ElmishBridge", "src\MechaHaze.UI.Frontend.ElmishBridge\MechaHaze.UI.Frontend.ElmishBridge.fsproj", "{DF88C5F4-73DA-46D4-87E3-CC78F1E16C11}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Interop.JavaScript", "src\MechaHaze.UI.Interop.JavaScript\MechaHaze.UI.Interop.JavaScript.fsproj", "{2B414FD9-1F7C-49C1-906C-25C8D7D23186}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Interop.JavaScript", "src\MechaHaze.Interop.JavaScript\MechaHaze.Interop.JavaScript.fsproj", "{2B414FD9-1F7C-49C1-906C-25C8D7D23186}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Frontend.React", "src\MechaHaze.UI.Frontend.React\MechaHaze.UI.Frontend.React.fsproj", "{FA0C90F5-5B7C-4092-807A-8441098A1B2C}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Backend.ElmishBridge", "src\MechaHaze.UI.Backend.ElmishBridge\MechaHaze.UI.Backend.ElmishBridge.fsproj", "{5DD21678-7A23-4ACF-B9C8-382AAF940EBB}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.CoreCLR", "src\MechaHaze.CoreCLR\MechaHaze.CoreCLR.fsproj", "{DADF8602-9E92-4D58-8097-B05840F30727}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Interop.Python", "src\MechaHaze.Interop.Python\MechaHaze.Interop.Python.fsproj", "{0F2C2914-3CDF-4AC8-8B4D-3A9C5F4094EB}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Interop.Spiral", "src\MechaHaze.Interop.Spiral\MechaHaze.Interop.Spiral.fsproj", "{F06FE87C-E261-4895-A430-14A717574EBE}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Interop.CSharp", "src\MechaHaze.Interop.CSharp\MechaHaze.Interop.CSharp.fsproj", "{3DF425C6-4A4F-4698-A6E8-B7D9E0DC967F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Interop.Rust", "src\MechaHaze.Interop.Rust\MechaHaze.Interop.Rust.fsproj", "{EC798FDB-053A-480A-856D-86CB88CC227A}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.IO.Resolume", "src\MechaHaze.IO.Resolume\MechaHaze.IO.Resolume.fsproj", "{C4E9AF1F-1BD0-4441-A667-88705B4C1EC5}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.IO.VL", "src\MechaHaze.IO.VL\MechaHaze.IO.VL.fsproj", "{AB4EAB3C-1B95-41EF-8B65-17A61691CE94}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.IO.Magic", "src\MechaHaze.IO.Magic\MechaHaze.IO.Magic.fsproj", "{BFAB73CC-F24C-4555-ACAA-58D7693A4ACB}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Interop.Notebook", "src\MechaHaze.Interop.Notebook\MechaHaze.Interop.Notebook.fsproj", "{05A529EA-47A8-493A-9525-663802E5EAAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -175,10 +189,6 @@ Global
 		{7E04F948-B9A7-4E27-A11A-29AA006E2054}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E04F948-B9A7-4E27-A11A-29AA006E2054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E04F948-B9A7-4E27-A11A-29AA006E2054}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -207,6 +217,38 @@ Global
 		{DADF8602-9E92-4D58-8097-B05840F30727}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DADF8602-9E92-4D58-8097-B05840F30727}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DADF8602-9E92-4D58-8097-B05840F30727}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F2C2914-3CDF-4AC8-8B4D-3A9C5F4094EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F2C2914-3CDF-4AC8-8B4D-3A9C5F4094EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F2C2914-3CDF-4AC8-8B4D-3A9C5F4094EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F2C2914-3CDF-4AC8-8B4D-3A9C5F4094EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F06FE87C-E261-4895-A430-14A717574EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06FE87C-E261-4895-A430-14A717574EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06FE87C-E261-4895-A430-14A717574EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06FE87C-E261-4895-A430-14A717574EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DF425C6-4A4F-4698-A6E8-B7D9E0DC967F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DF425C6-4A4F-4698-A6E8-B7D9E0DC967F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DF425C6-4A4F-4698-A6E8-B7D9E0DC967F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DF425C6-4A4F-4698-A6E8-B7D9E0DC967F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC798FDB-053A-480A-856D-86CB88CC227A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC798FDB-053A-480A-856D-86CB88CC227A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC798FDB-053A-480A-856D-86CB88CC227A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC798FDB-053A-480A-856D-86CB88CC227A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4E9AF1F-1BD0-4441-A667-88705B4C1EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4E9AF1F-1BD0-4441-A667-88705B4C1EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4E9AF1F-1BD0-4441-A667-88705B4C1EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4E9AF1F-1BD0-4441-A667-88705B4C1EC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB4EAB3C-1B95-41EF-8B65-17A61691CE94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB4EAB3C-1B95-41EF-8B65-17A61691CE94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB4EAB3C-1B95-41EF-8B65-17A61691CE94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB4EAB3C-1B95-41EF-8B65-17A61691CE94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFAB73CC-F24C-4555-ACAA-58D7693A4ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFAB73CC-F24C-4555-ACAA-58D7693A4ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFAB73CC-F24C-4555-ACAA-58D7693A4ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFAB73CC-F24C-4555-ACAA-58D7693A4ACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05A529EA-47A8-493A-9525-663802E5EAAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05A529EA-47A8-493A-9525-663802E5EAAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05A529EA-47A8-493A-9525-663802E5EAAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05A529EA-47A8-493A-9525-663802E5EAAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2DDB874F-F795-42ED-BF2F-BD2847F33726} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
@@ -236,7 +278,6 @@ Global
 		{8FA76BC0-1461-4548-A962-B3BEFA8B1089} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
 		{55E970B5-ADF6-493B-AD7A-98793DAF27E9} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
 		{7E04F948-B9A7-4E27-A11A-29AA006E2054} = {6F86F337-52E2-448D-99FA-6A52D377B969}
-		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{DF88C5F4-73DA-46D4-87E3-CC78F1E16C11} = {6F86F337-52E2-448D-99FA-6A52D377B969}
@@ -244,5 +285,13 @@ Global
 		{FA0C90F5-5B7C-4092-807A-8441098A1B2C} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{5DD21678-7A23-4ACF-B9C8-382AAF940EBB} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{DADF8602-9E92-4D58-8097-B05840F30727} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{0F2C2914-3CDF-4AC8-8B4D-3A9C5F4094EB} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{F06FE87C-E261-4895-A430-14A717574EBE} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{3DF425C6-4A4F-4698-A6E8-B7D9E0DC967F} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{EC798FDB-053A-480A-856D-86CB88CC227A} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{C4E9AF1F-1BD0-4441-A667-88705B4C1EC5} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{AB4EAB3C-1B95-41EF-8B65-17A61691CE94} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{BFAB73CC-F24C-4555-ACAA-58D7693A4ACB} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{05A529EA-47A8-493A-9525-663802E5EAAB} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 	EndGlobalSection
 EndGlobal

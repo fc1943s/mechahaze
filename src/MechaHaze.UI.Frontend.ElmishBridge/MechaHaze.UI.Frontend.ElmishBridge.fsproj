@@ -9,7 +9,7 @@
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.UI.Interop.JavaScript\MechaHaze.UI.Interop.JavaScript.fsproj" />
+    <ProjectReference Include="..\MechaHaze.Interop.JavaScript\MechaHaze.Interop.JavaScript.fsproj" />
     <ProjectReference Include="..\MechaHaze.UI\MechaHaze.UI.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

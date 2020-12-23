@@ -8,7 +8,7 @@ open Fable.Core.JsInterop
 open Fable.React
 open Fable.React.Props
 open System
-open MechaHaze.UI.Interop.JavaScript
+open MechaHaze.Interop.JavaScript
 
 
 module PeaksComponent =

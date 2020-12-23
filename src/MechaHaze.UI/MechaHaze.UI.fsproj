@@ -5,9 +5,9 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="paket.references" />
     <Compile Include="UIState.fs" />
     <Compile Include="InternalUI.fs" />
+    <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MechaHaze.Shared\MechaHaze.Shared.fsproj" />

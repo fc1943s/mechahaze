@@ -1,9 +1,5 @@
 FSharp.Core
-
-group MechaHaze.Shared.CoreCLR
-    FSharp.Data
-    Tomlyn
-    MathNet.Numerics.FSharp
-
-group MechaHaze.Serilog
-    Serilog
+Serilog
+FSharp.Data
+Tomlyn
+MathNet.Numerics.FSharp

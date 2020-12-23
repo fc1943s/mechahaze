@@ -1,0 +1,5 @@
+FSharp.Core
+NAudio
+SoundFingerprinting
+SoundFingerprinting.Extensions.LMDB
+SoundFingerprinting.Audio.Bass

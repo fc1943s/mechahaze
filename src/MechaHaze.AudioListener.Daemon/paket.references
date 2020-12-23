@@ -1,6 +1,0 @@
-group MechaHaze.AudioListener.Daemon
-
-FSharp.Core
-
-Elmish
-NAudio
