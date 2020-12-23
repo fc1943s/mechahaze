@@ -3,16 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>preview</LangVersion>
-    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="UIServer.fs" />
-    <Compile Include="Main.fs" />
+    <Compile Include="Client.fs" />
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.Shared.CoreCLR\MechaHaze.Shared.CoreCLR.fsproj" />
-    <ProjectReference Include="..\MechaHaze.UI.Backend.ElmishBridge\MechaHaze.UI.Backend.ElmishBridge.fsproj" />
+    <ProjectReference Include="..\MechaHaze.UI.Interop.JavaScript\MechaHaze.UI.Interop.JavaScript.fsproj" />
     <ProjectReference Include="..\MechaHaze.UI\MechaHaze.UI.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

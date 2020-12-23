@@ -1,0 +1,5 @@
+FSharp.Core
+
+group MechaHaze.UI.Backend.ElmishBridge
+    Elmish.Bridge.Giraffe
+    Giraffe.SerilogExtensions

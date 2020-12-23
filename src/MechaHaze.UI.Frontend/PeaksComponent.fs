@@ -8,6 +8,7 @@ open Fable.Core.JsInterop
 open Fable.React
 open Fable.React.Props
 open System
+open MechaHaze.UI.Interop.JavaScript
 
 
 module PeaksComponent =
@@ -113,7 +114,7 @@ module PeaksComponent =
                             [|
                                 256
                             |]
-                            |> Util.jsArray
+                            |> JavaScript.newJsArray
                         segments =
                             [|
                                 {| startTime = 30; endTime = 60; color = "#333" |}

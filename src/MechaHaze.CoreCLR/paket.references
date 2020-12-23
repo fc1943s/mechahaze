@@ -1,0 +1,5 @@
+FSharp.Core
+
+group MechaHaze.CoreCLR
+    Serilog.Sinks.Console
+    Destructurama.FSharp

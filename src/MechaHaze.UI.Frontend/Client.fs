@@ -2,6 +2,7 @@ namespace MechaHaze.UI.Frontend
 
 open MechaHaze.Shared
 open MechaHaze.UI
+open MechaHaze.UI.Frontend.ElmishBridge
 
 
 module Client =

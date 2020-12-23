@@ -2,15 +2,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
+      <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="RabbitQueue.fs" />
     <Content Include="paket.references" />
-    <Compile Include="UIState.fs" />
-    <Compile Include="InternalUI.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.Shared\MechaHaze.Shared.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -5,10 +5,14 @@ open System.Collections.Concurrent
 open System.IO
 open System.Net.Sockets
 open System.Threading
+open CoreOSC
+open CoreOSC.Types
+open MechaHaze.Core
 open MechaHaze.Shared
 open FSharp.Control
 open MechaHaze.Shared.CoreCLR
 open Serilog
+open CoreOSC.IO
 
 
 module OscDispatcher =

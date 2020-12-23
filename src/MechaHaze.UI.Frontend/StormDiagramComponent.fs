@@ -1,6 +1,7 @@
 namespace MechaHaze.UI.Frontend
 
 open System
+open MechaHaze.Core
 open MechaHaze.UI.Frontend
 open MechaHaze.Shared
 open Fable.Core

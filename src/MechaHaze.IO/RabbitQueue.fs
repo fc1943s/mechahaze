@@ -1,4 +1,4 @@
-namespace Suigetsu.Bus
+namespace MechaHaze.IO
 
 open RabbitMQ.Client
 open System

@@ -2,17 +2,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
+      <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="SharedConfig.fs" />
-    <Compile Include="Waveform.fs" />
-    <Compile Include="TimeSync.fs" />
     <Content Include="paket.references" />
+    <Compile Include="Extensions.fs" />
+    <Compile Include="Regexxer.fs" />
+    <Compile Include="Logging.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.IO\MechaHaze.IO.fsproj" />
-    <ProjectReference Include="..\MechaHaze.Shared\MechaHaze.Shared.fsproj" />
+    <ProjectReference Include="..\MechaHaze.Core\MechaHaze.Core.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

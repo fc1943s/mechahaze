@@ -5,7 +5,7 @@ open MechaHaze.Core
 open MechaHaze.Shared
 open Serilog
 open System
-open Suigetsu.Bus
+open MechaHaze.IO
 
 
 module TimeSync =

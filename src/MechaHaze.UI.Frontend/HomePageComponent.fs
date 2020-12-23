@@ -1,8 +1,10 @@
 namespace MechaHaze.UI.Frontend
 
+open FSharpPlus
 open Browser.Types
 open MechaHaze.UI.Frontend
 open MechaHaze.Shared
+open MechaHaze.Core
 open Fable.Core
 open Fable.FontAwesome
 open Fable.React
@@ -11,6 +13,7 @@ open Fulma
 open Fulma.Extensions.Wikiki
 open MechaHaze.UI
 open System
+open MechaHaze.UI.Frontend.ElmishBridge
 
 
 module HomePageComponent =

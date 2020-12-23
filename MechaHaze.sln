@@ -4,7 +4,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "repo", "repo", "{AC1CE2EB-7
 	ProjectSection(SolutionItems) = preProject
 		paket.dependencies = paket.dependencies
 		README.md = README.md
-		daemon = daemon
+		.config/dotnet-tools.json = .config/dotnet-tools.json
+		fsharplint.json = fsharplint.json
+		Directory.Build.targets = Directory.Build.targets
+		.gitignore = .gitignore
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6F86F337-52E2-448D-99FA-6A52D377B969}"
@@ -43,9 +47,19 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Core", "src\Mecha
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Serilog", "src\MechaHaze.Serilog\MechaHaze.Serilog.fsproj", "{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Bus", "src\MechaHaze.Bus\MechaHaze.Bus.fsproj", "{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.IO", "src\MechaHaze.IO\MechaHaze.IO.fsproj", "{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Testing", "src\MechaHaze.Testing\MechaHaze.Testing.fsproj", "{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Frontend.ElmishBridge", "src\MechaHaze.UI.Frontend.ElmishBridge\MechaHaze.UI.Frontend.ElmishBridge.fsproj", "{DF88C5F4-73DA-46D4-87E3-CC78F1E16C11}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Interop.JavaScript", "src\MechaHaze.UI.Interop.JavaScript\MechaHaze.UI.Interop.JavaScript.fsproj", "{2B414FD9-1F7C-49C1-906C-25C8D7D23186}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Frontend.React", "src\MechaHaze.UI.Frontend.React\MechaHaze.UI.Frontend.React.fsproj", "{FA0C90F5-5B7C-4092-807A-8441098A1B2C}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.UI.Backend.ElmishBridge", "src\MechaHaze.UI.Backend.ElmishBridge\MechaHaze.UI.Backend.ElmishBridge.fsproj", "{5DD21678-7A23-4ACF-B9C8-382AAF940EBB}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.CoreCLR", "src\MechaHaze.CoreCLR\MechaHaze.CoreCLR.fsproj", "{DADF8602-9E92-4D58-8097-B05840F30727}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,6 +187,26 @@ Global
 		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF88C5F4-73DA-46D4-87E3-CC78F1E16C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF88C5F4-73DA-46D4-87E3-CC78F1E16C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF88C5F4-73DA-46D4-87E3-CC78F1E16C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF88C5F4-73DA-46D4-87E3-CC78F1E16C11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B414FD9-1F7C-49C1-906C-25C8D7D23186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B414FD9-1F7C-49C1-906C-25C8D7D23186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B414FD9-1F7C-49C1-906C-25C8D7D23186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B414FD9-1F7C-49C1-906C-25C8D7D23186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA0C90F5-5B7C-4092-807A-8441098A1B2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA0C90F5-5B7C-4092-807A-8441098A1B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA0C90F5-5B7C-4092-807A-8441098A1B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA0C90F5-5B7C-4092-807A-8441098A1B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD21678-7A23-4ACF-B9C8-382AAF940EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD21678-7A23-4ACF-B9C8-382AAF940EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD21678-7A23-4ACF-B9C8-382AAF940EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD21678-7A23-4ACF-B9C8-382AAF940EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DADF8602-9E92-4D58-8097-B05840F30727}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DADF8602-9E92-4D58-8097-B05840F30727}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DADF8602-9E92-4D58-8097-B05840F30727}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DADF8602-9E92-4D58-8097-B05840F30727}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2DDB874F-F795-42ED-BF2F-BD2847F33726} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
@@ -205,5 +239,10 @@ Global
 		{6B1BFDB5-ACFD-4D0E-A7A5-B7E908875098} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{A75A2FE7-DEE5-4B03-A266-DB2F03B3E48C} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{1407C6B2-EDE6-4D91-BE79-EAFA9CF02FE8} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{DF88C5F4-73DA-46D4-87E3-CC78F1E16C11} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{2B414FD9-1F7C-49C1-906C-25C8D7D23186} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{FA0C90F5-5B7C-4092-807A-8441098A1B2C} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{5DD21678-7A23-4ACF-B9C8-382AAF940EBB} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{DADF8602-9E92-4D58-8097-B05840F30727} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 	EndGlobalSection
 EndGlobal

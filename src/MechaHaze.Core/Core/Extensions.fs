@@ -12,3 +12,9 @@ module Extensions =
             |> Result.mapError (fun x -> x.ToString () |> exn)
             |> ResultOrException.Result
 
+    module Set =
+        let toggle item set =
+            if Set.contains item set then
+                Set.add item set
+            else
+                Set.remove item set

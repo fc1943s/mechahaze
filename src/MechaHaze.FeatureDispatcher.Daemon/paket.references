@@ -1,4 +1,5 @@
 FSharp.Core
 
 group MechaHaze.FeatureDispatcher.Daemon
-
+    CoreOSC
+    VL.IO.OSC
