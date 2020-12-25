@@ -9,6 +9,7 @@
     <None Include="Interactive\dependencies.fsx" />
     <None Include="Interactive\watch.fsx" />
     <None Include="Interactive\build.fsx" />
+    <Content Include="Interactive\global.json" />
       <Compile Include="RabbitQueue.fs" />
       <Content Include="paket.references" />
   </ItemGroup>

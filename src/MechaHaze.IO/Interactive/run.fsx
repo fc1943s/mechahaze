@@ -17,7 +17,7 @@ let tests =
         testList (nameof RabbitQueue) [
             test (nameof createBus) {
                 RabbitQueue.createBus ()
-                Expect.equal "" RabbitQueue.a 4
+                Expect.equal "" RabbitQueue.a 6
             }
         ]
     ]

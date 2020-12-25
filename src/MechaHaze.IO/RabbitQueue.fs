@@ -6,7 +6,7 @@ open EasyNetQ
 open Serilog
 
 module RabbitQueue =
-    let a = 3
+    let a = 5
 
     type private NamingConventions =
         {

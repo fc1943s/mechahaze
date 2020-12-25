@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="MechaHaze.IO.Interactive" type="RunNativeExe" factoryName="Native Executable">
+  <configuration default="false" name="MechaHaze.IO - interactive watch" type="RunNativeExe" factoryName="Native Executable">
     <option name="EXE_PATH" value="C:/Program Files/dotnet/dotnet.exe" />
-    <option name="PROGRAM_PARAMETERS" value="fsi watch.fsx" />
+    <option name="PROGRAM_PARAMETERS" value="fake build -t Watch" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/MechaHaze.IO/Interactive" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
