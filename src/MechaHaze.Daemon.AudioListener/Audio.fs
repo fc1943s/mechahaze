@@ -12,3 +12,4 @@ module Audio =
     let averageSampleByteLength =
         int64 NAudio.waveFormat.AverageBytesPerSecond
         * int64 SharedState.sampleLengthSeconds
+        * int64 SharedState.sampleLengthSeconds

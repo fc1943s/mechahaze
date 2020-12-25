@@ -1,6 +1,6 @@
 namespace MechaHaze.Daemon.AudioListener
 
-open MechaHaze.Core
+open MechaHaze.Shared.Core
 open MechaHaze.Shared
 open Serilog
 open System.Collections.Concurrent

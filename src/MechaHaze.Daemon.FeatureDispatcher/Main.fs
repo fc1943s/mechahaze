@@ -1,10 +1,10 @@
 ﻿namespace MechaHaze.Daemon.FeatureDispatcher
 
-open MechaHaze.Core
-open MechaHaze.CoreCLR
+open MechaHaze.Shared.Core
+open MechaHaze.CoreCLR.Core
 open MechaHaze.Daemon.FeatureDispatcher
 open MechaHaze.Shared
-open MechaHaze.Shared.CoreCLR
+open MechaHaze.CoreCLR
 open Serilog
 open MechaHaze.IO
 

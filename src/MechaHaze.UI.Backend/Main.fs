@@ -1,14 +1,13 @@
 ﻿namespace MechaHaze.UI.Backend
 
-open MechaHaze.Core
 open MechaHaze.IO
 open MechaHaze.Shared
-open MechaHaze.Shared.CoreCLR
+open MechaHaze.CoreCLR
 open MechaHaze.UI
 open MechaHaze.UI.Backend
 open MechaHaze.UI.Backend.ElmishBridge
+open MechaHaze.CoreCLR.Core
 open Serilog
-open Suigetsu.CoreCLR
 
 
 module Main =

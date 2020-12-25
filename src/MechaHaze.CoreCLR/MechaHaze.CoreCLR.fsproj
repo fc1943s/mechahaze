@@ -5,17 +5,25 @@
       <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Extensions.fs" />
-    <Compile Include="Regexxer.fs" />
-    <Compile Include="Logging.fs" />
-    <Compile Include="Runtime.fs" />
-    <Compile Include="Startup.fs" />
-    <Compile Include="FileSystem.fs" />
-    <Compile Include="Json.fs" />
-    <Content Include="paket.references" />
+    <Compile Include="Core\Extensions.fs" />
+    <Compile Include="Core\Regexxer.fs" />
+    <Compile Include="Core\Testing.fs" />
+    <Compile Include="Core\Runtime.fs" />
+    <Compile Include="Core\Logging.fs" />
+    <Compile Include="Core\Environment.fs" />
+    <Compile Include="Core\Startup.fs" />
+    <Compile Include="Core\FileSystem.fs" />
+    <Compile Include="Core\Json.fs" />
+    <Compile Include="Core\Timer.fs" />
+    <Compile Include="Core\SafeQueue.fs" />
+      <Compile Include="SharedConfig.fs" />
+      <Compile Include="Waveform.fs" />
+      <Compile Include="TimeSync.fs" />
+      <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.Core\MechaHaze.Core.fsproj" />
+    <ProjectReference Include="..\MechaHaze.IO\MechaHaze.IO.fsproj" />
+    <ProjectReference Include="..\MechaHaze.Shared\MechaHaze.Shared.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -2,12 +2,12 @@ namespace MechaHaze.Daemon.AudioListener
 
 open System
 open NAudio.Wave
-open MechaHaze.Core
+open MechaHaze.Shared.Core
 open Serilog
 open System.Collections.Concurrent
 open System.IO
 open MechaHaze.Shared
-open MechaHaze.Shared.CoreCLR
+open MechaHaze.CoreCLR
 open SoundFingerprinting.Audio.Bass
 open SoundFingerprinting.Builder
 open SoundFingerprinting.Extensions.LMDB

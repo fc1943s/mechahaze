@@ -5,13 +5,15 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Core.fs" />
-    <Compile Include="Bindings.fs" />
-    <Compile Include="SharedState.fs" />
-    <Content Include="paket.references" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.Core\MechaHaze.Core.fsproj" />
+    <Compile Include="Core\Core.fs" />
+    <Compile Include="Core\Extensions.fs" />
+    <Compile Include="Core\Tuple2.fs" />
+    <Compile Include="Core\AlphaNum.fs" />
+    <Compile Include="Core\Io.fs" />
+    <Compile Include="Core\Operators.fs" />
+      <Compile Include="Bindings.fs" />
+      <Compile Include="SharedState.fs" />
+      <Content Include="paket.references" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

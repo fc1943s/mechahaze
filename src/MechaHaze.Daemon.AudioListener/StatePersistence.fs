@@ -1,13 +1,13 @@
 namespace MechaHaze.Daemon.AudioListener
 
+open System
 open MechaHaze.Shared
-open MechaHaze.Core
-open MechaHaze.Shared.CoreCLR
+open MechaHaze.CoreCLR
 open Newtonsoft.Json
 open Serilog
-open System
+open MechaHaze.Shared.Core
 open System.IO
-open Suigetsu.CoreCLR
+open MechaHaze.CoreCLR.Core
 
 
 module StatePersistence =

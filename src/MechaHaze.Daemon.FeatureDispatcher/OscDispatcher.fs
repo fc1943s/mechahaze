@@ -7,10 +7,11 @@ open System.Net.Sockets
 open System.Threading
 open CoreOSC
 open CoreOSC.Types
-open MechaHaze.Core
+open MechaHaze.CoreCLR.Core
 open MechaHaze.Shared
 open FSharp.Control
-open MechaHaze.Shared.CoreCLR
+open MechaHaze.CoreCLR
+open MechaHaze.Shared.Core
 open Serilog
 open CoreOSC.IO
 

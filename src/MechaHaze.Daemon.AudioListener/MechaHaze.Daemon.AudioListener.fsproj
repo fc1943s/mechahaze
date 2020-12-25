@@ -6,6 +6,7 @@
       <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
+      <Folder Include="Interactive" />
     <Compile Include="LocalQueue.fs" />
     <Compile Include="Audio.fs" />
     <Compile Include="AudioRecorder.fs" />
@@ -13,11 +14,12 @@
     <Compile Include="TrackLocker.fs" />
     <Compile Include="StatePersistence.fs" />
     <Compile Include="Main.fs" />
+    <None Include="AudioListener.fsx" />
+    <Content Include="AudioListener.ipynb" />
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MechaHaze.CoreCLR\MechaHaze.CoreCLR.fsproj" />
-    <ProjectReference Include="..\MechaHaze.Shared.CoreCLR\MechaHaze.Shared.CoreCLR.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

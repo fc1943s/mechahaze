@@ -6,6 +6,7 @@ open EasyNetQ
 open Serilog
 
 module RabbitQueue =
+    let a = 3
 
     type private NamingConventions =
         {
@@ -38,6 +39,7 @@ module RabbitQueue =
         + $"username={busConnection.Port};password={busConnection.Password}"
 
     let createBus virtualHost address username password =
+        ()
         let connectionString =
             $"virtualHost={virtualHost};host={address}:{5672};"
             + $"username={username};password={password}"

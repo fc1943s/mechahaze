@@ -1,8 +1,8 @@
 namespace MechaHaze.Daemon.TrackIngest
 
-open MechaHaze.Core
 open MechaHaze.Shared
-open MechaHaze.Shared.CoreCLR
+open MechaHaze.CoreCLR
+open MechaHaze.Shared.Core
 open NAudio.Wave
 open Serilog
 open SoundFingerprinting.Audio.Bass
@@ -12,7 +12,7 @@ open SoundFingerprinting.Extensions.LMDB
 open System
 open System.IO
 open System.Linq
-open MechaHaze.CoreCLR
+open MechaHaze.CoreCLR.Core
 
 
 module RecJob =

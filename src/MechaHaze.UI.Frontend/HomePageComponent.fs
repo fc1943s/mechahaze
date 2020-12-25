@@ -4,7 +4,7 @@ open FSharpPlus
 open Browser.Types
 open MechaHaze.UI.Frontend
 open MechaHaze.Shared
-open MechaHaze.Core
+open MechaHaze.Shared.Core
 open Fable.Core
 open Fable.FontAwesome
 open Fable.React

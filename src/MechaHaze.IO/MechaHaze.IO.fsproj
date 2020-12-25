@@ -5,8 +5,12 @@
       <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="RabbitQueue.fs" />
-    <Content Include="paket.references" />
+    <None Include="Interactive\run.fsx" />
+    <None Include="Interactive\dependencies.fsx" />
+    <None Include="Interactive\watch.fsx" />
+    <None Include="Interactive\build.fsx" />
+      <Compile Include="RabbitQueue.fs" />
+      <Content Include="paket.references" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

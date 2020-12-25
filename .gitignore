@@ -1,6 +1,7 @@
 ### Local settings
 # IDE settings
 .idea/
+.ionide/
 # User configurations
 *.user
 

@@ -1,6 +1,6 @@
 namespace MechaHaze.Shared
 
-open MechaHaze.Core
+open MechaHaze.Shared.Core
 
 
 module Bindings =

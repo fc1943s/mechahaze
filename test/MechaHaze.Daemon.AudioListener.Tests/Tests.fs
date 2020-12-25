@@ -3,7 +3,7 @@ namespace MechaHaze.Daemon.AudioListener
 open System
 open Expecto
 open Expecto.Flip
-open MechaHaze.Core
+open MechaHaze.Shared.Core
 open MechaHaze.Shared
 
 

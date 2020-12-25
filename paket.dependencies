@@ -10,18 +10,14 @@ nuget SoundFingerprinting 7.4.7
 nuget SoundFingerprinting.Extensions.LMDB ~> 7.4
 nuget SoundFingerprinting.Audio.Bass ~> 7.0
 
-// MechaHaze.IO
-nuget EasyNetQ ~> 6.4 prerelease
-
-// MechaHaze.Core
-nuget Serilog ~> 2.10 prerelease
-nuget FSharpPlus ~> 1.2 prerelease
-
 // MechaHaze.CoreCLR
 nuget Newtonsoft.Json ~> 12.0
 nuget Destructurama.FSharp ~> 1.1 prerelease
 nuget Serilog.Sinks.Console ~> 4.0 prerelease
 nuget Argu ~> 6.1
+nuget FSharp.Data ~> 3.3
+nuget Tomlyn ~> 0.1
+nuget MathNet.Numerics.FSharp ~> 4.9
 
 // MechaHaze.Daemon.AudioListener
 nuget Elmish ~> 4.0 prerelease
@@ -30,21 +26,15 @@ nuget Elmish ~> 4.0 prerelease
 nuget VL.IO.OSC ~> 2020.3.100-alpha prerelease
 nuget CoreOSC ~> 1.0
 
-// MechaHaze.Daemon.TrackIngest
-
 // MechaHaze.IO
+nuget EasyNetQ ~> 6.4 prerelease
 
 // MechaHaze.Shared
-
-// MechaHaze.Shared.CoreCLR
-nuget FSharp.Data ~> 3.3
-nuget Tomlyn ~> 0.1
-nuget MathNet.Numerics.FSharp ~> 4.9
+nuget FSharpPlus ~> 1.2 prerelease
+nuget Serilog ~> 2.10 prerelease
 
 // MechaHaze.Testing
 nuget Expecto ~> 9.0
-
-// MechaHaze.UI
 
 // MechaHaze.UI.Backend
 nuget Saturn ~> 0.14

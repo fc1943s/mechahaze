@@ -2,9 +2,9 @@ namespace MechaHaze.UI.Backend.ElmishBridge
 
 open Elmish.Bridge
 open Elmish
+open MechaHaze.CoreCLR.Core
 open Serilog
 open Giraffe.SerilogExtensions
-open MechaHaze.Core
 open MechaHaze.UI
 
 module Server =

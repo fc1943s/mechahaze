@@ -4,7 +4,7 @@ open FSharp.Control
 open System
 open NAudio.Wave
 open NAudio.CoreAudioApi
-open MechaHaze.Core
+open MechaHaze.Shared.Core
 open System.IO
 open System.Threading
 open Serilog

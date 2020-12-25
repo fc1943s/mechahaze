@@ -1,16 +1,16 @@
 ﻿namespace MechaHaze.Daemon.AudioListener
 
 open FSharpPlus
-open MechaHaze.Core
+open MechaHaze.Shared.Core
 open MechaHaze.IO
 open MechaHaze.Shared
 open Serilog
 open FSharp.Control
 open MechaHaze.Daemon.AudioListener
 open Elmish
-open MechaHaze.Shared.CoreCLR
+open MechaHaze.CoreCLR
 open Newtonsoft.Json
-open Suigetsu.CoreCLR
+open MechaHaze.CoreCLR.Core
 
 
 module Main =

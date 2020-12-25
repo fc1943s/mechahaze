@@ -1,6 +1,6 @@
 ﻿namespace MechaHaze.Daemon.TrackIngest
 
-open MechaHaze.CoreCLR
+open MechaHaze.CoreCLR.Core
 open Serilog
 open MechaHaze.Daemon.TrackIngest
 open NAudio.MediaFoundation
