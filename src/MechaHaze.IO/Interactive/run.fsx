@@ -2,6 +2,7 @@
 
 open Expecto
 open Expecto.Flip
+
 open MechaHaze.IO
 
 
@@ -17,7 +18,7 @@ let tests =
         testList (nameof RabbitQueue) [
             test (nameof createBus) {
                 RabbitQueue.createBus ()
-                Expect.equal "" RabbitQueue.a 6
+                Expect.equal "" RabbitQueue.a 7
             }
         ]
     ]

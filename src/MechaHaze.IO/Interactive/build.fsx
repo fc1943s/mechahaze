@@ -4,46 +4,30 @@ nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
 //"
 #load "./.fake/build.fsx/intellisense.fsx"
+#load "../../MechaHaze.Interop.OperatingSystem/Interactive/utils.fsx"
 
 open Fake.Core
 open Fake.DotNet
-open Fake.IO.Globbing.Operators
 
 
+Target.create "Clean" (fun _ -> Trace.trace " --- Cleaning the app --- ")
 
-Target.initEnvironment ()
+Target.create "Build" (fun _ ->
+    Trace.trace " --- Building the app --- "
 
-Target.create "Clean" (fun _ -> Trace.trace " --- Cleaning stuff (empty) --- ")
+    let buildParams (args: DotNet.BuildOptions) =
+        { args.WithCommon Utils.Interactive.getDotNetRelease with
+              NoRestore = true
+              Configuration = DotNet.BuildConfiguration.Debug }
 
-Target.create
-    "Build"
-    (fun _ ->
-        Trace.trace " --- Building the app --- "
+    DotNet.build buildParams "../MechaHaze.IO.fsproj"
+    ())
 
-        let dotnetRelease (option: DotNet.CliInstallOptions) =
-            { option with
-                  InstallerOptions = (fun io -> { io with Branch = "release/5.0" })
-                  Channel = None
-                  Version = DotNet.Version "5.0.100" }
+Target.create "Watch" (fun _ ->
+    Trace.trace " --- Watching app --- "
 
-        let install = lazy (DotNet.install dotnetRelease)
-
-        let inline dotnetSimple arg = DotNet.Options.lift install.Value arg
-
-        let inline dotnetSimple2 (arg: Fake.DotNet.DotNet.BuildOptions) =
-            { arg with
-                  NoRestore = true
-                  Configuration = DotNet.BuildConfiguration.Debug }
-
-        DotNet.build dotnetSimple2 "../MechaHaze.IO.fsproj"
-        |> ignore
-
-        DotNet.exec dotnetSimple "fsi" "watch.fsx"
-        |> ignore
-
-        ())
-
-Target.create "Watch" (fun _ -> Trace.trace " --- Watching app --- ")
+    DotNet.exec Utils.Interactive.getDotNetRelease "fsi" "../../MechaHaze.Interop.OperatingSystem/Interactive/watch.fsx"
+    |> ignore)
 
 open Fake.Core.TargetOperators
 
