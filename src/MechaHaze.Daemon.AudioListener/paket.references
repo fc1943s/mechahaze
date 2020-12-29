@@ -3,4 +3,4 @@ Elmish
 NAudio
 SoundFingerprinting
 SoundFingerprinting.Extensions.LMDB
-SoundFingerprinting.Audio.Bass
+SoundFingerprinting.Audio.NAudio

@@ -26,7 +26,7 @@ module Main =
 
 
             let rabbitExchange =
-                use rabbitBus =
+                let rabbitBus =
                     RabbitQueue.createBus
                         "mechahaze"
                         configToml.RabbitMqAddress

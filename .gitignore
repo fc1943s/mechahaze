@@ -10,13 +10,19 @@ bin/
 obj/
 .paket/
 paket-files/
+coverage/
+coverage.xml
 
 ### DevOps
 .fake/
 
 ### JS
+.eslintcache
 node_modules/
 
 ### Output
 dist/
+build/
 target/
+*.fs.js
+*.fs.ts

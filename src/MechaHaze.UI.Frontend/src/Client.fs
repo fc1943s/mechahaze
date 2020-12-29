@@ -97,4 +97,3 @@ module Client =
             handleClientMessage
             true
 
-    listen ()

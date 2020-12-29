@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command": "dotnet fake build",
+			"options": {
+				"cwd": "src/MechaHaze.IO/Interactive"
+			},
+			"label": "Mechahaze.IO/Interactive - dotnet fake build",
+			"problemMatcher": []
+		}
+	]
+}

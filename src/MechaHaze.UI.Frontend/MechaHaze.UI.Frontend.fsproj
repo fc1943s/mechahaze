@@ -5,23 +5,21 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ExtTypes.fs" />
-    <Compile Include="Element.fs" />
-    <Compile Include="Ext.fs" />
-    <Compile Include="TabManager.fs" />
-    <Compile Include="ModalManager.fs" />
-    <Compile Include="PeaksComponent.fs" />
-    <Compile Include="StormDiagramComponent.fs" />
-    <Compile Include="JitterChartComponent.fs" />
-    <Compile Include="ToggleBindingsDestinationInputComponent.fs" />
-    <Compile Include="AddBindingsPresetInputComponent.fs" />
-    <Compile Include="BindingsSettingsDropdownComponent.fs" />
-    <Compile Include="HomePageComponent.fs" />
-    <Compile Include="MainView.fs" />
-    <Compile Include="Client.fs" />
-    <Content Include="paket.references" />
-    <Content Include="package.json" />
-    <Content Include="webpack.config.ts" />
+      <Compile Include="src\ExtTypes.fs" />
+      <Compile Include="src\Element.fs" />
+      <Compile Include="src\Ext.fs" />
+      <Compile Include="src\TabManager.fs" />
+      <Compile Include="src\ModalManager.fs" />
+      <Compile Include="src\PeaksComponent.fs" />
+      <Compile Include="src\StormDiagramComponent.fs" />
+      <Compile Include="src\JitterChartComponent.fs" />
+      <Compile Include="src\ToggleBindingsDestinationInputComponent.fs" />
+      <Compile Include="src\AddBindingsPresetInputComponent.fs" />
+      <Compile Include="src\BindingsSettingsDropdownComponent.fs" />
+      <Compile Include="src\HomePageComponent.fs" />
+      <Compile Include="src\MainView.fs" />
+      <Compile Include="src\Client.fs" />
+      <Compile Include="src\Main.fs" />
     <Content Include="public\index.js" />
     <Content Include="public\index.scss" />
     <Content Include="public\index.html" />
@@ -33,6 +31,17 @@
     <Content Include="public\apexcharts\timeline-multiseries.jsx" />
     <Content Include="public\apexcharts\temp1.jsx" />
     <Content Include="public\apexcharts\temp2.jsx" />
+    <Content Include=".babelrc.js" />
+    <Content Include="config-overrides.js" />
+    <Content Include=".tsconfig" />
+    <Content Include=".eslintignore" />
+    <Content Include=".eslintrc.js" />
+    <Content Include="src\StormDiagramComponent.fs.js" />
+    <Content Include="tsconfig.json" />
+      <Content Include="package.json" />
+    <Content Include="yarn.lock" />
+      <Content Include="webpack.config.ts" />
+    <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MechaHaze.Interop.JavaScript\MechaHaze.Interop.JavaScript.fsproj" />

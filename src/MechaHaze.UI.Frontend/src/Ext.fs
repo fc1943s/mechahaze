@@ -11,17 +11,17 @@ module Ext =
     JsInterop.importAll "typeface-roboto-condensed"
 
 
-    JsInterop.importAll "./node_modules/@fortawesome/fontawesome-free/css/all.css"
+    JsInterop.importAll "../node_modules/@fortawesome/fontawesome-free/css/all.css"
 
-    JsInterop.importAll "./node_modules/bulma/bulma.sass"
-    JsInterop.importAll "./node_modules/bulma-extensions/dist/css/bulma-extensions.min.css"
-    JsInterop.importAll "./node_modules/bulmaswatch/cyborg/bulmaswatch.scss"
+    JsInterop.importAll "../node_modules/bulma/bulma.sass"
+    JsInterop.importAll "../node_modules/bulma-extensions/dist/css/bulma-extensions.min.css"
+    JsInterop.importAll "../node_modules/bulmaswatch/cyborg/bulmaswatch.scss"
 
-    JsInterop.importAll "./public/index.scss"
-    JsInterop.importAll "./public/index.ts"
-    JsInterop.importAll "./public/index.tsx"
-    JsInterop.importAll "./public/index.js"
-    JsInterop.importAll "./public/index.jsx"
+    JsInterop.importAll "../public/index.scss"
+    JsInterop.importAll "../public/index.ts"
+    JsInterop.importAll "../public/index.tsx"
+    JsInterop.importAll "../public/index.js"
+    JsInterop.importAll "../public/index.jsx"
 
 
     let peaks: ExtTypes.IPeaks = importAll "peaks.js"
@@ -30,7 +30,7 @@ module Ext =
     let stormDiagrams: ExtTypes.IStormDiagrams = importAll "@projectstorm/react-diagrams"
     let createStormDiagram: unit -> ExtTypes.IStormDiagramEngine = importDefault "@projectstorm/react-diagrams"
     let stormCanvas: ExtTypes.IStormCanvas = importAll "@projectstorm/react-canvas-core"
-    let stormDefaultState: unit -> obj = import "DefaultState" "./public/storm-diagrams/DefaultState.ts"
+    let stormDefaultState: unit -> obj = import "DefaultState" "../public/storm-diagrams/DefaultState.ts"
 
 
     let plotly: obj = importDefault "react-plotly.js"

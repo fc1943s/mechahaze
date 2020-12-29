@@ -6,7 +6,6 @@ open EasyNetQ
 open Serilog
 
 module RabbitQueue =
-    let a = 5
 
     type private NamingConventions =
         {
@@ -26,20 +25,7 @@ module RabbitQueue =
                 RetrieveErrorExchangeName = fun messageReceivedInfo -> messageReceivedInfo.Exchange + " - @@Error"
             }
 
-    type private BusConnection =
-        {
-            Address: string
-            Port: uint16
-            Username: string
-            Password: string
-        }
-
-    let private buildConnectionString busConnection =
-        $"virtualHost=mechahaze;host={busConnection.Address}:{busConnection.Port};"
-        + $"username={busConnection.Port};password={busConnection.Password}"
-
     let createBus virtualHost address username password =
-        ()
         let connectionString =
             $"virtualHost={virtualHost};host={address}:{5672};"
             + $"username={username};password={password}"
@@ -65,7 +51,6 @@ module RabbitQueue =
 
 
     type Exchange<'T when 'T: not struct> (bus: IBus) =
-
         let exchange = bus.Advanced.ExchangeDeclare ($"@@Exchange-{typeof<'T>.FullName}", ExchangeType.Topic)
 
         member _.Post routingKey message =

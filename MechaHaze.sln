@@ -75,6 +75,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Model", "src\Mech
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Interop.OperatingSystem", "src\MechaHaze.Interop.OperatingSystem\MechaHaze.Interop.OperatingSystem.fsproj", "{2DA5CBB8-043B-4807-87CB-F586DFBC1D6E}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Deploy", "src\MechaHaze.Deploy\MechaHaze.Deploy.fsproj", "{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -249,6 +251,10 @@ Global
 		{2DA5CBB8-043B-4807-87CB-F586DFBC1D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DA5CBB8-043B-4807-87CB-F586DFBC1D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DA5CBB8-043B-4807-87CB-F586DFBC1D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2DDB874F-F795-42ED-BF2F-BD2847F33726} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
@@ -294,5 +300,6 @@ Global
 		{E2930DB3-0D2B-4D9D-A930-46F8E0E39A20} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{3A9540A9-FF2A-432C-A7AB-7E101C331B94} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{2DA5CBB8-043B-4807-87CB-F586DFBC1D6E} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 	EndGlobalSection
 EndGlobal

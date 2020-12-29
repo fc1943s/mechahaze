@@ -5,10 +5,10 @@ source https://api.nuget.org/v3/index.json
 
 nuget FSharp.Core ~> 5.0
 
-nuget NAudio ~> 2.0.0-beta1
+nuget NAudio 1.10 // ~> 2.0.0-beta1
 nuget SoundFingerprinting 7.4.7
 nuget SoundFingerprinting.Extensions.LMDB ~> 7.4
-nuget SoundFingerprinting.Audio.Bass ~> 7.0
+nuget SoundFingerprinting.Audio.NAudio ~> 7.0
 
 // MechaHaze.CoreCLR
 nuget Newtonsoft.Json ~> 12.0
@@ -56,7 +56,8 @@ nuget Feliz.Recoil.Bridge ~> 0.19
 nuget Elmish.Bridge.Client ~> 3.4
 
 // MechaHaze.UI.Frontend.React
-nuget Feliz ~> 1.31
+nuget Fable.Core 3.1.6 // ~> 4.0 prerelease
+nuget Feliz 1.25 // ~> 1.32
 
 // Build
 nuget Fake.Core.Target ~> 5.20 prerelease

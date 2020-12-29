@@ -8,7 +8,7 @@ open System.Collections.Concurrent
 open System.IO
 open MechaHaze.Shared
 open MechaHaze.CoreCLR
-open SoundFingerprinting.Audio.Bass
+open SoundFingerprinting.Audio.NAudio
 open SoundFingerprinting.Builder
 open SoundFingerprinting.Extensions.LMDB
 open SoundFingerprinting.Query
@@ -18,7 +18,7 @@ module TrackMatcher =
     let private saveTempSampleIoAsync (sample: LocalQueue.Sample) =
         async {
             let outputFilePath =
-                Path.Combine ((SharedConfig.pathsLazyIo ()).tempSamples, string (System.Random().Next()) + ".wav")
+                Path.Combine ((SharedConfig.pathsLazyIo ()).tempSamples, string (Random().Next()) + ".wav")
 
             use writer = new WaveFileWriter(outputFilePath, Audio.NAudio.waveFormat)
 
@@ -31,7 +31,7 @@ module TrackMatcher =
     let private servicesLazyIo =
         fun () ->
             {|
-                Audio = BassAudioService ()
+                Audio = NAudioService ()
                 Model = new LMDBModelService((SharedConfig.pathsLazyIo ()).dbFingerprints)
             |}
         |> Core.memoizeLazy

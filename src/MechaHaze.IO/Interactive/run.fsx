@@ -5,10 +5,13 @@ open Expecto.Flip
 
 open MechaHaze.IO
 
+open RabbitMQ.Client
+open EasyNetQ
+
 
 module RabbitQueue =
     let createBus () =
-        printfn "createBus"
+        printfn "\n\n----\ncreateBus"
         ()
 
 open RabbitQueue
@@ -18,7 +21,7 @@ let tests =
         testList (nameof RabbitQueue) [
             test (nameof createBus) {
                 RabbitQueue.createBus ()
-                Expect.equal "" RabbitQueue.a 7
+                // Expect.equal "" RabbitQueue.a 9
             }
         ]
     ]
