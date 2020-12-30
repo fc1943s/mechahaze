@@ -5,6 +5,9 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+      <Compile Include="src\State.fs" />
+      <Compile Include="src\Components\Bridge.fs" />
+      <Folder Include="src\Hooks" />
       <Compile Include="src\ExtTypes.fs" />
       <Compile Include="src\Element.fs" />
       <Compile Include="src\Ext.fs" />
@@ -17,8 +20,6 @@
       <Compile Include="src\AddBindingsPresetInputComponent.fs" />
       <Compile Include="src\BindingsSettingsDropdownComponent.fs" />
       <Compile Include="src\HomePageComponent.fs" />
-      <Compile Include="src\MainView.fs" />
-      <Compile Include="src\Client.fs" />
       <Compile Include="src\Main.fs" />
     <Content Include="public\index.js" />
     <Content Include="public\index.scss" />

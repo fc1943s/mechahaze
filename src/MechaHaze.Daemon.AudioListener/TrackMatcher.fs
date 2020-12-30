@@ -97,7 +97,7 @@ module TrackMatcher =
 
                     return
                         {
-                            SharedState.Id = id
+                            SharedState.Id = SharedState.TrackId id
                             SharedState.Position = position
                             SharedState.DurationSeconds = queryTrackDurationIo id
                             SharedState.Offset = elapsed
@@ -147,7 +147,7 @@ module TrackMatcher =
 
                     let (|Valid|Invalid|) =
                         function
-                        | _, { SharedState.Id = "" } -> Invalid
+                        | _, { SharedState.Id = id } when id = SharedState.Track.Default.Id -> Invalid
                         | { SharedState.Position = oldPosition }, { Position = newPosition } when oldPosition = newPosition ->
                             Invalid
                         | _ -> Valid

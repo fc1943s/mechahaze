@@ -33,22 +33,24 @@ module OscDispatcher =
             _state <- Some state
 
             if oldState.IsNone
-               || state.Track.Id <> ""
+               || state.Track.Id <> SharedState.Track.Default.Id
                   && oldState.Value.Track.Id <> state.Track.Id then
                 peaksLevelsDict.Clear ()
                 peaksPitchDict.Clear ()
 
-                if state.Track.Id <> "" then
+                if state.Track.Id <> SharedState.Track.Default.Id then
                     Bindings.layers
                     |> List.iter (fun (layer, _) ->
                         async {
                             let peaksLevelsPath, peaksPitchPath =
                                 (Bindings.sources.Levels, Bindings.sources.Pitch)
                                 |> Tuple2.map (fun format ->
+                                    let (SharedState.TrackId trackId) = state.Track.Id
+
                                     Path.Combine
                                         ((SharedConfig.pathsLazyIo ()).dbTracks,
-                                         state.Track.Id,
-                                         $"{state.Track.Id}.{layer}.peaks.{format}.dat"))
+                                         trackId,
+                                         $"{trackId}.{layer}.peaks.{format}.dat"))
 
                             if File.Exists peaksLevelsPath then
                                 let peaksLevels = Waveform.readPeaks peaksLevelsPath

@@ -20,7 +20,10 @@ module SharedState =
         static member inline Default = { Offsets = [||]; StableOffsets = [||] }
 
 
-    type TimeSyncMap = TimeSyncMap of Map<string, TimeSync>
+    type ProcessId = ProcessId of processId: string
+    type PresetId = PresetId of presetId: string
+
+    type TimeSyncMap = TimeSyncMap of Map<ProcessId, TimeSync>
     let ofTimeSyncMap (TimeSyncMap x) = x
 
 
@@ -51,9 +54,10 @@ module SharedState =
                 AvgScoreAcrossBestPath = 0.
             }
 
+    type TrackId = TrackId of string
     type Track =
         {
-            Id: string
+            Id: TrackId
             Position: float
             DurationSeconds: float
             DebugInfo: MatchDebugInfo
@@ -63,7 +67,7 @@ module SharedState =
         }
         static member inline Default =
             {
-                Id = ""
+                Id = TrackId ""
                 Position = 0.
                 DurationSeconds = 0.
                 DebugInfo = MatchDebugInfo.Default
@@ -108,7 +112,7 @@ module SharedState =
         }
 
 
-    type SharedClientMessage =
+    type Action =
         | SetOffset of float
         | SetLocked of bool
         | SetAutoLock of bool
@@ -118,8 +122,9 @@ module SharedState =
         | TogglePreset of string
 
 
-    type SharedServerMessage =
-        | SetTrack of Track
+    type Response =
+        | TrackUpdated of Track
+        | StateUpdated of SharedState
 
         (* Client To Client *)
         | ClientSetDebug of bool

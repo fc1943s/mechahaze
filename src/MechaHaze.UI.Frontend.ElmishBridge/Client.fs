@@ -143,8 +143,9 @@ module Client =
 //                    (Bridge.endpoint $"{Bridge.Endpoints.apiBaseUrl}{Bridge.Endpoints.socketPath}"
                     (Bridge.endpoint Bridge.Endpoints.socketPath
 //                     |> Bridge.withUrlMode Raw
-                     |> Bridge.withMapping InternalServerMessage
-                     |> Bridge.withWhenDown ConnectionLost)
+//                     |> Bridge.withMapping InternalServerMessage
+//                     |> Bridge.withWhenDown ConnectionLost
+                     )
         |> Program.withReactSynchronous "root"
 #if DEBUG
         //  |> Program.withConsoleTrace

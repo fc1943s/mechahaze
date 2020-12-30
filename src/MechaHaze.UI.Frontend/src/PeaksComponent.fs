@@ -25,7 +25,7 @@ module PeaksComponent =
         {
             PeaksHandle: obj
             LastPosition: float
-            LastId: string
+            LastId: SharedState.TrackId
         }
 
     let view =
@@ -36,7 +36,7 @@ module PeaksComponent =
                         {
                             PeaksHandle = null
                             LastPosition = 0.
-                            LastId = ""
+                            LastId = SharedState.Track.Default.Id
                         }
 
                 state |> ignore
@@ -61,7 +61,7 @@ module PeaksComponent =
                 {
                     PeaksHandle = null
                     LastPosition = 0.
-                    LastId = ""
+                    LastId = SharedState.Track.Default.Id
                 }
 
         member this.GetTrackMediaUrl () =
@@ -85,7 +85,7 @@ module PeaksComponent =
             JS.encodeURIComponent $"root/dataset-mp3silence/{newSeconds}.mp3"
 
         member this.GetTrackDataUri () =
-            if this.props.Track.Id = "" then
+            if this.props.Track.Id = SharedState.Track.Default.Id then
                 JS.undefined
             else
                 {|
@@ -102,7 +102,7 @@ module PeaksComponent =
 
         member this.Init () =
             if this.state.PeaksHandle = null
-               && this.props.Track.Id <> "" then
+               && this.props.Track.Id <> SharedState.Track.Default.Id then
                 let peaksOptions =
                     {|
                         containers =
@@ -222,7 +222,7 @@ module PeaksComponent =
                 if this.props.Track.Position > 0. then
                     if this.state.LastPosition
                        <> this.props.Track.Position then
-                        if this.state.LastId = ""
+                        if this.state.LastId = SharedState.Track.Default.Id
                            || this.state.LastId <> this.props.Track.Id then
                             let props =
                                 {|

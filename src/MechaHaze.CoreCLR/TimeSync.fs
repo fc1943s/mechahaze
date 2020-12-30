@@ -67,11 +67,11 @@ module TimeSync =
 
     type Message =
         | Init of T1: int64
-        | Align of clientReqId: string * T1: int64 * T2: int64
+        | Align of processId: SharedState.ProcessId * T1: int64 * T2: int64
         | Finish of T1: int64 * T2: int64 * T3: int64
 
 
-    let pid = Random().Next() |> string
+    let processId = SharedState.ProcessId (Random().Next() |> string)
 
 
     module Server =
@@ -108,7 +108,7 @@ module TimeSync =
             async {
                 match message with
                 | Init T1 ->
-                    Align (pid, T1, DateTime.UtcNow.Ticks)
+                    Align (processId, T1, DateTime.UtcNow.Ticks)
                     |> exchange.Post "client.align"
 
                 | Finish (T1, T2, T3) ->
@@ -126,7 +126,7 @@ module TimeSync =
             let bindingKeys =
                 [
                     "server.*"
-                    $"server.*.{pid}"
+                    $"server.*.{processId}"
                 ]
 
             exchange.RegisterConsumer bindingKeys (handlerAsync onOffset)
@@ -135,7 +135,7 @@ module TimeSync =
     let getOffset (timeSyncMap: SharedState.TimeSyncMap) =
         timeSyncMap
         |> SharedState.ofTimeSyncMap
-        |> Map.tryFind pid
+        |> Map.tryFind processId
         |> function
         | None -> 0.
         | Some timeSync ->
@@ -151,10 +151,10 @@ module TimeSync =
 
         let timeSync =
             timeSyncMap
-            |> Map.tryFind pid
+            |> Map.tryFind processId
             |> Option.defaultValue SharedState.TimeSync.Default
             |> withOffset offset
 
         timeSyncMap
-        |> Map.add pid timeSync
+        |> Map.add processId timeSync
         |> SharedState.TimeSyncMap

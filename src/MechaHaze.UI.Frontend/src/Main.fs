@@ -1,8 +1,9 @@
 namespace MechaHaze.UI.Frontend
 
-open Browser.Dom
-open Fable.Core.JsInterop
+open Feliz
+open Feliz.Recoil
 open MechaHaze.UI.Frontend
+open MechaHaze.UI.Frontend.Components
 
 
 module Main =
@@ -16,4 +17,14 @@ module Main =
 //
 //    React.render (document.getElementById "root") (React.strictMode [ App.App () ])
 
-    Client.listen ()
+    let render =
+        React.functionComponent (fun () ->
+            Html.div [
+                Recoil.root [
+                    HomePageComponent.``default`` ()
+
+                    Bridge.bridge ()
+                ]
+            ])
+
+    ReactDOM.render (render, Browser.Dom.document.getElementById "root")

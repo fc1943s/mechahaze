@@ -6,7 +6,7 @@ source https://api.nuget.org/v3/index.json
 nuget FSharp.Core ~> 5.0
 
 nuget NAudio 1.10 // ~> 2.0.0-beta1
-git https://github.com/fc1943s/Elmish.Bridge.git experiments build: 'cmd /C \"dotnet tool restore && dotnet paket restore\"'
+git https://github.com/fc1943s/Elmish.Bridge.git experiments build: "cmd /C \"dotnet tool restore && dotnet paket restore\""
 git https://github.com/fc1943s/soundfingerprinting.audio.bass.git develop
 git https://github.com/fc1943s/SoundFingerprinting.Extensions.LMDB.git master
 
@@ -41,6 +41,7 @@ nuget Saturn ~> 0.14
 
 // MechaHaze.UI.Backend.ElmishBridge
 nuget Giraffe.SerilogExtensions ~> 1.3
+nuget Thoth.Json.Giraffe ~> 4.2
 
 // MechaHaze.UI.Frontend.ElmishBridge
 nuget Fable.Elmish.HMR ~> 4.1

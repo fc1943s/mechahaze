@@ -9,7 +9,6 @@
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\paket-files\github.com\fc1943s\Elmish.Bridge\src\Client\Elmish.Bridge.Client.fsproj" />
     <ProjectReference Include="..\MechaHaze.Interop.JavaScript\MechaHaze.Interop.JavaScript.fsproj" />
     <ProjectReference Include="..\MechaHaze.Model\MechaHaze.Model.fsproj" />
     <ProjectReference Include="..\MechaHaze.UI\MechaHaze.UI.fsproj" />

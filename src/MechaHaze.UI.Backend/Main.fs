@@ -9,6 +9,13 @@ open MechaHaze.UI.Backend
 open MechaHaze.UI.Backend.ElmishBridge
 open MechaHaze.CoreCLR.Core
 open Serilog
+open Elmish.Bridge
+open Elmish
+open MechaHaze.CoreCLR.Core
+open MechaHaze.Model
+open Serilog
+open Giraffe.SerilogExtensions
+open MechaHaze.UI
 
 
 module Main =
@@ -34,16 +41,16 @@ module Main =
                                     else
                                         stateQueue.Dequeue () |> Server.scopeToState
 
-                                uiServer.BroadcastState
-                                    { oldState with
-                                        SharedState = newState |> Server.scopeToState
-                                    }
+//                                uiServer.BroadcastState
+//                                    { oldState with
+//                                        SharedState = newState |> Server.scopeToState
+//                                    }
 
                                 stateQueue.Enqueue
-                                    ({ oldState with
-                                         SharedState = newState |> Server.scopeToState
-                                     }
-                                     |> Server.Internal)
+                                    (Server.Internal
+                                        { oldState with
+                                            SharedState = newState |> Server.scopeToState
+                                        })
 
                             | Server.Remote state -> rabbitExchange.Post "" (SharedState.ClientStateUpdate state)
                         | _ -> ()
@@ -56,8 +63,6 @@ module Main =
                     configToml.RabbitMqUsername
                     configToml.RabbitMqPassword
 
-            let rabbitExchange = RabbitQueue.Exchange rabbitBus
-
             let rabbitHandlerAsync message __exchange =
                 async {
                     match message with
@@ -69,12 +74,16 @@ module Main =
                     | _ -> ()
                 }
 
-            rabbitExchange.RegisterConsumer
-                [
-                    "#"
-                ]
-                rabbitHandlerAsync
+            _rabbitExchange <-
+                let rabbitExchange = RabbitQueue.Exchange rabbitBus
 
+                rabbitExchange.RegisterConsumer
+                    [
+                        "#"
+                    ]
+                    rabbitHandlerAsync
+
+                Some rabbitExchange
 
             let stateQueue =
                 SafeQueue.SafeQueue<Server.StateScope<UIState.State>> (fun _ newState ->
@@ -84,23 +93,17 @@ module Main =
                         | _ -> ()
                     })
 
-            _rabbitExchange <- Some rabbitExchange
             _stateQueue <- Some stateQueue
 
-            let __initialState = stateQueue.Dequeue ()
+            let __waitForInitialState = stateQueue.Dequeue ()
 
-
-            let onOffset offset =
+            TimeSync.Client.start rabbitBus (fun offset ->
                 let state = stateQueue.Dequeue () |> Server.scopeToState
 
                 let newTimeSyncMap = state.TimeSyncMap |> TimeSync.saveOffset offset
 
-                { state with TimeSyncMap = newTimeSyncMap }
-                |> Server.Internal
-                |> stateQueue.Enqueue
-
-            TimeSync.Client.start rabbitBus onOffset
-
+                let newState = { state with TimeSyncMap = newTimeSyncMap }
+                stateQueue.Enqueue (Server.Internal newState))
 
             do! uiServer.HangAsync stateQueue
         }

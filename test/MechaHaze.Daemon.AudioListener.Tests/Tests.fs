@@ -49,9 +49,17 @@ module Tests =
                             { io with Fetch = io.Fetch }
 
                         test "Stabilizer" {
-                            let empty = { SharedState.Track.Default with Id = "" }
-                            let trackA = { SharedState.Track.Default with Id = "a" }
-                            let trackB = { SharedState.Track.Default with Id = "b" }
+                            let empty = SharedState.Track.Default
+
+                            let trackA =
+                                { SharedState.Track.Default with
+                                    Id = SharedState.TrackId "a"
+                                }
+
+                            let trackB =
+                                { SharedState.Track.Default with
+                                    Id = SharedState.TrackId "b"
+                                }
 
                             let io = createTest ()
 

@@ -2,6 +2,10 @@ namespace MechaHaze.UI.Frontend
 
 open FSharpPlus
 open Browser.Types
+open Feliz.Recoil.Bridge
+open Elmish.Bridge
+open Feliz
+open Feliz.Recoil
 open MechaHaze.UI.Frontend
 open MechaHaze.Shared
 open MechaHaze.Shared.Core
@@ -20,71 +24,84 @@ module HomePageComponent =
 
     type Props =
         {
-            Dispatch: SharedState.SharedServerMessage -> unit
+            Dispatch: SharedState.Response -> unit
             UIState: UIState.State
             PrivateState: Client.PrivateState<UIState.State>
         }
 
-    type State =
-        {
-            SelectedPeaks: Set<string * string>
-        }
-        static member inline Default = { SelectedPeaks = Set.empty }
-
-    type ToggleBindingSource = ToggleBindingSource of string * string
-
-
     let ``default`` =
         FunctionComponent.Of
-            ((fun props ->
-                let state =
-                    Hooks.useReducer
-                        ((fun state dispatch ->
-                            match dispatch with
-                            | ToggleBindingSource (bindingSource, layer) ->
-                                let id = bindingSource, layer
+            ((fun () ->
+                let uiState, setUiState = Recoil.useState Atoms.uiState
+                let debug, setDebug = Recoil.useState Atoms.debug
+                let trackId, setTrackId = Recoil.useState Atoms.trackId
+                let locked, setLocked = Recoil.useState (AtomFamilies.Track.locked trackId)
+                let offset, setOffset = Recoil.useState (AtomFamilies.Track.offset trackId)
+                let position, setPosition = Recoil.useState (AtomFamilies.Track.position trackId)
+                let timestamp, setTimestamp = Recoil.useState (AtomFamilies.Track.timestamp trackId)
+                let debugInfo, setDebugInfo = Recoil.useState (AtomFamilies.Track.debugInfo trackId)
+                let durationSeconds, setDurationSeconds = Recoil.useState (AtomFamilies.Track.durationSeconds trackId)
+                let autoLock, setAutoLock = Recoil.useState Atoms.autoLock
+                let recordingMode, setRecordingMode = Recoil.useState Atoms.recordingMode
+                let activeBindingsPreset, setActiveBindingsPreset = Recoil.useState Atoms.activeBindingsPreset
+                let presetIdList, setPresetIdList = Recoil.useState Atoms.presetIdList
+                let processIdList, setProcessIdList = Recoil.useState Atoms.processIdList
+                let track = Recoil.useValue (SelectorFamilies.track trackId)
 
-                                { state with
-                                    SelectedPeaks = state.SelectedPeaks |> Set.toggle id
-                                }),
-                         State.Default)
+                let selectedPeaks, setSelectedPeaks = React.useState (Set.empty: Set<string * string>)
 
                 let events =
                     {|
                         OnMenuBindingSourcePeakClick =
-                            fun bindingSource layer _ -> state.update (ToggleBindingSource (bindingSource, layer))
-                        OnMenuDebugClick =
-                            fun _ -> props.Dispatch (SharedState.ClientSetDebug (not props.UIState.SharedState.Debug))
+                            fun bindingSource layer _ ->
+                                let id = bindingSource, layer
+                                setSelectedPeaks (selectedPeaks |> Set.toggle id)
+                        OnMenuDebugClick = fun _ -> setDebug (not debug)
                         OnBindingsDestinationToggle =
-                            fun id -> props.Dispatch (SharedState.ClientToggleBinding (Bindings.Binding ("", id)))
-                        OnPresetToggle = fun presetName -> props.Dispatch (SharedState.ClientTogglePreset presetName)
+                            fun id -> Bridge.Send (SharedState.ClientToggleBinding (Bindings.Binding ("", id)))
+                        OnPresetToggle = fun presetName -> Bridge.Send (SharedState.ClientTogglePreset presetName)
                         OnActiveBindingsPresetChange =
-                            fun presetName -> props.Dispatch (SharedState.ClientSetActiveBindingsPreset presetName)
+                            fun presetName ->
+                                setActiveBindingsPreset presetName
+                                Bridge.Send (SharedState.SetActiveBindingsPreset presetName)
                         OnMenuTopRightButtonClick = fun _ -> printfn "CLICK"
                         OnOffsetSliderChange =
-                            fun (e: Event) -> props.Dispatch (SharedState.ClientSetOffset (float e.Value))
+                            fun (e: Event) ->
+                                let newOffset = float e.Value
+                                setOffset newOffset
+                                Bridge.Send (SharedState.SetOffset newOffset)
                         OnBindingLink =
                             fun o ->
                                 if JS.Constructors.Array.isArray o then
                                     match List.ofArray (box o :?> string []) with
                                     | a :: b :: _ ->
-                                        props.Dispatch (SharedState.ClientToggleBinding (Bindings.Binding (a, b)))
+                                        Bridge.Send (SharedState.ClientToggleBinding (Bindings.Binding (a, b)))
                                     | _ -> ()
                         OnAlignmentAutoLockClick =
                             fun _ ->
-                                props.Dispatch (SharedState.ClientSetAutoLock (not props.UIState.SharedState.AutoLock))
+                                let newAutoLock = not autoLock
+                                setAutoLock newAutoLock
+                                Bridge.Send (SharedState.SetAutoLock newAutoLock)
                         OnAlignmentRecordingModeClick =
                             fun _ ->
-                                props.Dispatch
-                                    (SharedState.ClientSetRecordingMode (not props.UIState.SharedState.RecordingMode))
-                        OnAlignmentOffsetCenterClick = fun _ -> props.Dispatch (SharedState.ClientSetOffset 0.)
+                                let newRecordingMode = not recordingMode
+                                setRecordingMode newRecordingMode
+                                Bridge.Send (SharedState.SetRecordingMode newRecordingMode)
+                        OnAlignmentOffsetCenterClick =
+                            fun _ ->
+                                let newOffset = 0.
+                                setOffset newOffset
+                                Bridge.Send (SharedState.SetOffset newOffset)
                         OnAlignmentOffsetFlipClick =
                             fun _ ->
-                                props.Dispatch (SharedState.ClientSetOffset -props.UIState.SharedState.Track.Offset)
+                                let newOffset = -offset
+                                setOffset newOffset
+                                Bridge.Send (SharedState.SetOffset newOffset)
                         OnAlignmentLockClick =
                             fun _ ->
-                                props.Dispatch
-                                    (SharedState.ClientSetLocked (not props.UIState.SharedState.Track.Locked))
+                                let newLocked = not locked
+                                setLocked newLocked
+                                Bridge.Send (SharedState.SetLocked newLocked)
                     |}
 
                 Text.div [
@@ -94,13 +111,10 @@ module HomePageComponent =
                              ]
                          ] [
 
-                    if not props.UIState.SharedState.Debug then
+                    if not debug then
                         PageLoader.pageLoader [
                                                   PageLoader.Color IsDark
-                                                  PageLoader.IsActive
-                                                      (match props.PrivateState.Connection with
-                                                       | Client.Connected _ -> false
-                                                       | _ -> true)
+                                                  PageLoader.IsActive (processIdList.Length > 0)
                                               ] []
 
                     Navbar.navbar [
@@ -131,7 +145,7 @@ module HomePageComponent =
                                         Checkbox.input [
                                             CustomClass "switch is-small is-dark"
                                             Props [
-                                                Checked props.UIState.SharedState.Debug
+                                                Checked debug
                                                 OnChange (fun _ -> ())
                                             ]
                                         ]
@@ -187,7 +201,7 @@ module HomePageComponent =
                                                         Checkbox.input [
                                                             CustomClass "switch is-small is-dark"
                                                             Props [
-                                                                Checked (state.current.SelectedPeaks |> Set.contains id)
+                                                                Checked (selectedPeaks |> Set.contains id)
                                                                 OnChange (fun _ -> ())
                                                             ]
                                                         ]
@@ -227,11 +241,11 @@ module HomePageComponent =
                         ]
                     ]
 
-                    if props.UIState.SharedState.Track.Id <> "" then
+                    if trackId <> SharedState.Track.Default.Id then
                         PeaksComponent.``default``
                             {
-                                Track = props.UIState.SharedState.Track
-                                Debug = props.UIState.SharedState.Debug
+                                Track = track
+                                Debug = debug
                                 Layer = "all"
                                 BindingSource = Bindings.sources.Levels
                             }
@@ -262,9 +276,9 @@ module HomePageComponent =
                             ]
                             Slider.Min -0.5
                             Slider.Max 0.5
-                            Slider.Value (props.UIState.SharedState.Track.Offset)
+                            Slider.Value (track.Offset)
                             Slider.Step (1. / 1000.)
-                            Slider.Disabled (not props.UIState.SharedState.Track.Locked)
+                            Slider.Disabled (not track.Locked)
                             Slider.OnChange events.OnOffsetSliderChange
                         ]
                     ]
@@ -323,9 +337,8 @@ module HomePageComponent =
 
                                             BindingsSettingsDropdownComponent.``default``
                                                 {
-                                                    BindingsPresetMap = props.UIState.SharedState.BindingsPresetMap
-                                                    ActiveBindingsPreset =
-                                                        props.UIState.SharedState.ActiveBindingsPreset
+                                                    BindingsPresetMap = uiState.SharedState.BindingsPresetMap
+                                                    ActiveBindingsPreset = activeBindingsPreset
                                                     TogglePreset = events.OnPresetToggle
                                                     ToggleBindingsDestination = events.OnBindingsDestinationToggle
                                                     SetActiveBindingsPreset = events.OnActiveBindingsPresetChange
@@ -347,9 +360,9 @@ module HomePageComponent =
                                 StormDiagramComponent.``default``
                                     {
                                         BindingsPreset =
-                                            props.UIState.SharedState.BindingsPresetMap
+                                            uiState.SharedState.BindingsPresetMap
                                             |> Bindings.ofPresetMap
-                                            |> Map.tryFind props.UIState.SharedState.ActiveBindingsPreset
+                                            |> Map.tryFind activeBindingsPreset
                                             |> Option.defaultValue (Bindings.Preset [])
 
                                         OnLink = events.OnBindingLink
@@ -373,7 +386,7 @@ module HomePageComponent =
                             ]
 
                             let data =
-                                props.UIState.TimeSyncMap
+                                uiState.TimeSyncMap
                                 |> SharedState.ofTimeSyncMap
                                 |> Map.values
                                 |> Seq.filter (fun { Offsets = offsets } -> offsets |> Array.isEmpty |> not)
@@ -432,7 +445,7 @@ module HomePageComponent =
 
                                 Column.column [] [
                                     str "Offset: "
-                                    ofFloat props.UIState.SharedState.Track.Offset
+                                    ofFloat offset
                                 ]
 
                                 Column.column [
@@ -447,7 +460,7 @@ module HomePageComponent =
                                         Checkbox.input [
                                             CustomClass "switch is-small is-dark"
                                             Props [
-                                                Checked props.UIState.SharedState.AutoLock
+                                                Checked autoLock
                                                 OnChange (fun _ -> ())
                                             ]
                                         ]
@@ -464,7 +477,7 @@ module HomePageComponent =
                                         Checkbox.input [
                                             CustomClass "switch is-small is-dark"
                                             Props [
-                                                Checked props.UIState.SharedState.RecordingMode
+                                                Checked recordingMode
                                                 OnChange (fun _ -> ())
                                             ]
                                         ]
@@ -480,7 +493,7 @@ module HomePageComponent =
                                     Button.button [
                                                       Button.Size IsSmall
                                                       Button.Color IsDark
-                                                      Button.Disabled (not props.UIState.SharedState.Track.Locked)
+                                                      Button.Disabled (not locked)
                                                       Button.OnClick events.OnAlignmentOffsetCenterClick
                                                   ] [
 
@@ -490,7 +503,7 @@ module HomePageComponent =
                                     Button.button [
                                                       Button.Size IsSmall
                                                       Button.Color IsDark
-                                                      Button.Disabled (not props.UIState.SharedState.Track.Locked)
+                                                      Button.Disabled (not locked)
                                                       Button.OnClick events.OnAlignmentOffsetFlipClick
                                                   ] [
 
@@ -508,7 +521,7 @@ module HomePageComponent =
                                         Checkbox.input [
                                             CustomClass "switch is-small is-dark"
                                             Props [
-                                                Checked props.UIState.SharedState.Track.Locked
+                                                Checked locked
                                                 OnChange (fun _ -> ())
                                             ]
                                         ]
@@ -533,20 +546,20 @@ module HomePageComponent =
                             str "Current Track:"
                             br []
 
-                            match props.UIState.SharedState.Track with
-                            | { Id = "" } -> str "- No track"
-
-                            | track ->
+                            if trackId = SharedState.Track.Default.Id then
+                                str "- No track"
+                            else
                                 str "- Id: "
-                                str track.Id
+                                let (SharedState.TrackId trackId) = trackId
+                                str trackId
                                 br []
                                 str "- Position: "
-                                ofFloat track.Position
+                                ofFloat position
 
                             br []
                             br []
 
-                            if props.UIState.SharedState.Debug then
+                            if debug then
 
                                 Tabs.tabs [
                                               Tabs.Size IsSmall
@@ -561,26 +574,15 @@ module HomePageComponent =
                                 ]
 
                                 str "User Id: "
-                                str props.PrivateState.User.Id
+                                //                                str props.PrivateState.User.Id
+                                str "???"
                                 br []
                                 str "Connection: "
-                                str $"%A{props.PrivateState.Connection}"
+                                //                                str $"%A{props.PrivateState.Connection}"
+                                str "???"
                                 br []
 
                                 br []
-
-                                str "Users: "
-
-                                match props.PrivateState.Users with
-                                | [] -> str "None"
-                                | _ ->
-                                    props.PrivateState.Users
-                                    |> List.map (fun user -> user.Id)
-                                    |> List.sort
-                                    |> List.map (fun x -> div [] [ str x ])
-                                    |> div []
-
-                                    br []
                         ]
                     ]
                 ]),

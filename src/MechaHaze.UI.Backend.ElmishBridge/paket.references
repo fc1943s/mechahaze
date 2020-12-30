@@ -1,2 +1,4 @@
 FSharp.Core
+
 Giraffe.SerilogExtensions
+Thoth.Json.Giraffe
