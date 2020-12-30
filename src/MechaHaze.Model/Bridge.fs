@@ -5,7 +5,7 @@ namespace MechaHaze.Model
 module Bridge =
 
     module Endpoints =
-        let protocol = "http"
+        let protocol = "https"
         let host = "mechahaze"
         let apiPort = 8085
         let socketPath = "/sync"

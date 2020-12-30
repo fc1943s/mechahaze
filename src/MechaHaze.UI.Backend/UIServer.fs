@@ -1,11 +1,14 @@
 namespace MechaHaze.UI.Backend
 
+open System.Net
+open System.Net.Security
 open Giraffe.SerilogExtensions
 open MechaHaze.CoreCLR.Core
 open MechaHaze.Model
 open MechaHaze.UI.Backend.ElmishBridge
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
+open Serilog
 open Thoth.Json.Giraffe
 open MechaHaze.Shared
 open Saturn
@@ -260,6 +263,11 @@ module UIServer =
 
                 let appRouter = router { get Bridge.Endpoints.socketPath bridge }
 
+                ServicePointManager.ServerCertificateValidationCallback <-
+                    RemoteCertificateValidationCallback (fun sender cert chain sslPolicyErrors ->
+                        Log.Debug ("Validating cert: {0}; {1}", cert.GetCertHashString (), cert.GetRawCertDataString ())
+                        true)
+
                 let app =
                     application {
                         app_config Giraffe.useWebSockets
@@ -267,15 +275,13 @@ module UIServer =
                         service_config (fun (services: IServiceCollection) ->
                             services.AddSingleton<Giraffe.Serialization.Json.IJsonSerializer> (ThothSerializer ()))
 
-                        url $"http://0.0.0.0:{Bridge.Endpoints.apiPort}"
-                        //                        use_router router'
+                        url $"{Bridge.Endpoints.protocol}://0.0.0.0:{Bridge.Endpoints.apiPort}/"
                         use_router appRouter
-                        //                        use_gzip
-//                        disable_diagnostics
+                        use_gzip
+                        disable_diagnostics
                         use_developer_exceptions
-                    //                        force_ssl
+                        force_ssl
                     }
 
                 run app
-            //                        force_ssl
             }
