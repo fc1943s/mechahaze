@@ -21,6 +21,8 @@
       <Compile Include="src\BindingsSettingsDropdownComponent.fs" />
       <Compile Include="src\HomePageComponent.fs" />
       <Compile Include="src\Main.fs" />
+      <Content Include="src\react-app-env.d.ts" />
+      <Content Include="src\setupProxy.js" />
     <Content Include="public\index.js" />
     <Content Include="public\index.scss" />
     <Content Include="public\index.html" />
@@ -32,8 +34,6 @@
     <Content Include="public\apexcharts\timeline-multiseries.jsx" />
     <Content Include="public\apexcharts\temp1.jsx" />
     <Content Include="public\apexcharts\temp2.jsx" />
-    <Content Include="src\react-app-env.d.ts" />
-    <Content Include="src\setupProxy.js" />
       <Folder Include="ssl" />
     <Content Include=".babelrc.js" />
     <Content Include="config-overrides.js" />

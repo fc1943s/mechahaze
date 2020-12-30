@@ -85,6 +85,6 @@ module Bridge =
                 Model = Atoms.uiState
                 Update = Client.update
                 BridgeConfig =
-                    Bridge.endpoint $"{Bridge.Endpoints.apiBaseUrl}{Bridge.Endpoints.socketPath}"
-                    |> Bridge.withUrlMode UrlMode.Raw
+                    Bridge.endpoint Bridge.Endpoints.socketPath
+//                    |> Bridge.withUrlMode UrlMode.Raw
             }

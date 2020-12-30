@@ -4,7 +4,6 @@ open MechaHaze.IO
 open MechaHaze.Model
 open MechaHaze.Shared
 open MechaHaze.CoreCLR
-open MechaHaze.UI
 open MechaHaze.UI.Backend
 open MechaHaze.UI.Backend.ElmishBridge
 open MechaHaze.CoreCLR.Core

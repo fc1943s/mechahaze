@@ -18,12 +18,9 @@ module ServerBridge =
 
     let init (clientDispatch: Dispatch<SharedState.Response>) (state: UIState.State) =
         clientDispatch (SharedState.Response.StateUpdated state.SharedState)
-        state, (Cmd.none: Cmd<SharedState.Action>)
+        state, Cmd.none
 
-    let update (clientDispatch: Dispatch<SharedState.Response>)
-               (msg: SharedState.Action)
-               (state: UIState.State)
-               : UIState.State * Cmd<SharedState.Action> =
+    let update (clientDispatch: Dispatch<SharedState.Response>) (msg: SharedState.Action) (state: UIState.State) =
 
         let withClientDispatch cmd (rsp: SharedState.Response) =
             clientDispatch rsp
@@ -256,15 +253,12 @@ module UIServer =
                 //                let router' = Server.createRouter stateQueue connections handleClientMessage
 
                 let bridge =
-                    let bridgeInit: BridgeServer<UIState.State, UIState.State, SharedState.Action, SharedState.Response, (Giraffe.Core.HttpFunc -> HttpContext -> Giraffe.Core.HttpFuncResult)> =
-                        Bridge.mkServer "/sync" ServerBridge.init ServerBridge.update
-
-                    bridgeInit
+                    Bridge.mkServer Bridge.Endpoints.socketPath ServerBridge.init ServerBridge.update
                     |> Bridge.withConsoleTrace
                     |> Bridge.runWith Giraffe.server UIState.State.Default
                     |> SerilogAdapter.Enable
 
-                let appRouter = router { get "/sync" bridge }
+                let appRouter = router { get Bridge.Endpoints.socketPath bridge }
 
                 let app =
                     application {
