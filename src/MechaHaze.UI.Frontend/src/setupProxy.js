@@ -1,14 +1,14 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-const target = process.env.API_URL || "https://mechahaze:8085";
+const target = process.env.API_URL || `http://${process.env.HOST}:8085/sync`;
 
 module.exports = function (app) {
   app.use(
-    '/sync',
-    createProxyMiddleware({
+    createProxyMiddleware(
       target,
-      changeOrigin: true,
-      ws: true,
-    })
+      {
+        changeOrigin: true,
+        ws: true,
+      })
   );
 };

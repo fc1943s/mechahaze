@@ -140,9 +140,9 @@ module Client =
             else
                 program
                 |> Program.withBridgeConfig
-                    (Bridge.endpoint $"wss://{Bridge.Endpoints.host}:{Bridge.Endpoints.apiPort}{Bridge.Endpoints.socketPath}"
-//                    (Bridge.endpoint Bridge.Endpoints.socketPath
-                     |> Bridge.withUrlMode Raw
+//                    (Bridge.endpoint $"{Bridge.Endpoints.apiBaseUrl}{Bridge.Endpoints.socketPath}"
+                    (Bridge.endpoint Bridge.Endpoints.socketPath
+//                     |> Bridge.withUrlMode Raw
                      |> Bridge.withMapping InternalServerMessage
                      |> Bridge.withWhenDown ConnectionLost)
         |> Program.withReactSynchronous "root"

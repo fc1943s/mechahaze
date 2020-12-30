@@ -156,12 +156,12 @@ module UIServer =
 
                 let app =
                     application {
-                        url Bridge.Endpoints.apiBaseUrl
+                        url $"http://0.0.0.0:{Bridge.Endpoints.apiPort}"
                         app_config Giraffe.useWebSockets
                         use_router router'
                         use_gzip
                         disable_diagnostics
-                        force_ssl
+//                        force_ssl
                     }
 
                 run app

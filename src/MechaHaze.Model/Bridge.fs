@@ -19,6 +19,6 @@ module Bridge =
     module Endpoints =
         let apiPort = 8085
         let host = "mechahaze"
-        let protocol = "https"
+        let private protocol = "http"
         let apiBaseUrl = $"{protocol}://{host}:{apiPort}"
         let socketPath = "/sync"
