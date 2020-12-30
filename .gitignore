@@ -15,6 +15,7 @@ coverage.xml
 
 ### DevOps
 .fake/
+ssl/
 
 ### JS
 .eslintcache

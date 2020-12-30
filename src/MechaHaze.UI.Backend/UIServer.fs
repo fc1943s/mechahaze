@@ -1,5 +1,6 @@
 namespace MechaHaze.UI.Backend
 
+open MechaHaze.Model
 open MechaHaze.UI.Backend.ElmishBridge
 open Serilog
 open MechaHaze.Shared
@@ -13,7 +14,7 @@ module UIServer =
     let port =
         match Environment.GetEnvironmentVariable "PORT" with
         | null
-        | "" -> "8085"
+        | "" -> string Bridge.Endpoints.apiPort
         | x -> x
 
     type UIServer () =
@@ -155,11 +156,12 @@ module UIServer =
 
                 let app =
                     application {
-                        use_static "/"
-                        use_router router'
-                        disable_diagnostics
+                        url Bridge.Endpoints.apiBaseUrl
                         app_config Giraffe.useWebSockets
-                        url ($"http://0.0.0.0:{port}/")
+                        use_router router'
+                        use_gzip
+                        disable_diagnostics
+                        force_ssl
                     }
 
                 run app

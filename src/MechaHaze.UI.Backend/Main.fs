@@ -1,6 +1,7 @@
 ﻿namespace MechaHaze.UI.Backend
 
 open MechaHaze.IO
+open MechaHaze.Model
 open MechaHaze.Shared
 open MechaHaze.CoreCLR
 open MechaHaze.UI
@@ -50,7 +51,7 @@ module Main =
 
             use rabbitBus =
                 RabbitQueue.createBus
-                    "mechahaze"
+                    Bridge.Endpoints.host
                     configToml.RabbitMqAddress
                     configToml.RabbitMqUsername
                     configToml.RabbitMqPassword

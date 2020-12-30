@@ -14,8 +14,10 @@
     "build:fable": "dotnet tool restore && dotnet paket install && dotnet fable",
     "build:react": "cross-env CI= EXTEND_ESLINT=true SKIP_PREFLIGHT_CHECK=true react-app-rewired build",
     "watch:frontend-build": "dotnet fable watch",
-    "watch:frontend": "cross-env HTTPS=true EXTEND_ESLINT=true BROWSER=none FAST_REFRESH=true PORT=8082 SKIP_PREFLIGHT_CHECK=true react-app-rewired start",
-    "watch": "concurrently \"yarn:watch:*\"",
+    "watch:frontend": "cross-env HTTPS=true EXTEND_ESLINT=true BROWSER=none FAST_REFRESH=true HOST='mechahaze' PORT=8082 SKIP_PREFLIGHT_CHECK=true react-app-rewired start",
+    "watch": "yarn start",
+    "start": "concurrently \"yarn:watch:*\"",
+    "prestart": "rm ./node_modules/webpack-dev-server/ssl/server.pem && cp -f ./ssl/server.pem ./node_modules/webpack-dev-server/ssl",
     "build": "yarn build:fable && yarn build:react",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --rootDir . --runInBand --env=jest-environment-jsdom-sixteen --testNamePattern=",
     "test-watch": "yarn test --watchAll",
@@ -109,7 +111,7 @@
 
     "concurrently": "^5.3",
 
-
+    "http-proxy-middleware": "^1.0",
 
     "html-webpack-plugin": "^4.5",
     "copy-webpack-plugin": "^7.0",
@@ -142,6 +144,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "https://localhost:8085"
+  }
 }

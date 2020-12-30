@@ -17,4 +17,3 @@ module InternalUI =
 
         | SharedClientMessage of 'SharedClientMessage
 
-    let socketPath = "/socket"

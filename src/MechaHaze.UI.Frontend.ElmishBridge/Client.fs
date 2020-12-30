@@ -1,10 +1,11 @@
 namespace MechaHaze.UI.Frontend.ElmishBridge
 
-open Elmish
 open Elmish.Bridge
+open Elmish
 open Elmish.React
 open Fable.Core
 open Fable.React
+open MechaHaze.Model
 open MechaHaze.UI
 
 #if DEBUG
@@ -139,11 +140,12 @@ module Client =
             else
                 program
                 |> Program.withBridgeConfig
-                    (Bridge.endpoint $"https://localhost:8085{InternalUI.socketPath}"
+                    (Bridge.endpoint $"wss://{Bridge.Endpoints.host}:{Bridge.Endpoints.apiPort}{Bridge.Endpoints.socketPath}"
+//                    (Bridge.endpoint Bridge.Endpoints.socketPath
                      |> Bridge.withUrlMode Raw
                      |> Bridge.withMapping InternalServerMessage
                      |> Bridge.withWhenDown ConnectionLost)
-        |> Program.withReactSynchronous "app"
+        |> Program.withReactSynchronous "root"
 #if DEBUG
         //  |> Program.withConsoleTrace
         //  |> Program.withDebugger

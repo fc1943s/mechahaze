@@ -1,5 +1,6 @@
 ﻿namespace MechaHaze.Daemon.FeatureDispatcher
 
+open MechaHaze.Model
 open MechaHaze.Shared.Core
 open MechaHaze.CoreCLR.Core
 open MechaHaze.Daemon.FeatureDispatcher
@@ -16,7 +17,7 @@ module Main =
 
             use rabbitBus =
                 RabbitQueue.createBus
-                    "mechahaze"
+                    Bridge.Endpoints.host
                     configToml.RabbitMqAddress
                     configToml.RabbitMqUsername
                     configToml.RabbitMqPassword

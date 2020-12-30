@@ -3,6 +3,7 @@ namespace MechaHaze.UI.Backend.ElmishBridge
 open Elmish.Bridge
 open Elmish
 open MechaHaze.CoreCLR.Core
+open MechaHaze.Model
 open Serilog
 open Giraffe.SerilogExtensions
 open MechaHaze.UI
@@ -128,7 +129,7 @@ module Server =
             Disconnected, Cmd.none
 
 
-        Bridge.mkServer InternalUI.socketPath init update
+        Bridge.mkServer Bridge.Endpoints.socketPath init update
         //  |> Bridge.withConsoleTrace
         |> Bridge.whenDown Closed
         |> Bridge.withServerHub connections.Connections

@@ -16,6 +16,8 @@ open MechaHaze.CoreCLR.Core
 
 
 module RecJob =
+    let condaEnvironment = "mechahaze"
+
     let private persistFingerprintAsync (path: string) id =
         async {
             Log.Debug ("Persisting fingerprint")
@@ -273,7 +275,7 @@ module RecJob =
 
                                                                         let! errorCode, _ =
                                                                             Runtime.executeCondaAsync
-                                                                                "mechahaze"
+                                                                                condaEnvironment
                                                                                 [
                                                                                     cmd
                                                                                 ]
@@ -306,7 +308,7 @@ module RecJob =
 
                                                         let! errorCode, _ =
                                                             Runtime.executeCondaAsync
-                                                                "mechahaze"
+                                                                condaEnvironment
                                                                 [
                                                                     cmd
                                                                 ]

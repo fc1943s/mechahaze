@@ -31,12 +31,14 @@
     <Content Include="public\apexcharts\timeline-multiseries.jsx" />
     <Content Include="public\apexcharts\temp1.jsx" />
     <Content Include="public\apexcharts\temp2.jsx" />
+    <Content Include="src\react-app-env.d.ts" />
+    <Content Include="src\setupProxy.js" />
+      <Folder Include="ssl" />
     <Content Include=".babelrc.js" />
     <Content Include="config-overrides.js" />
     <Content Include=".tsconfig" />
     <Content Include=".eslintignore" />
     <Content Include=".eslintrc.js" />
-    <Content Include="src\StormDiagramComponent.fs.js" />
     <Content Include="tsconfig.json" />
       <Content Include="package.json" />
     <Content Include="yarn.lock" />

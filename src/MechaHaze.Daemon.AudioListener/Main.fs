@@ -1,6 +1,7 @@
 ﻿namespace MechaHaze.Daemon.AudioListener
 
 open FSharpPlus
+open MechaHaze.Model
 open MechaHaze.Shared.Core
 open MechaHaze.IO
 open MechaHaze.Shared
@@ -28,7 +29,7 @@ module Main =
             let rabbitExchange =
                 let rabbitBus =
                     RabbitQueue.createBus
-                        "mechahaze"
+                        Bridge.Endpoints.host
                         configToml.RabbitMqAddress
                         configToml.RabbitMqUsername
                         configToml.RabbitMqPassword

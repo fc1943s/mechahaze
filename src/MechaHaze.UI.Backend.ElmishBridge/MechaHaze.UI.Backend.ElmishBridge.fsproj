@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\paket-files\github.com\fc1943s\Elmish.Bridge\src\Giraffe\Elmish.Bridge.Giraffe.fsproj" />
     <ProjectReference Include="..\MechaHaze.CoreCLR\MechaHaze.CoreCLR.fsproj" />
+    <ProjectReference Include="..\MechaHaze.Model\MechaHaze.Model.fsproj" />
     <ProjectReference Include="..\MechaHaze.UI\MechaHaze.UI.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

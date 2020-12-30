@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\paket-files\github.com\fc1943s\soundfingerprinting.audio.bass\src\SoundFingerprinting.Audio.Bass\SoundFingerprinting.Audio.Bass.csproj" />
     <ProjectReference Include="..\..\paket-files\github.com\fc1943s\SoundFingerprinting.Extensions.LMDB\src\SoundFingerprinting.Extensions.LMDB\SoundFingerprinting.Extensions.LMDB.csproj" />
     <ProjectReference Include="..\MechaHaze.CoreCLR\MechaHaze.CoreCLR.fsproj" />
+    <ProjectReference Include="..\MechaHaze.Model\MechaHaze.Model.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
