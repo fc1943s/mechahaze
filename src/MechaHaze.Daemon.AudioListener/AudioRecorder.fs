@@ -32,6 +32,7 @@ module SilentSinePlayer =
         fun () -> hangIoAsync |> Async.Start
         |> Core.memoizeLazy
 
+
 module AudioRecorder =
     let private unsafeRecordIoAsync =
         fun (succ, _, _) ->

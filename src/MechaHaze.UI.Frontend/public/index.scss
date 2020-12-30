@@ -12,7 +12,7 @@ a {
 
 .tags.has-addons .tag {
   border: 1px solid #444;
-  
+
   &:first-child {
     background-color: #222;
     border-right: 0;
@@ -37,7 +37,7 @@ a {
     background-color: #555;
     color: #aaa;
   }
-  
+
   .icon {
     color: #aaa;
   }
@@ -49,7 +49,7 @@ a {
     margin: 20px 0;
     background-color: #555;
   }
-  
+
   .field-label {
     text-align: left;
     color: #aaa;
@@ -61,7 +61,7 @@ a {
     & a {
       color: #666;
     }
-    
+
     &.is-active a {
       color: #aaa;
       border-bottom-color: #888;
@@ -72,16 +72,16 @@ a {
 
 .navbar-nested-dropdown {
   position: relative;
-  
+
   > .navbar-item {
     display: block;
   }
-  
+
   > .dropdown-menu {
     top: -13px;
     margin-left: 100%;
   }
-  
+
   &:hover > .dropdown-menu {
     display: block;
   }

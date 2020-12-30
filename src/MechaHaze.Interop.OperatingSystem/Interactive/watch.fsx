@@ -11,6 +11,7 @@ let runScript =
     Path.Combine(Environment.CurrentDirectory, "run.fsx")
 
 let dependenciesScriptFileName = "dependencies.fsx"
+
 let dependenciesScript =
     Path.Combine(Environment.CurrentDirectory, dependenciesScriptFileName)
 

@@ -41,7 +41,7 @@
     "react-icons": "^4.1",
     "date-fns": "^2.16",
     "crypto-js": "^4.0",
-    "gun": "amark/gun.git#master",
+    "gun": "amark/gun.git#manhattan",
 
 
 

@@ -20,18 +20,23 @@ module Regexxer =
         while _match.Success do
             let curr = List<string> ()
             res.Add curr
-
             for i = 1 to _match.Groups.Count - 1 do
                 let group = _match.Groups.[i]
+
                 if group.Value = "" then
                     curr.Add ""
                 else
                     for v in group.Captures do
                         let mutable _block = v.Value
+
                         match replace with
                         | Some replace ->
                             _block <- replace _block
-                            _replacedText <- text.Substring (_replaceOffset, v.Index - _replaceOffset) + _block
+
+                            _replacedText <-
+                                text.Substring (_replaceOffset, v.Index - _replaceOffset)
+                                + _block
+
                             _replaceOffset <- v.Index + v.Length
                         | None -> ()
 
@@ -45,10 +50,11 @@ module Regexxer =
 
 
     let matchAll (text, pattern) =
-        matchAllEx(text, pattern, None, None).Result.FirstOrDefault (fun _ -> List<string> () :> IList<_>)
+        matchAllEx(text, pattern, None, None)
+            .Result.FirstOrDefault(fun _ -> List<string>() :> IList<_>)
 
     let matchFirst (text, pattern) =
-        matchAll(text, pattern).FirstOrDefault (fun _ -> "")
+        matchAll(text, pattern)
+            .FirstOrDefault(fun _ -> "")
 
-    let hasMatch (text, pattern) =
-        matchAll(text, pattern).Count > 0
+    let hasMatch (text, pattern) = matchAll(text, pattern).Count > 0

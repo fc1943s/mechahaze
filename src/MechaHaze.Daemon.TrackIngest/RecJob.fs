@@ -5,7 +5,7 @@ open MechaHaze.CoreCLR
 open MechaHaze.Shared.Core
 open NAudio.Wave
 open Serilog
-open SoundFingerprinting.Audio.NAudio
+open SoundFingerprinting.Audio.Bass
 open SoundFingerprinting.Builder
 open SoundFingerprinting.Data
 open SoundFingerprinting.Extensions.LMDB
@@ -20,7 +20,7 @@ module RecJob =
         async {
             Log.Debug ("Persisting fingerprint")
 
-            let audioService = NAudioService ()
+            let audioService = BassAudioService ()
             use modelService = new LMDBModelService((SharedConfig.pathsLazyIo ()).dbFingerprints)
 
             let trackData = modelService.ReadTrackById id

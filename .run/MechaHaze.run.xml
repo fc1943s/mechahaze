@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MechaHaze" type="CompoundRunConfigurationType">
+    <toRun name="MechaHaze.UI.Backend" type="DotNetProject" />
+    <toRun name="MechaHaze.AudioListener.Daemon" type="DotNetProject" />
+    <toRun name="MechaHaze.UI.Frontend - yarn watch" type="js.build_tools.npm" />
+    <toRun name="MechaHaze.FeatureDispatcher.Daemon" type="DotNetProject" />
+    <method v="2" />
+  </configuration>
+</component>

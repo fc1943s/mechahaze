@@ -77,6 +77,16 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Interop.Operating
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MechaHaze.Deploy", "src\MechaHaze.Deploy\MechaHaze.Deploy.fsproj", "{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundFingerprinting.Audio.Bass", "paket-files\github.com\fc1943s\soundfingerprinting.audio.bass\src\SoundFingerprinting.Audio.Bass\SoundFingerprinting.Audio.Bass.csproj", "{BE2CC1AC-2C8F-4D57-87A7-2B45200CA3F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundFingerprinting.Extensions.LMDB", "paket-files\github.com\fc1943s\SoundFingerprinting.Extensions.LMDB\src\SoundFingerprinting.Extensions.LMDB\SoundFingerprinting.Extensions.LMDB.csproj", "{81B81F98-C60A-4F35-B72B-03FBD8090502}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Elmish.Bridge.Client", "paket-files\github.com\fc1943s\Elmish.Bridge\src\Client\Elmish.Bridge.Client.fsproj", "{EE63ED13-A02C-423C-BCBA-DD4760C32B6E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Elmish.Bridge.Giraffe", "paket-files\github.com\fc1943s\Elmish.Bridge\src\Giraffe\Elmish.Bridge.Giraffe.fsproj", "{987EF9DF-512F-4045-B3B8-D797B0436029}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Elmish.Bridge.Server", "paket-files\github.com\fc1943s\Elmish.Bridge\src\Server\Elmish.Bridge.Server.fsproj", "{23AB037D-066F-4DAB-9E38-A862060B2A37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -255,6 +265,26 @@ Global
 		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE2CC1AC-2C8F-4D57-87A7-2B45200CA3F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE2CC1AC-2C8F-4D57-87A7-2B45200CA3F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE2CC1AC-2C8F-4D57-87A7-2B45200CA3F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE2CC1AC-2C8F-4D57-87A7-2B45200CA3F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81B81F98-C60A-4F35-B72B-03FBD8090502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81B81F98-C60A-4F35-B72B-03FBD8090502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81B81F98-C60A-4F35-B72B-03FBD8090502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81B81F98-C60A-4F35-B72B-03FBD8090502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE63ED13-A02C-423C-BCBA-DD4760C32B6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE63ED13-A02C-423C-BCBA-DD4760C32B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE63ED13-A02C-423C-BCBA-DD4760C32B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE63ED13-A02C-423C-BCBA-DD4760C32B6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{987EF9DF-512F-4045-B3B8-D797B0436029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{987EF9DF-512F-4045-B3B8-D797B0436029}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{987EF9DF-512F-4045-B3B8-D797B0436029}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{987EF9DF-512F-4045-B3B8-D797B0436029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23AB037D-066F-4DAB-9E38-A862060B2A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23AB037D-066F-4DAB-9E38-A862060B2A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23AB037D-066F-4DAB-9E38-A862060B2A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23AB037D-066F-4DAB-9E38-A862060B2A37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2DDB874F-F795-42ED-BF2F-BD2847F33726} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
@@ -301,5 +331,10 @@ Global
 		{3A9540A9-FF2A-432C-A7AB-7E101C331B94} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{2DA5CBB8-043B-4807-87CB-F586DFBC1D6E} = {6F86F337-52E2-448D-99FA-6A52D377B969}
 		{B5A41E7C-5FF6-43E5-8FD7-7F7ADA4DB808} = {6F86F337-52E2-448D-99FA-6A52D377B969}
+		{BE2CC1AC-2C8F-4D57-87A7-2B45200CA3F5} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
+		{81B81F98-C60A-4F35-B72B-03FBD8090502} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
+		{EE63ED13-A02C-423C-BCBA-DD4760C32B6E} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
+		{987EF9DF-512F-4045-B3B8-D797B0436029} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
+		{23AB037D-066F-4DAB-9E38-A862060B2A37} = {658CE79C-0BA7-4E15-A40D-0D65038F4298}
 	EndGlobalSection
 EndGlobal

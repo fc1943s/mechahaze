@@ -8,7 +8,7 @@ open System.Collections.Concurrent
 open System.IO
 open MechaHaze.Shared
 open MechaHaze.CoreCLR
-open SoundFingerprinting.Audio.NAudio
+open SoundFingerprinting.Audio.Bass
 open SoundFingerprinting.Builder
 open SoundFingerprinting.Extensions.LMDB
 open SoundFingerprinting.Query
@@ -31,7 +31,7 @@ module TrackMatcher =
     let private servicesLazyIo =
         fun () ->
             {|
-                Audio = NAudioService ()
+                Audio = BassAudioService ()
                 Model = new LMDBModelService((SharedConfig.pathsLazyIo ()).dbFingerprints)
             |}
         |> Core.memoizeLazy
@@ -49,7 +49,7 @@ module TrackMatcher =
                     |> Async.AwaitTask
             with ex ->
                 Log.Error (ex, "Error on LMDB Query")
-                return QueryResult ([], null, QueryStats (0, 0, 0L, 0L))
+                return QueryResult ([], QueryStats (0, 0, 0L, 0L))
         }
 
     let queryTrackDurationIo id =

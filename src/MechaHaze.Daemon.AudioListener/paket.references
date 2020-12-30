@@ -1,6 +1,4 @@
 FSharp.Core
+
 Elmish
 NAudio
-SoundFingerprinting
-SoundFingerprinting.Extensions.LMDB
-SoundFingerprinting.Audio.NAudio

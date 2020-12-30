@@ -9,4 +9,3 @@ module Environment =
         | null
         | "" -> Error $"Invalid EnvVar: {name}"
         | s -> s |> Ok
-

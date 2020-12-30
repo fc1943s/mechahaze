@@ -2,8 +2,7 @@ namespace MechaHaze.UI
 
 module InternalUI =
 
-    type User =
-        { Id: string }
+    type User = { Id: string }
 
     type InternalServerMessage<'SharedServerMessage, 'UIState> =
         | WelcomeUser of User list * 'UIState

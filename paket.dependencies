@@ -6,9 +6,9 @@ source https://api.nuget.org/v3/index.json
 nuget FSharp.Core ~> 5.0
 
 nuget NAudio 1.10 // ~> 2.0.0-beta1
-nuget SoundFingerprinting 7.4.7
-nuget SoundFingerprinting.Extensions.LMDB ~> 7.4
-nuget SoundFingerprinting.Audio.NAudio ~> 7.0
+git https://github.com/fc1943s/Elmish.Bridge.git experiments build: 'cmd /C \"dotnet tool restore && dotnet paket restore\"'
+git https://github.com/fc1943s/soundfingerprinting.audio.bass.git develop
+git https://github.com/fc1943s/SoundFingerprinting.Extensions.LMDB.git master
 
 // MechaHaze.CoreCLR
 nuget Newtonsoft.Json ~> 12.0
@@ -40,24 +40,22 @@ nuget Expecto ~> 9.0
 nuget Saturn ~> 0.14
 
 // MechaHaze.UI.Backend.ElmishBridge
-nuget Elmish.Bridge.Giraffe ~> 3.0
 nuget Giraffe.SerilogExtensions ~> 1.3
+
+// MechaHaze.UI.Frontend.ElmishBridge
+nuget Fable.Elmish.HMR ~> 4.1
+nuget Fable.Elmish.React ~> 3.0
+nuget Feliz.Recoil.Bridge ~> 0.19
+
+// MechaHaze.UI.Frontend.React
+nuget Fable.Core // ~> 4.0 prerelease
+nuget Feliz ~> 1.32
 
 // MechaHaze.UI.Frontend
 nuget Fable.FontAwesome.Free ~> 2.0
 nuget Zanaptak.TypedCssClasses ~> 0.2
 nuget Fulma.Extensions.Wikiki.PageLoader ~> 2.0
 nuget Fulma.Extensions.Wikiki.Slider ~> 2.0
-
-// MechaHaze.UI.Frontend.ElmishBridge
-nuget Fable.Elmish.HMR ~> 4.1
-nuget Fable.Elmish.React ~> 3.0
-nuget Feliz.Recoil.Bridge ~> 0.19
-nuget Elmish.Bridge.Client ~> 3.4
-
-// MechaHaze.UI.Frontend.React
-nuget Fable.Core 3.1.6 // ~> 4.0 prerelease
-nuget Feliz 1.25 // ~> 1.32
 
 // Build
 nuget Fake.Core.Target ~> 5.20 prerelease

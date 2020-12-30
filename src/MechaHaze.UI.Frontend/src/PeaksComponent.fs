@@ -91,7 +91,9 @@ module PeaksComponent =
                 {|
                     arraybuffer =
                         JS.encodeURIComponent
-                            $"root/db-tracks/{this.props.Track.Id}/{this.props.Track.Id}.{this.props.Layer}.peaks.{this.props.BindingSource}.dat"
+                            $"root/db-tracks/{this.props.Track.Id}/{this.props.Track.Id}.{this.props.Layer}.peaks.{
+                                                                                                                       this.props.BindingSource
+                            }.dat"
                 |}
 
 

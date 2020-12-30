@@ -96,4 +96,3 @@ module Client =
             MainView.lazyView
             handleClientMessage
             true
-

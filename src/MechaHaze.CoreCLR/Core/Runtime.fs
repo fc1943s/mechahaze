@@ -13,7 +13,7 @@ module Runtime =
     let executePowerShellAsync (cmd: string list) =
         async {
             let cmd = cmd |> String.concat "; "
-            let cmd = cmd.Replace("\"", "\\\"\"")
+            let cmd = cmd.Replace ("\"", "\\\"\"")
             //  let cmd = if powershell then cmd.Replace ("\\", "\\\\") else cmd
             let startInfo =
                 ProcessStartInfo
@@ -25,42 +25,56 @@ module Runtime =
                      CreateNoWindow = true)
 
             use proc = new Process(StartInfo = startInfo)
-            let log = ConcurrentStack()
+            let log = ConcurrentStack ()
 
             let event =
                 fun (error: bool) (e: DataReceivedEventArgs) ->
                     if e.Data <> null then
                         let txt =
-                            (Regexxer.matchAllEx (e.Data, @"\[(={20,})", Some(fun _ -> "="), None))
+                            (Regexxer.matchAllEx (e.Data, @"\[(={20,})", Some (fun _ -> "="), None))
                                 .ReplacedText
 
                         try
-                            Log.Verbose("{Error}{Id}: " + txt, (if error then 'E' else ' '), proc.Id)
-                        with ex -> Log.Error(ex, "ERROR ON PROCESS DATA. TXT: {txt}", txt)
+                            Log.Verbose
+                                ("{Error}{Id}: " + txt,
+                                 (if error then
+                                     'E'
+                                  else
+                                      ' '),
+                                 proc.Id)
+                        with ex -> Log.Error (ex, "ERROR ON PROCESS DATA. TXT: {txt}", txt)
 
                         log.Push txt
 
-            proc.OutputDataReceived.Add(event false)
-            proc.ErrorDataReceived.Add(event true)
+            proc.OutputDataReceived.Add (event false)
+            proc.ErrorDataReceived.Add (event true)
 
-            Log.Debug("Starting process: " + cmd)
+            Log.Debug ("Starting process: " + cmd)
 
-            if not (proc.Start())
-            then failwithf "Error executing script: %s" cmd
+            if not (proc.Start ()) then
+                failwithf "Error executing script: %s" cmd
 
-            proc.BeginErrorReadLine()
-            proc.BeginOutputReadLine()
+            proc.BeginErrorReadLine ()
+            proc.BeginOutputReadLine ()
 
-            do! proc.WaitForExitAsync() |> Async.AwaitTask
+            do! proc.WaitForExitAsync () |> Async.AwaitTask
 
             let result =
-                log.Reverse() |> String.concat Environment.NewLine
+                log.Reverse ()
+                |> String.concat Environment.NewLine
 
-            Log.Debug("Process finished with result: {@Code}", proc.ExitCode)
+            Log.Debug ("Process finished with result: {@Code}", proc.ExitCode)
 
             return proc.ExitCode, result
         }
 
 
     let executeCondaAsync env cmd =
-        async { return! executePowerShellAsync ([ $"conda activate {env}" ] @ cmd) }
+        async {
+            return!
+                executePowerShellAsync
+                    ([
+                        $"conda activate {env}"
+                     ]
+                     @ cmd)
+        }

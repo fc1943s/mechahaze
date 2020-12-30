@@ -2,6 +2,7 @@ namespace MechaHaze.Daemon.AudioListener
 
 open MechaHaze.Shared
 
+
 module LocalQueue =
     type Sample = { Buffer: byte []; Timestamp: int64 }
 

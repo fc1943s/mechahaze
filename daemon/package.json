@@ -1,9 +1,13 @@
 {
   "license": "MIT",
   "scripts": {
-    "concurrently": "concurrently"
+    "watch:audiolistener": "powershell -c \"dotnet run --no-build --project ../src/MechaHaze.Daemon.AudioListener\" ",
+    "watch:featuredispatcher": "powershell -c \"dotnet run --no-build --project ../src/MechaHaze.Daemon.FeatureDispatcher\" ",
+    "watch:backend": "powershell -c \"dotnet run --no-build --project ../src/MechaHaze.UI.Backend\" ",
+    "watch:frontend": "cd ../src/MechaHaze.UI.Frontend && yarn watch ",
+    "watch": "concurrently \"yarn:watch:*\""
   },
   "devDependencies": {
-    "concurrently": "^5.0.2"
+    "concurrently": "^5.3"
   }
 }

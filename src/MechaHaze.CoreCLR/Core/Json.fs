@@ -6,9 +6,12 @@ open System
 
 module Json =
     let contractResolvers =
-        {| RequireObjectProperties =
-               { new DefaultContractResolver () with
-                     member _.CreateObjectContract objectType =
-                         let contract = base.CreateObjectContract objectType
-                         contract.ItemRequired <- Nullable Required.Always
-                         contract } |}
+        {|
+            RequireObjectProperties =
+                { new DefaultContractResolver() with
+                    member _.CreateObjectContract objectType =
+                        let contract = base.CreateObjectContract objectType
+                        contract.ItemRequired <- Nullable Required.Always
+                        contract
+                }
+        |}
