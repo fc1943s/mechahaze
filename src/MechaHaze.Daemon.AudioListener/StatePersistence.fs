@@ -7,40 +7,48 @@ open Serilog
 open MechaHaze.Shared.Core
 open System.IO
 open MechaHaze.CoreCLR.Core
+open FSharp.Control.Tasks
 
 
 module StatePersistence =
-    let private statePathLazyIo =
-        fun () -> Path.Combine ((SharedConfig.pathsLazyIo ()).dbState, "main.json")
+    type StateUri = StateUri of uri: Uri
+
+    let stateUriMemoizedLazy =
+        fun () ->
+            (SharedConfig.pathsLazyIo ()).dbState
+            </> "main.json"
+            |> Uri
+            |> StateUri
         |> Core.memoizeLazy
 
-    let readIo () =
-        let statePath = statePathLazyIo ()
+    let read (StateUri uri) =
+        task {
+            try
+                let! json = File.ReadAllTextAsync uri.AbsolutePath
 
-        try
-            let json = File.ReadAllText statePath
+                return
+                    Json.deserialize<SharedState.SharedState> json
+                    |> Ok
+            with ex ->
+                File.Copy (uri.AbsolutePath, $"{uri.AbsolutePath}.{Core.getTimestamp DateTime.Now}.error.json")
+                return Error ex
+        }
 
-            Json.deserialize<SharedState.SharedState> json
-            |> Ok
-        with ex ->
-            File.Copy (statePath, $"{statePath}.{Core.getTimestamp DateTime.Now}.error.json")
 
-            Error ex
+    let write (StateUri uri) (newState: SharedState.SharedState) =
+        task {
+            try
+                let json = Json.serialize newState
 
-    let writeIo (newState: SharedState.SharedState) =
-        try
-            let json = Json.serialize newState
+                uri.AbsolutePath
+                |> Path.GetDirectoryName
+                |> Directory.CreateDirectory
+                |> ignore
 
-            let statePath = statePathLazyIo ()
+                do! File.WriteAllTextAsync (uri.AbsolutePath, json)
 
-            statePath
-            |> Path.GetDirectoryName
-            |> Directory.CreateDirectory
-            |> ignore
+                File.Copy (uri.AbsolutePath, $"{uri.AbsolutePath}.{Core.getTimestamp DateTime.Now}.event.json")
 
-            File.WriteAllText (statePath, json)
-
-            File.Copy (statePath, $"{statePath}.{Core.getTimestamp DateTime.Now}.event.json")
-
-            Ok ()
-        with ex -> Error ex
+                return Ok ()
+            with ex -> return Error ex
+        }

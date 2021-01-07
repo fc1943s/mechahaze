@@ -6,11 +6,13 @@ source https://api.nuget.org/v3/index.json
 nuget FSharp.Core ~> 5.0
 
 nuget NAudio 1.10 // ~> 2.0.0-beta1
+nuget FSharp.SystemTextJson ~> 0.15
 git https://github.com/fc1943s/Elmish.Bridge.git experiments build: "cmd /C \"dotnet tool restore && dotnet paket restore\""
 git https://github.com/fc1943s/soundfingerprinting.audio.bass.git develop
 git https://github.com/fc1943s/SoundFingerprinting.Extensions.LMDB.git master
 
 // MechaHaze.CoreCLR
+nuget Ply ~> 0.3
 nuget Newtonsoft.Json ~> 12.0
 nuget Destructurama.FSharp ~> 1.1 prerelease
 nuget Serilog.Sinks.Console ~> 4.0 prerelease

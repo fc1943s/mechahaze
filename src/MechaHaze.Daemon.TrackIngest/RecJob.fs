@@ -154,12 +154,12 @@ module RecJob =
 
             let tempFolder = FileSystem.ensureTempSessionDirectory ()
 
-            let trackPath = Path.Combine ((SharedConfig.pathsLazyIo ()).dbTracks, id)
+            let trackPath = (SharedConfig.pathsLazyIo ()).dbTracks </> id
             Directory.CreateDirectory trackPath |> ignore
 
             let (tempMp3Path, tempWavPath) =
                 ("mp3", "wav")
-                |> Tuple2.map (fun ext -> Path.Combine (tempFolder, $"all.{ext}"))
+                |> Tuple2.map (fun ext -> tempFolder </> $"all.{ext}")
 
             try
                 try
@@ -198,7 +198,9 @@ module RecJob =
 
                                 getOffset i, min reader.Length (getOffset (i + 1))
 
-                            let newPath = Path.Combine (Path.GetDirectoryName path, $"{i}.{Path.GetFileName path}")
+                            let newPath =
+                                Path.GetDirectoryName path
+                                </> $"{i}.{Path.GetFileName path}"
 
                             use reader = new AudioFileReader(path)
                             use writer = new WaveFileWriter(newPath, reader.WaveFormat)
@@ -224,18 +226,21 @@ module RecJob =
                     do! Bindings.layers
                         |> Seq.map (fun (layer, warm) ->
                             async {
-                                let tempOutDir = Path.Combine (tempFolder, layer)
+                                let tempOutDir = tempFolder </> layer
                                 Directory.CreateDirectory tempOutDir |> ignore
 
                                 try
                                     let destPeaksLevelsPath =
-                                        Path.Combine (trackPath, $"{id}.{layer}.peaks.{Bindings.sources.Levels}.dat")
+                                        trackPath
+                                        </> $"{id}.{layer}.peaks.{Bindings.sources.Levels}.dat"
 
                                     let destPeaksPitchPath =
-                                        Path.Combine (trackPath, $"{id}.{layer}.peaks.{Bindings.sources.Pitch}.dat")
+                                        trackPath
+                                        </> $"{id}.{layer}.peaks.{Bindings.sources.Pitch}.dat"
 
                                     let destPitchPath =
-                                        Path.Combine (trackPath, $"{id}.{layer}.{Bindings.sources.Pitch}.csv")
+                                        trackPath
+                                        </> $"{id}.{layer}.{Bindings.sources.Pitch}.csv"
 
                                     let destPeaksLevelsPathExists = File.Exists destPeaksLevelsPath
                                     let destPitchPathExists = File.Exists destPitchPath
@@ -254,15 +259,13 @@ module RecJob =
                                                                 let modelId = $"insanebrothers_{layer}_warm{warm}_v1"
 
                                                                 let modelPath =
-                                                                    Path.Combine
-                                                                        ((SharedConfig.pathsLazyIo ()).extOpenUnmix,
-                                                                         "states",
-                                                                         modelId)
+                                                                    (SharedConfig.pathsLazyIo ()).extOpenUnmix
+                                                                    </> "states"
+                                                                    </> modelId
 
                                                                 let inferenceScript =
-                                                                    Path.Combine
-                                                                        ((SharedConfig.pathsLazyIo ()).extOpenUnmix,
-                                                                         "test.py")
+                                                                    (SharedConfig.pathsLazyIo ()).extOpenUnmix
+                                                                    </> "test.py"
 
                                                                 let! unmixedPath =
                                                                     async {
@@ -283,7 +286,7 @@ module RecJob =
                                                                         if errorCode <> 0 then
                                                                             failwith "Error executing open unmix"
 
-                                                                        return Path.Combine (tempOutDir, $"{i}.wav")
+                                                                        return tempOutDir </> $"{i}.wav"
                                                                     }
 
                                                                 do! ensureSameWavLengthAsync path unmixedPath
@@ -317,9 +320,8 @@ module RecJob =
                                                             failwith "Error executing crepe"
 
                                                         return
-                                                            Path.Combine
-                                                                (tempOutDir,
-                                                                 (Path.GetFileName path).Replace(".wav", ".f0.csv"))
+                                                            tempOutDir
+                                                            </> (Path.GetFileName path).Replace(".wav", ".f0.csv")
                                                     }
 
                                                 let! pitchSlices =
@@ -329,7 +331,7 @@ module RecJob =
 
                                                 do! Waveform.recombineCsvAsync pitchSlices destPitchPath
 
-                                            let combinedPath = Path.Combine (tempFolder, $"{layer}.wav")
+                                            let combinedPath = tempFolder </> $"{layer}.wav"
 
                                             recombineAudio16 slices combinedPath
 
@@ -351,7 +353,7 @@ module RecJob =
 
                     let destFileName = $"{id}.mp3"
 
-                    let destPath = Path.Combine (trackPath, destFileName)
+                    let destPath = trackPath </> destFileName
 
                     if File.Exists destPath then
                         Log.Warning ("Track mp3 already exists")

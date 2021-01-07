@@ -12,11 +12,12 @@ open Elmish
 open MechaHaze.CoreCLR
 open Newtonsoft.Json
 open MechaHaze.CoreCLR.Core
+open FSharp.Control.Tasks
 
 
 module Main =
-    let startAsync =
-        async {
+    let start () =
+        task {
             let configToml = SharedConfig.loadTomlIo ()
 
             let eventInjectorQueue = SafeQueue.SafeQueue<LocalQueue.Event -> unit> (fun _ _ -> async { () })
@@ -59,10 +60,14 @@ module Main =
                 rabbitExchange
 
 
+            let stateUri = StatePersistence.stateUriMemoizedLazy ()
 
             let init () =
                 let state =
-                    match StatePersistence.readIo () with
+
+                    match (StatePersistence.read stateUri)
+                        .GetAwaiter()
+                        .GetResult() with
                     | Ok state ->
                         rabbitExchange.Post "" (SharedState.StateUpdate state)
                         state
@@ -170,7 +175,9 @@ module Main =
                 if cleanState <> cleanNewState then
                     Log.Debug ("Persisting new state")
 
-                    match StatePersistence.writeIo cleanNewState with
+                    match (cleanNewState |> StatePersistence.write stateUri)
+                        .GetAwaiter()
+                        .GetResult() with
                     | Error ex ->
                         Log.Error
                             (ex,
@@ -189,7 +196,7 @@ module Main =
 
             let view __state __dispatch = ()
 
-            let subscription state =
+            let subscription _state =
                 Cmd.batch [
                     Cmd.ofSub (Sub timerSub) LocalQueue.Error
                     Cmd.ofSub (Sub eventInjectorSub) LocalQueue.Error
@@ -212,5 +219,5 @@ module Main =
 
     [<EntryPoint>]
     let main _ =
-        fun () -> startAsync |> Async.RunSynchronously
+        start().GetAwaiter().GetResult
         |> Startup.withLogging false

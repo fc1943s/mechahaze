@@ -3,8 +3,10 @@ namespace MechaHaze.Daemon.AudioListener
 open System
 open Expecto
 open Expecto.Flip
+open MechaHaze.CoreCLR.Core
 open MechaHaze.Shared.Core
 open MechaHaze.Shared
+open FSharp.Control.Tasks
 
 
 module Tests =
@@ -16,16 +18,22 @@ module Tests =
                     "State"
                     [
                         test "Save then load state" {
+                            task {
+                                let dir = FileSystem.ensureTempSessionDirectory ()
 
-                            let initialState = StatePersistence.readIo () |> Result.okOrThrow
+                                let statePath = StatePersistence.StateUri (Uri (dir </> "state.json"))
+                                let initialState = SharedState.SharedState.Default
+                                let! writeResult = initialState |> StatePersistence.write statePath
+                                writeResult |> Result.unwrap
 
-                            initialState
-                            |> StatePersistence.writeIo
-                            |> Result.okOrThrow
-
-                            let newState = StatePersistence.readIo () |> Result.okOrThrow
-
-                            newState |> Expect.equal "" initialState
+                                match! StatePersistence.read statePath with
+                                | Ok newState ->
+                                    printfn $"initialState={initialState}; newState={newState}"
+                                    newState |> Expect.equal "" initialState
+                                | Error ex -> raise ex
+                            }
+                            |> Async.AwaitTask
+                            |> Async.RunSynchronously
                         }
                     ]
 

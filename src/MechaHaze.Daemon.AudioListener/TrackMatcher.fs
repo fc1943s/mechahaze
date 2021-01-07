@@ -18,7 +18,8 @@ module TrackMatcher =
     let private saveTempSampleIoAsync (sample: LocalQueue.Sample) =
         async {
             let outputFilePath =
-                Path.Combine ((SharedConfig.pathsLazyIo ()).tempSamples, string (Random().Next()) + ".wav")
+                (SharedConfig.pathsLazyIo ()).tempSamples
+                </> string (Random().Next()) + ".wav"
 
             use writer = new WaveFileWriter(outputFilePath, Audio.NAudio.waveFormat)
 
@@ -53,7 +54,10 @@ module TrackMatcher =
         }
 
     let queryTrackDurationIo id =
-        let path = Path.Combine ((SharedConfig.pathsLazyIo ()).dbTracks, id, id + ".mp3")
+        let path =
+            (SharedConfig.pathsLazyIo ()).dbTracks
+            </> id
+            </> id + ".mp3"
 
         if File.Exists path |> not then
             0.

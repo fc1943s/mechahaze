@@ -48,10 +48,9 @@ module OscDispatcher =
                                 |> Tuple2.map (fun format ->
                                     let (SharedState.TrackId trackId) = state.Track.Id
 
-                                    Path.Combine
-                                        ((SharedConfig.pathsLazyIo ()).dbTracks,
-                                         trackId,
-                                         $"{trackId}.{layer}.peaks.{format}.dat"))
+                                    (SharedConfig.pathsLazyIo ()).dbTracks
+                                    </> trackId
+                                    </> $"{trackId}.{layer}.peaks.{format}.dat")
 
                             if File.Exists peaksLevelsPath then
                                 let peaksLevels = Waveform.readPeaks peaksLevelsPath

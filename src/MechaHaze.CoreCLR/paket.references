@@ -1,5 +1,6 @@
 FSharp.Core
 
+FSharp.SystemTextJson
 Fable.Remoting.Json
 Newtonsoft.Json
 Serilog.Sinks.Console

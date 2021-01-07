@@ -3,12 +3,15 @@ namespace MechaHaze.CoreCLR.Core
 open System
 open System.IO
 open System.Reflection
+open MechaHaze.Shared.Core
 
 
 module FileSystem =
     let ensureTempSessionDirectory () =
         let tempFolder =
-            Path.Combine (Path.GetTempPath (), Assembly.GetEntryAssembly().GetName().Name, string (Guid.NewGuid ()))
+            Path.GetTempPath ()
+            </> Assembly.GetEntryAssembly().GetName().Name
+            </> string (Guid.NewGuid ())
 
         Directory.CreateDirectory tempFolder |> ignore
 

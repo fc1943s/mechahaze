@@ -7,7 +7,7 @@ open FSharpPlus.Data
 [<AutoOpen>]
 module Extensions =
     module Result =
-        let okOrThrow result =
+        let unwrap result =
             result
             |> Result.mapError (fun x -> x.ToString () |> exn)
             |> ResultOrException.Result

@@ -18,17 +18,20 @@ module SharedConfig =
         fun () ->
             let rootPath =
                 Environment.getRequiredEnvVar envVars.RootPath
-                |> Result.okOrThrow
+                |> Result.unwrap
 
             let paths =
                 {|
-                    configToml = Path.Combine (rootPath, "config.toml")
-                    dbFingerprints = Path.Combine (rootPath, "db-fingerprints")
-                    dbTracks = Path.Combine (rootPath, "db-tracks")
-                    dbState = Path.Combine (rootPath, "db-state")
-                    extAudiowaveformExe = Path.Combine (rootPath, "ext-audiowaveform-mingw64", "audiowaveform.exe")
-                    ingestTracks = Path.Combine (rootPath, "ingest-tracks")
-                    tempSamples = Path.Combine (rootPath, "temp-samples")
+                    configToml = rootPath </> "config.toml"
+                    dbFingerprints = rootPath </> "db-fingerprints"
+                    dbTracks = rootPath </> "db-tracks"
+                    dbState = rootPath </> "db-state"
+                    extAudiowaveformExe =
+                        rootPath
+                        </> "ext-audiowaveform-mingw64"
+                        </> "audiowaveform.exe"
+                    ingestTracks = rootPath </> "ingest-tracks"
+                    tempSamples = rootPath </> "temp-samples"
                     extOpenUnmix = @"D:\kal\fs\git-repos\open-unmix-pytorch"
                 |}
 
