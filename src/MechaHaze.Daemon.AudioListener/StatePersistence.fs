@@ -3,7 +3,6 @@ namespace MechaHaze.Daemon.AudioListener
 open System
 open MechaHaze.Shared
 open MechaHaze.CoreCLR
-open Newtonsoft.Json
 open Serilog
 open MechaHaze.Shared.Core
 open System.IO
@@ -21,10 +20,7 @@ module StatePersistence =
         try
             let json = File.ReadAllText statePath
 
-            let settings = JsonSerializerSettings (ContractResolver = Json.contractResolvers.RequireObjectProperties)
-
-            (json, settings)
-            |> JsonConvert.DeserializeObject<SharedState.SharedState>
+            Json.deserialize<SharedState.SharedState> json
             |> Ok
         with ex ->
             File.Copy (statePath, $"{statePath}.{Core.getTimestamp DateTime.Now}.error.json")
@@ -33,7 +29,7 @@ module StatePersistence =
 
     let writeIo (newState: SharedState.SharedState) =
         try
-            let json = JsonConvert.SerializeObject (newState, Formatting.Indented)
+            let json = Json.serialize newState
 
             let statePath = statePathLazyIo ()
 

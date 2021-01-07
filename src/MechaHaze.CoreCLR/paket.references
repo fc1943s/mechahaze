@@ -1,5 +1,6 @@
 FSharp.Core
 
+Fable.Remoting.Json
 Newtonsoft.Json
 Serilog.Sinks.Console
 Destructurama.FSharp

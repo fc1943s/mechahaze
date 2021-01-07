@@ -7,6 +7,7 @@
   <ItemGroup>
       <Compile Include="src\State.fs" />
       <Compile Include="src\Components\Bridge.fs" />
+      <Compile Include="src\Components\StateSubscriber.fs" />
       <Folder Include="src\Hooks" />
       <Compile Include="src\ExtTypes.fs" />
       <Compile Include="src\Element.fs" />

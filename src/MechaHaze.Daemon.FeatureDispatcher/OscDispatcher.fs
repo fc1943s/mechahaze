@@ -11,6 +11,7 @@ open MechaHaze.CoreCLR.Core
 open MechaHaze.Shared
 open FSharp.Control
 open MechaHaze.CoreCLR
+open MechaHaze.Shared.Bindings
 open MechaHaze.Shared.Core
 open Serilog
 open CoreOSC.IO
@@ -39,11 +40,11 @@ module OscDispatcher =
                 peaksPitchDict.Clear ()
 
                 if state.Track.Id <> SharedState.Track.Default.Id then
-                    Bindings.layers
+                    layers
                     |> List.iter (fun (layer, _) ->
                         async {
                             let peaksLevelsPath, peaksPitchPath =
-                                (Bindings.sources.Levels, Bindings.sources.Pitch)
+                                (sources.Levels, sources.Pitch)
                                 |> Tuple2.map (fun format ->
                                     let (SharedState.TrackId trackId) = state.Track.Id
 
@@ -196,7 +197,7 @@ module OscDispatcher =
                                  / 1000.)
                                 - state.Track.Offset
 
-                            Bindings.layers
+                            layers
                             |> List.toArray
                             |> Array.Parallel.collect (fun (layer, _) ->
                                 let peaksSuccess, peaks = peaksLevelsDict.TryGetValue layer
@@ -252,35 +253,23 @@ module OscDispatcher =
                                         0., 0., 0., 0.
 
                                 [|
-                                    Bindings.sources.Levels
-                                    + string Bindings.separator
-                                    + layer,
-                                    levelAverage
-                                    Bindings.sources.Pitch
-                                    + string Bindings.separator
-                                    + layer,
-                                    pitch
-                                    Bindings.sources.PanL
-                                    + string Bindings.separator
-                                    + layer,
-                                    panL
-                                    Bindings.sources.PanR
-                                    + string Bindings.separator
-                                    + layer,
-                                    panR
+                                    sources.Levels + string separator + layer, levelAverage
+                                    sources.Pitch + string separator + layer, pitch
+                                    sources.PanL + string separator + layer, panL
+                                    sources.PanR + string separator + layer, panR
                                 |])
                             |> Map.ofArray
                             |> Some
                         | _ -> None)
 
                 match _state, layers with
-                | Some state, Some layers ->
+                | Some ({ ActiveBindingsPreset = Some activeBindingsPreset } as state), Some layers ->
                     let messages =
                         state.BindingsPresetMap
-                        |> Bindings.ofPresetMap
-                        |> Map.tryFind state.ActiveBindingsPreset
-                        |> Option.defaultValue (Bindings.Preset [])
-                        |> Bindings.splitPreset
+                        |> ofPresetMap
+                        |> Map.tryFind activeBindingsPreset
+                        |> Option.defaultValue Preset.Default
+                        |> splitPreset
                         |> Seq.filter (fun ((fullSource, _), _) -> fullSource <> "")
                         |> Seq.choose (fun ((fullSource, _), (fullDest, dest)) ->
                             layers
@@ -294,9 +283,9 @@ module OscDispatcher =
                                         value
 
                                 let client =
-                                    if fullDest.StartsWith Bindings.destinations.Resolume then
+                                    if fullDest.StartsWith destinations.Resolume then
                                         Some resolumeClient
-                                    elif fullDest.StartsWith Bindings.destinations.Magic then
+                                    elif fullDest.StartsWith destinations.Magic then
                                         Some magicClient
                                     else
                                         Log.Error ("Invalid binding prefix")

@@ -2,6 +2,7 @@ namespace MechaHaze.Shared
 
 open Expecto
 open Expecto.Flip
+open MechaHaze.Shared.Bindings
 
 module Tests =
     let tests =
@@ -14,57 +15,38 @@ module Tests =
                     [
 
                         test "Bindings" {
-                            let apply binding = Bindings.applyBinding (Bindings.Binding binding)
+                            let apply (source, dest) =
+                                applyBinding (Binding (BindingSourceId source, BindingDestId dest))
 
-                            let expected = List.map Bindings.Binding >> Bindings.Preset
+                            let expected (bindings: (string * string) list) =
+                                bindings
+                                |> List.map (fun (source, dest) -> Binding (BindingSourceId source, BindingDestId dest))
 
-                            let bindingList = Bindings.Preset []
+                            let preset = Preset.Default
 
-                            let bindingList = apply ("a", "y") bindingList
+                            let preset = apply ("a", "y") preset
 
-                            bindingList
-                            |> Expect.equal
-                                ""
-                                   ([
-                                       ("a", "y")
-                                    ]
-                                    |> expected)
+                            preset.Bindings
+                            |> Expect.equal "" (expected [ ("a", "y") ])
 
-                            let bindingList = apply ("a", "y") bindingList
+                            let preset = apply ("a", "y") preset
 
-                            bindingList
-                            |> Expect.equal
-                                ""
-                                   ([
-                                       ("", "y")
-                                    ]
-                                    |> expected)
+                            preset.Bindings
+                            |> Expect.equal "" (expected [ ("", "y") ])
 
-                            let bindingList = apply ("a", "y") bindingList
+                            let preset = apply ("a", "y") preset
 
-                            bindingList
-                            |> Expect.equal
-                                ""
-                                   ([
-                                       ("a", "y")
-                                    ]
-                                    |> expected)
+                            preset.Bindings
+                            |> Expect.equal "" (expected [ ("a", "y") ])
 
-                            let bindingList = apply ("a", "y") bindingList
+                            let preset = apply ("a", "y") preset
 
-                            bindingList
-                            |> Expect.equal
-                                ""
-                                   ([
-                                       ("", "y")
-                                    ]
-                                    |> expected)
+                            preset.Bindings
+                            |> Expect.equal "" (expected [ ("", "y") ])
 
-                            let bindingList = apply ("", "y") bindingList
+                            let preset = apply ("", "y") preset
 
-                            bindingList
-                            |> Bindings.ofPreset
-                            |> Expect.isEmpty ""
+                            preset.Bindings |> Expect.isEmpty ""
                         }
                     ]
             ]

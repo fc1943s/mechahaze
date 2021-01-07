@@ -12,6 +12,22 @@ module Tests =
         testList
             "Tests"
             [
+                testList
+                    "State"
+                    [
+                        test "Save then load state" {
+
+                            let initialState = StatePersistence.readIo () |> Result.okOrThrow
+
+                            initialState
+                            |> StatePersistence.writeIo
+                            |> Result.okOrThrow
+
+                            let newState = StatePersistence.readIo () |> Result.okOrThrow
+
+                            newState |> Expect.equal "" initialState
+                        }
+                    ]
 
                 testList
                     "AudioRecorder"

@@ -47,7 +47,7 @@ module State =
         let rec activeBindingsPreset =
             atom {
                 key (nameof activeBindingsPreset)
-                def ""
+                def (None: PresetId option)
             }
 
         let rec presetIdList =
@@ -110,7 +110,7 @@ module State =
         let rec preset =
             atomFamily {
                 key (nameof preset)
-                def (fun (_id: PresetId) -> Preset [])
+                def (fun (_id: PresetId) -> Preset.Default)
             }
 
     module SelectorFamilies =

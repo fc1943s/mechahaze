@@ -5,6 +5,7 @@ open System.Net.Security
 open Giraffe.SerilogExtensions
 open MechaHaze.CoreCLR.Core
 open MechaHaze.Model
+open MechaHaze.Shared.Bindings
 open MechaHaze.UI.Backend.ElmishBridge
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
@@ -64,19 +65,19 @@ module ServerBridge =
             |> withClientDispatch Cmd.none
 
 
-        | SharedState.ToggleBinding (Bindings.BindingToggle (presetName, binding)) ->
+        | SharedState.ToggleBinding (Bindings.BindingToggle (presetId, binding)) ->
 
             let preset =
                 state.SharedState.BindingsPresetMap
                 |> Bindings.ofPresetMap
-                |> Map.tryFind presetName
-                |> Option.defaultValue (Bindings.Preset [])
+                |> Map.tryFind presetId
+                |> Option.defaultValue Preset.Default
                 |> Bindings.applyBinding binding
 
             let presets =
                 state.SharedState.BindingsPresetMap
                 |> Bindings.ofPresetMap
-                |> Map.add presetName preset
+                |> Map.add presetId preset
                 |> Bindings.PresetMap
 
             SharedState.Response.StateUpdated
@@ -85,19 +86,19 @@ module ServerBridge =
                 }
             |> withClientDispatch Cmd.none
 
-        | SharedState.TogglePreset presetName ->
+        | SharedState.TogglePreset presetId ->
             let presets =
                 let presetMap =
                     state.SharedState.BindingsPresetMap
                     |> Bindings.ofPresetMap
 
                 presetMap
-                |> Map.containsKey presetName
+                |> Map.containsKey presetId
                 |> function
-                | true -> presetMap |> Map.remove presetName
+                | true -> presetMap |> Map.remove presetId
                 | false ->
                     presetMap
-                    |> Map.add presetName (Bindings.Preset [])
+                    |> Map.add presetId Preset.Default
                 |> Bindings.PresetMap
 
             SharedState.Response.StateUpdated
@@ -265,8 +266,10 @@ module UIServer =
 
                 ServicePointManager.ServerCertificateValidationCallback <-
                     RemoteCertificateValidationCallback (fun sender cert chain sslPolicyErrors ->
-                        Log.Debug ("Validating cert: {0}; {1}", cert.GetCertHashString (), cert.GetRawCertDataString ())
-                        true)
+                        Log.Information
+                            ("Validating cert: {0}; {1}", cert.GetCertHashString (), cert.GetRawCertDataString ())
+
+                        false)
 
                 let app =
                     application {

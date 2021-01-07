@@ -6,16 +6,17 @@ open Fable.React
 open Fable.React.Props
 open Fulma
 open MechaHaze.Shared
+open MechaHaze.Shared.Bindings
 
 module BindingsSettingsDropdownComponent =
 
     type Props =
         {
             BindingsPresetMap: Bindings.PresetMap
-            ActiveBindingsPreset: string
-            TogglePreset: string -> unit
-            ToggleBindingsDestination: string -> unit
-            SetActiveBindingsPreset: string -> unit
+            ActiveBindingsPreset: PresetId option
+            TogglePreset: PresetId -> unit
+            ToggleBindingsDestination: BindingDestId -> unit
+            SetActiveBindingsPreset: PresetId option -> unit
         }
 
     type Tab =
@@ -121,14 +122,14 @@ module BindingsSettingsDropdownComponent =
 
 
                         props.BindingsPresetMap
-                        |> Bindings.ofPresetMap
+                        |> ofPresetMap
                         |> Map.keys
-                        |> Seq.map (fun presetName ->
-                            let active = presetName = props.ActiveBindingsPreset
+                        |> Seq.map (fun ((PresetId presetIdValue) as presetId) ->
+                            let active = (Some presetId) = props.ActiveBindingsPreset
 
                             Control.div [
                                             Control.Props [
-                                                Key presetName
+                                                Key presetIdValue
                                                 Style [ MarginBottom 5 ]
                                             ]
                                         ] [
@@ -142,20 +143,20 @@ module BindingsSettingsDropdownComponent =
                                             span [
                                                      Style [ Color "#fff" ]
                                                  ] [
-                                                str presetName
+                                                str presetIdValue
                                             ]
                                         else
                                             a [
-                                                OnClick (events.OnPresetClick presetName)
+                                                OnClick (events.OnPresetClick (Some presetId))
                                               ] [
-                                                str presetName
+                                                str presetIdValue
                                             ]
                                     ]
 
                                     if not active then
                                         Tag.delete [
                                                        Tag.Props [
-                                                           OnClick (events.OnPresetDeleteClick presetName)
+                                                           OnClick (events.OnPresetDeleteClick presetId)
                                                        ]
                                                    ] []
                                 ]

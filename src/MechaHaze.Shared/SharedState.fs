@@ -1,5 +1,7 @@
 namespace MechaHaze.Shared
 
+open MechaHaze.Shared.Bindings
+
 module SharedState =
     let matchStabilityCount = 3
     let lockingNoiseCount = 9
@@ -21,7 +23,6 @@ module SharedState =
 
 
     type ProcessId = ProcessId of processId: string
-    type PresetId = PresetId of presetId: string
 
     type TimeSyncMap = TimeSyncMap of Map<ProcessId, TimeSync>
     let ofTimeSyncMap (TimeSyncMap x) = x
@@ -55,6 +56,7 @@ module SharedState =
             }
 
     type TrackId = TrackId of string
+
     type Track =
         {
             Id: TrackId
@@ -83,7 +85,7 @@ module SharedState =
             Track: Track
             AutoLock: bool
             RecordingMode: bool
-            ActiveBindingsPreset: string
+            ActiveBindingsPreset: PresetId option
             BindingsPresetMap: Bindings.PresetMap
         }
 
@@ -98,8 +100,30 @@ module SharedState =
 #endif
                 AutoLock = true
                 RecordingMode = false
-                BindingsPresetMap = Map.empty |> Bindings.PresetMap
-                ActiveBindingsPreset = ""
+                //                BindingsPresetMap = PresetMap Map.empty
+                BindingsPresetMap =
+                    PresetMap
+                        ([
+                            PresetId "Simple",
+                            {
+                                Bindings =
+                                    [
+                                        Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals")
+                                        Binding (BindingSourceId "levels|vocals2", BindingDestId "magic|vocals2")
+                                    ]
+                            }
+                            PresetId "Advanced",
+                            {
+                                Bindings =
+                                    [
+                                        Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals")
+                                        Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals2")
+                                        Binding (BindingSourceId "", BindingDestId "magic|vocals3")
+                                    ]
+                            }
+                         ]
+                         |> Map.ofList)
+                ActiveBindingsPreset = None
             }
 
     let clean state =
@@ -118,23 +142,21 @@ module SharedState =
         | SetAutoLock of bool
         | SetRecordingMode of bool
         | ToggleBinding of Bindings.BindingToggle
-        | SetActiveBindingsPreset of string
-        | TogglePreset of string
+        | SetActiveBindingsPreset of PresetId option
+        | TogglePreset of PresetId
 
 
     type Response =
         | TrackUpdated of Track
         | StateUpdated of SharedState
-
-        (* Client To Client *)
-        | ClientSetDebug of bool
-        | ClientSetOffset of float
-        | ClientSetLocked of bool
-        | ClientSetAutoLock of bool
-        | ClientSetRecordingMode of bool
-        | ClientToggleBinding of Bindings.Binding
-        | ClientTogglePreset of string
-        | ClientSetActiveBindingsPreset of string
+        | DebugUpdated of bool
+        | OffsetUpdated of float
+        | LockedUpdated of bool
+        | AutoLockUpdated of bool
+        | RecordingModeUpdated of bool
+        | BindingToggled of Bindings.Binding
+        | PresetToggled of PresetId
+        | ActiveBindingsPresetUpdated of PresetId option
 
 
     type SharedQueue =

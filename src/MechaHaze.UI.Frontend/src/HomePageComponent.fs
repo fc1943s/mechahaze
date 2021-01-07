@@ -6,6 +6,7 @@ open Feliz.Recoil.Bridge
 open Elmish.Bridge
 open Feliz
 open Feliz.Recoil
+open MechaHaze.Shared.Bindings
 open MechaHaze.UI.Frontend
 open MechaHaze.Shared
 open MechaHaze.Shared.Core
@@ -58,12 +59,13 @@ module HomePageComponent =
                                 setSelectedPeaks (selectedPeaks |> Set.toggle id)
                         OnMenuDebugClick = fun _ -> setDebug (not debug)
                         OnBindingsDestinationToggle =
-                            fun id -> Bridge.Send (SharedState.ClientToggleBinding (Bindings.Binding ("", id)))
-                        OnPresetToggle = fun presetName -> Bridge.Send (SharedState.ClientTogglePreset presetName)
+                            fun (bindingDestId: BindingDestId) ->
+                                Bridge.Send (SharedState.BindingToggled (Binding (BindingSourceId "", bindingDestId)))
+                        OnPresetToggle = fun presetId -> Bridge.Send (SharedState.PresetToggled presetId)
                         OnActiveBindingsPresetChange =
-                            fun presetName ->
-                                setActiveBindingsPreset presetName
-                                Bridge.Send (SharedState.SetActiveBindingsPreset presetName)
+                            fun presetId ->
+                                setActiveBindingsPreset presetId
+                                Bridge.Send (SharedState.SetActiveBindingsPreset presetId)
                         OnMenuTopRightButtonClick = fun _ -> printfn "CLICK"
                         OnOffsetSliderChange =
                             fun (e: Event) ->
@@ -73,9 +75,10 @@ module HomePageComponent =
                         OnBindingLink =
                             fun o ->
                                 if JS.Constructors.Array.isArray o then
-                                    match List.ofArray (box o :?> string []) with
+                                    match box o :?> string [] |> Array.toList with
                                     | a :: b :: _ ->
-                                        Bridge.Send (SharedState.ClientToggleBinding (Bindings.Binding (a, b)))
+                                        Bridge.Send
+                                            (SharedState.BindingToggled (Binding (BindingSourceId a, BindingDestId b)))
                                     | _ -> ()
                         OnAlignmentAutoLockClick =
                             fun _ ->
@@ -157,8 +160,8 @@ module HomePageComponent =
                                 Navbar.divider [] []
 
                                 [
-                                    Bindings.sources.Levels
-                                    Bindings.sources.Pitch
+                                    sources.Levels
+                                    sources.Pitch
                                 ]
                                 |> List.map (fun bindingSource ->
                                     div [
@@ -184,7 +187,7 @@ module HomePageComponent =
                                         Dropdown.menu [] [
                                             Navbar.Dropdown.div [] [
 
-                                                Bindings.layers
+                                                layers
                                                 |> List.map (fun (layer, _) ->
                                                     let id = bindingSource, layer
 
@@ -247,7 +250,7 @@ module HomePageComponent =
                                 Track = track
                                 Debug = debug
                                 Layer = "all"
-                                BindingSource = Bindings.sources.Levels
+                                BindingSource = sources.Levels
                             }
 
                     div [
@@ -357,16 +360,19 @@ module HomePageComponent =
                                     ]
                                 ] [
 
-                                StormDiagramComponent.``default``
-                                    {
-                                        BindingsPreset =
-                                            uiState.SharedState.BindingsPresetMap
-                                            |> Bindings.ofPresetMap
-                                            |> Map.tryFind activeBindingsPreset
-                                            |> Option.defaultValue (Bindings.Preset [])
+                                match activeBindingsPreset with
+                                | Some activeBindingsPreset ->
+                                    StormDiagramComponent.``default``
+                                        {
+                                            BindingsPreset =
+                                                uiState.SharedState.BindingsPresetMap
+                                                |> ofPresetMap
+                                                |> Map.tryFind activeBindingsPreset
+                                                |> Option.defaultValue Preset.Default
 
-                                        OnLink = events.OnBindingLink
-                                    }
+                                            OnLink = events.OnBindingLink
+                                        }
+                                | None -> str "no activeBindingsPreset to render StormDiagramComponent"
                             ]
                         ]
 

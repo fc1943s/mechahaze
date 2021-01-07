@@ -1,7 +1,5 @@
 namespace MechaHaze.Shared
 
-open MechaHaze.Shared.Core
-
 
 module Bindings =
     let separator = '|'
@@ -30,39 +28,48 @@ module Bindings =
         ]
 
 
-    type Binding = Binding of source: string * dest: string
+    type PresetId = PresetId of presetId: string
+    type BindingSourceId = BindingSourceId of bindingSourceId: string
+    type BindingDestId = BindingDestId of bindingDestId: string
+    type Binding = Binding of source: BindingSourceId * dest: BindingDestId
     let ofBinding (Binding (source, dest)) = source, dest
 
-    type BindingToggle = BindingToggle of presetName: string * Binding
+    type BindingToggle = BindingToggle of presetId: PresetId * Binding
 
-    type Preset = Preset of Binding list
-    let ofPreset (Preset x) = x
+    type Preset =
+        {
+            Bindings: Binding list
+        }
+        static member inline Default = { Bindings = [] }
 
-    type PresetMap = PresetMap of Map<string, Preset>
+
+    type PresetMap = PresetMap of Map<PresetId, Preset>
     let ofPresetMap (PresetMap x) = x
 
 
-    let splitPreset (Preset preset) =
-        preset
-        |> List.map
-            (ofBinding
-             >> Tuple2.map (fun id ->
-                 match id.Split separator |> Array.toList with
-                 | _ :: b :: _ -> id, b
-                 | _ -> "", ""))
+    let splitPreset (preset: Preset) =
+        let map (str: string) =
+            match str.Split separator |> Array.toList with
+            | _ :: b :: _ -> str, b
+            | _ -> "", ""
 
-    let applyBinding (Binding (source, dest) as binding) (Preset preset) =
-        preset
-        |> List.tryFind (ofBinding >> snd >> (=) dest)
-        |> function
-        | None -> binding :: preset
-        | Some (Binding (oldSource, _)) ->
-            preset
-            |> List.filter (ofBinding >> snd >> (<>) dest)
-            |> List.append [
-                match oldSource, source with
-                | "", "" -> ()
-                | "", _ -> binding
-                | _ -> Binding ("", dest)
-               ]
-        |> Preset
+        preset.Bindings
+        |> List.map (fun (Binding (BindingSourceId sourceId, BindingDestId destId)) -> map sourceId, map destId)
+
+    let applyBinding (Binding (BindingSourceId sourceId, dest) as binding) (preset: Preset) =
+        let newBindings =
+            preset.Bindings
+            |> List.tryFind (fun binding -> binding |> ofBinding |> snd |> (=) dest)
+            |> function
+            | None -> binding :: preset.Bindings
+            | Some (Binding (BindingSourceId oldSourceId, _)) ->
+                preset.Bindings
+                |> List.filter (fun binding -> binding |> ofBinding |> snd |> (<>) dest)
+                |> List.append [
+                    match oldSourceId, sourceId with
+                    | "", "" -> ()
+                    | "", _ -> binding
+                    | _ -> Binding (BindingSourceId "", dest)
+                   ]
+
+        { preset with Bindings = newBindings }

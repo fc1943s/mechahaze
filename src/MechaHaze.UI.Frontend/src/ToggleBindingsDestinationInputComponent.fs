@@ -5,13 +5,14 @@ open MechaHaze.Shared
 open Fable.React
 open Fable.React.Props
 open Fulma
+open MechaHaze.Shared.Bindings
 
 
 module ToggleBindingsDestinationInputComponent =
 
     type Props =
         {
-            ToggleBindingsDestination: string -> unit
+            ToggleBindingsDestination: BindingDestId -> unit
             Options: Input.Option list
             Style: CSSProp list
         }
@@ -54,7 +55,7 @@ module ToggleBindingsDestinationInputComponent =
                                         |> Seq.exists ((>) state.current.Text.Length)
 
                                     if valid then
-                                        props.ToggleBindingsDestination state.current.Text
+                                        props.ToggleBindingsDestination (BindingDestId state.current.Text)
                                         state.update (SetText "")
                                         state.update (SetError false)
                                     else

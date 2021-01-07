@@ -21,12 +21,12 @@ module Client =
                 SharedState = { state.SharedState with Track = track }
             }
 
-        | SharedState.ClientSetDebug debug ->
+        | SharedState.DebugUpdated debug ->
             { state with
                 SharedState = { state.SharedState with Debug = debug }
             }
 
-        | SharedState.ClientSetOffset offset ->
+        | SharedState.OffsetUpdated offset ->
             { state with
                 SharedState =
                     { state.SharedState with
@@ -34,12 +34,12 @@ module Client =
                     }
             }
 
-        | SharedState.ClientSetAutoLock autoLock ->
+        | SharedState.AutoLockUpdated autoLock ->
             { state with
                 SharedState = { state.SharedState with AutoLock = autoLock }
             }
 
-        | SharedState.ClientSetRecordingMode recordingMode ->
+        | SharedState.RecordingModeUpdated recordingMode ->
             { state with
                 SharedState =
                     { state.SharedState with
@@ -47,7 +47,7 @@ module Client =
                     }
             }
 
-        | SharedState.ClientSetLocked locked ->
+        | SharedState.LockedUpdated locked ->
             { state with
                 SharedState =
                     { state.SharedState with
@@ -64,13 +64,13 @@ module Client =
             }
 
 
-        | SharedState.ClientToggleBinding binding -> state
+        | SharedState.BindingToggled binding -> state
         //  , Some (SharedState.ToggleBinding (Bindings.BindingToggle (state.SharedState.ActiveBindingsPreset, binding)))
 
-        | SharedState.ClientTogglePreset presetName -> state
+        | SharedState.PresetToggled presetName -> state
         //, Some (SharedState.TogglePreset presetName)
 
-        | SharedState.ClientSetActiveBindingsPreset presetName ->
+        | SharedState.ActiveBindingsPresetUpdated presetName ->
             { state with
                 SharedState =
                     { state.SharedState with
@@ -80,11 +80,10 @@ module Client =
 
 module Bridge =
     let bridge =
-        Recoil.bridge  //<UIState.State, SharedState.Response, SharedState.Response>
+        Recoil.bridge
             {
                 Model = Atoms.uiState
                 Update = Client.update
                 BridgeConfig =
                     Bridge.endpoint Bridge.Endpoints.socketPath
-//                    |> Bridge.withUrlMode UrlMode.Raw
             }
