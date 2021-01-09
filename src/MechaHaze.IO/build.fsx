@@ -4,7 +4,7 @@ nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
 //"
 #load "./.fake/build.fsx/intellisense.fsx"
-#load "../../MechaHaze.Interop.OperatingSystem/Interactive/utils.fsx"
+#load "../MechaHaze.Interop.OperatingSystem/Interactive/utils.fsx"
 
 open Fake.Core
 open Fake.DotNet
@@ -20,13 +20,13 @@ Target.create "Build" (fun _ ->
               NoRestore = true
               Configuration = DotNet.BuildConfiguration.Debug }
 
-    DotNet.build buildParams "../MechaHaze.IO.fsproj"
+    DotNet.build buildParams "./MechaHaze.IO.fsproj"
     ())
 
 Target.create "Watch" (fun _ ->
     Trace.trace " --- Watching app --- "
 
-    DotNet.exec Utils.Interactive.getDotNetRelease "fsi" "../../MechaHaze.Interop.OperatingSystem/Interactive/watch.fsx"
+    DotNet.exec Utils.Interactive.getDotNetRelease "fsi" "../MechaHaze.Interop.OperatingSystem/Interactive/watch.fsx"
     |> ignore)
 
 open Fake.Core.TargetOperators

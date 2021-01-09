@@ -19,7 +19,7 @@ nuget Serilog.Sinks.Console ~> 4.0 prerelease
 nuget Argu ~> 6.1
 nuget FSharp.Data ~> 3.3
 nuget Tomlyn ~> 0.1
-nuget MathNet.Numerics.FSharp ~> 4.9
+nuget MathNet.Numerics.FSharp ~> 4.15
 
 // MechaHaze.Daemon.AudioListener
 nuget Elmish ~> 4.0 prerelease

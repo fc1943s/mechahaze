@@ -14,8 +14,10 @@
     <Compile Include="TrackLocker.fs" />
     <Compile Include="StatePersistence.fs" />
     <Compile Include="Main.fs" />
-    <None Include="AudioListener.fsx" />
-    <Content Include="AudioListener.ipynb" />
+    <Content Include="tests.ipynb" />
+    <None Include="tests.fsx" />
+    <None Include="dependencies.fsx" />
+    <None Include="build.fsx" />
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@ open System.IO
 open System.Text
 
 let runScript =
-    Path.Combine(Environment.CurrentDirectory, "run.fsx")
+    Path.Combine(Environment.CurrentDirectory, "tests.fsx")
 
 let dependenciesScriptFileName = "dependencies.fsx"
 
