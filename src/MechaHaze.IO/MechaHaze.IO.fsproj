@@ -6,10 +6,15 @@
   </PropertyGroup>
   <ItemGroup>
       <Compile Include="RabbitQueue.fs" />
+      <Compile Include="TimeSync.fs" />
       <None Include="tests.fsx" />
       <None Include="dependencies.fsx" />
       <None Include="build.fsx" />
       <Content Include="paket.references" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MechaHaze.CoreCLR\MechaHaze.CoreCLR.fsproj" />
+    <ProjectReference Include="..\MechaHaze.Shared\MechaHaze.Shared.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

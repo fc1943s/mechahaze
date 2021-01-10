@@ -6,7 +6,6 @@ open Expecto.Flip
 open MechaHaze.CoreCLR.Core
 open MechaHaze.Shared.Core
 open MechaHaze.Shared
-open FSharp.Control.Tasks
 
 
 module Tests =
@@ -14,29 +13,6 @@ module Tests =
         testList
             "Tests"
             [
-                testList
-                    "State"
-                    [
-                        test "Save then load state" {
-                            task {
-                                let dir = FileSystem.ensureTempSessionDirectory ()
-
-                                let statePath = StatePersistence.StateUri (Uri (dir </> "state.json"))
-                                let initialState = SharedState.SharedState.Default
-                                let! writeResult = initialState |> StatePersistence.write statePath
-                                writeResult |> Result.unwrap
-
-                                match! StatePersistence.read statePath with
-                                | Ok newState ->
-                                    printfn $"initialState={initialState}; newState={newState}"
-                                    newState |> Expect.equal "" initialState
-                                | Error ex -> raise ex
-                            }
-                            |> Async.AwaitTask
-                            |> Async.RunSynchronously
-                        }
-                    ]
-
                 testList
                     "AudioRecorder"
                     [

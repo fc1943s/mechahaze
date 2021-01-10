@@ -19,6 +19,7 @@ open CoreOSC.IO
 
 module OscDispatcher =
     let mutable private _state: SharedState.SharedState option = None
+    let mutable private _preset: (seq<(string * string) * (string * string)>) option = None
     let mutable private _offset = 0L
     let private lockState = Object ()
 
@@ -32,6 +33,14 @@ module OscDispatcher =
             let oldState = _state
 
             _state <- Some state
+
+            _preset <-
+                state.BindingsPresetMap
+                |> ofPresetMap
+                |> List.tryFind (fun (presetId, _) -> Some presetId = state.ActiveBindingsPreset)
+                |> Option.map (fun (_, preset) ->
+                    splitPreset preset
+                    |> Seq.filter (fun ((fullSource, _), _) -> fullSource <> ""))
 
             if oldState.IsNone
                || state.Track.Id <> SharedState.Track.Default.Id
@@ -261,15 +270,10 @@ module OscDispatcher =
                             |> Some
                         | _ -> None)
 
-                match _state, layers with
-                | Some ({ ActiveBindingsPreset = Some activeBindingsPreset } as state), Some layers ->
+                match _preset, layers with
+                | Some preset, Some layers ->
                     let messages =
-                        state.BindingsPresetMap
-                        |> ofPresetMap
-                        |> Map.tryFind activeBindingsPreset
-                        |> Option.defaultValue Preset.Default
-                        |> splitPreset
-                        |> Seq.filter (fun ((fullSource, _), _) -> fullSource <> "")
+                        preset
                         |> Seq.choose (fun ((fullSource, _), (fullDest, dest)) ->
                             layers
                             |> Map.tryFind fullSource

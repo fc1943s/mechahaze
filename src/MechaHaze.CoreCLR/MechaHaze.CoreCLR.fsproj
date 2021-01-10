@@ -18,11 +18,9 @@
     <Compile Include="Core\SafeQueue.fs" />
       <Compile Include="SharedConfig.fs" />
       <Compile Include="Waveform.fs" />
-      <Compile Include="TimeSync.fs" />
       <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.IO\MechaHaze.IO.fsproj" />
     <ProjectReference Include="..\MechaHaze.Shared\MechaHaze.Shared.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

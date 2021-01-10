@@ -3,6 +3,9 @@ nuget Fake.IO.FileSystem
 nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
 //"
+//#r "nuget: Fake.IO.FileSystem"
+//#r "nuget: Fake.DotNet.Cli"
+//#r "nuget: Fake.Core.Target"
 #load "./.fake/build.fsx/intellisense.fsx"
 #load "../MechaHaze.Interop.OperatingSystem/Interactive/utils.fsx"
 

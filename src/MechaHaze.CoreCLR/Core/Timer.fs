@@ -1,13 +1,14 @@
 namespace MechaHaze.CoreCLR.Core
 
-open FSharp.Control
+open System.Threading.Tasks
 open System.Diagnostics
 open Serilog
 open System.Threading
+open FSharp.Control.Tasks
 
 module Timer =
-    let hangAsync interval (timerEventAsync: Async<unit>) =
-        async {
+    let hangAsync interval (timerEventAsync: unit -> Task) =
+        task {
             let mutable _timer: Timer = null
 
             _timer <-
@@ -16,7 +17,7 @@ module Timer =
                               stopwatch.Start ()
 
                               try
-                                  timerEventAsync |> Async.RunSynchronously
+                                  (timerEventAsync ()).GetAwaiter().GetResult()
                               with ex -> Log.Error (ex, "Error on timer event")
 
                               //  Log.Debug ("DIFFERENCE {DIF}", interval - int stopwatch.ElapsedMilliseconds)
@@ -33,7 +34,7 @@ module Timer =
                           Timeout.Infinite)
 
             while true do
-                do! Async.Sleep 1000
+                do! Task.Delay 1000
 
             _timer.Dispose ()
         }

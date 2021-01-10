@@ -102,27 +102,25 @@ module SharedState =
                 RecordingMode = false
                 //                BindingsPresetMap = PresetMap Map.empty
                 BindingsPresetMap =
-                    PresetMap
-                        ([
-                            PresetId "Simple",
-                            {
-                                Bindings =
-                                    [
-                                        Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals")
-                                        Binding (BindingSourceId "levels|vocals2", BindingDestId "magic|vocals2")
-                                    ]
-                            }
-                            PresetId "Advanced",
-                            {
-                                Bindings =
-                                    [
-                                        Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals")
-                                        Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals2")
-                                        Binding (BindingSourceId "", BindingDestId "magic|vocals3")
-                                    ]
-                            }
-                         ]
-                         |> Map.ofList)
+                    PresetMap [
+                        PresetId "Simple",
+                        {
+                            Bindings =
+                                [
+                                    Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals")
+                                    Binding (BindingSourceId "levels|vocals2", BindingDestId "magic|vocals2")
+                                ]
+                        }
+                        PresetId "Advanced",
+                        {
+                            Bindings =
+                                [
+                                    Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals")
+                                    Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals2")
+                                    Binding (BindingSourceId "", BindingDestId "magic|vocals3")
+                                ]
+                        }
+                    ]
                 ActiveBindingsPreset = None
             }
 

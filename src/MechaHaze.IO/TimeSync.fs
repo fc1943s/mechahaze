@@ -1,11 +1,13 @@
 namespace MechaHaze.CoreCLR
 
+open System.Threading.Tasks
 open MathNet.Numerics
 open MechaHaze.Shared
 open MechaHaze.CoreCLR.Core
 open Serilog
 open System
 open MechaHaze.IO
+open FSharp.Control.Tasks
 
 
 module TimeSync =
@@ -76,49 +78,43 @@ module TimeSync =
 
     module Server =
         let handlerAsync message (exchange: RabbitQueue.Exchange<_>) =
-            async {
-                match message with
-                | Align (clientReqId, T1, T2) ->
-                    Finish (T1, T2, DateTime.UtcNow.Ticks)
-                    |> exchange.Post ($"server.finish.{clientReqId}")
-                | _ -> ()
+            match message with
+            | Align (clientReqId, T1, T2) ->
+                Finish (T1, T2, DateTime.UtcNow.Ticks)
+                |> exchange.PostAsync ($"server.finish.{clientReqId}")
+            | _ -> Task.CompletedTask
+
+        let startAsync bus cancellationToken =
+            task {
+                let exchange = RabbitQueue.Exchange bus
+
+                exchange.RegisterConsumer
+                    [
+                        "client.*"
+                    ]
+                    handlerAsync
+                    cancellationToken
+                |> ignore
+
+                do! (fun () -> exchange.PostAsync "server.init" (Init DateTime.UtcNow.Ticks))
+                    |> Timer.hangAsync 1000
             }
-
-        let start bus =
-            let exchange = RabbitQueue.Exchange bus
-
-            exchange.RegisterConsumer
-                [
-                    "client.*"
-                ]
-                handlerAsync
-
-            let timerEventAsync =
-                async {
-                    Init DateTime.UtcNow.Ticks
-                    |> exchange.Post "server.init"
-                }
-
-            timerEventAsync
-            |> Timer.hangAsync 1000
-            |> Async.Start
 
     module Client =
         let handlerAsync (onOffset: int64 -> unit) message (exchange: RabbitQueue.Exchange<_>) =
-            async {
-                match message with
-                | Init T1 ->
-                    Align (processId, T1, DateTime.UtcNow.Ticks)
-                    |> exchange.Post "client.align"
+            match message with
+            | Init T1 ->
+                Align (processId, T1, DateTime.UtcNow.Ticks)
+                |> exchange.PostAsync "client.align"
 
-                | Finish (T1, T2, T3) ->
-                    let offset = (T2 - T1 - T3 + T2) / 2L
+            | Finish (T1, T2, T3) ->
+                let offset = (T2 - T1 - T3 + T2) / 2L
 
-                    Log.Debug ("Stabilized Time Sync. Offset: {A}", offset)
+                Log.Debug ("Stabilized Time Sync. Offset: {A}", offset)
 
-                    onOffset offset
-                | _ -> ()
-            }
+                onOffset offset
+                Task.CompletedTask
+            | _ -> Task.CompletedTask
 
         let start bus (onOffset: int64 -> unit) =
             let exchange = RabbitQueue.Exchange bus

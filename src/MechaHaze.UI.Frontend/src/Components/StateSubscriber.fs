@@ -33,7 +33,7 @@ module StateSubscriber =
 
                 state.SharedState.BindingsPresetMap
                 |> ofPresetMap
-                |> Map.iter (fun presetId preset -> setter.set (AtomFamilies.preset presetId, preset))
+                |> List.iter (fun (presetId, preset) -> setter.set (AtomFamilies.preset presetId, preset))
 
                 state.TimeSyncMap
                 |> SharedState.ofTimeSyncMap
@@ -42,8 +42,7 @@ module StateSubscriber =
                 let presetIdList =
                     state.SharedState.BindingsPresetMap
                     |> ofPresetMap
-                    |> Map.keys
-                    |> Seq.toList
+                    |> List.map fst
 
                 setter.set (Atoms.presetIdList, presetIdList)
 

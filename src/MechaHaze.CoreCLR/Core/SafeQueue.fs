@@ -1,5 +1,6 @@
 namespace MechaHaze.CoreCLR.Core
 
+open System.Threading.Tasks
 open Serilog
 
 module SafeQueue =
@@ -9,7 +10,7 @@ module SafeQueue =
         | Get of AsyncReplyChannel<'T>
         | IsEmpty of AsyncReplyChannel<bool>
 
-    type SafeQueue<'T> (?onSet: 'T option -> 'T -> Async<unit>) =
+    type SafeQueue<'T> (?onSet: 'T option -> 'T -> Task) =
         let agent =
             MailboxProcessor<SafeQueueMessage<'T>>
                 .Start(fun inbox ->
@@ -27,7 +28,7 @@ module SafeQueue =
                                 match onSet with
                                 | Some onSet ->
                                     try
-                                        do! onSet oldState item
+                                        do! onSet oldState item |> Async.AwaitTask
                                     with ex -> Log.Error (ex, "Error setting state on SafeQueue")
                                 | _ -> ()
 

@@ -47,7 +47,7 @@ module AddBindingsPresetInputComponent =
                                     let valid =
                                         props.BindingsPresetMap
                                         |> ofPresetMap
-                                        |> Map.exists (fun (PresetId presetId) _ -> presetId = state.current.Text)
+                                        |> List.exists (fun ((PresetId presetId), _) -> presetId = state.current.Text)
                                         |> not
 
                                     if valid && state.current.Text.Length > 0 then

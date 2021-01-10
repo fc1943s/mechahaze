@@ -1,5 +1,8 @@
 ﻿namespace MechaHaze.UI.Backend
 
+open System.Threading
+open System.Threading.Tasks
+open FSharp.Control.Tasks
 open MechaHaze.IO
 open MechaHaze.Model
 open MechaHaze.Shared
@@ -10,16 +13,12 @@ open MechaHaze.CoreCLR.Core
 open Serilog
 open Elmish.Bridge
 open Elmish
-open MechaHaze.CoreCLR.Core
-open MechaHaze.Model
-open Serilog
-open Giraffe.SerilogExtensions
 open MechaHaze.UI
 
 
 module Main =
-    let startAsync =
-        async {
+    let startAsync cancellationToken =
+        task {
             let configToml = SharedConfig.loadTomlIo ()
 
             let uiServer = UIServer.UIServer ()
@@ -29,31 +28,31 @@ module Main =
 
             let stateBroadcastQueue =
                 SafeQueue.SafeQueue<Server.StateScope<SharedState.SharedState>> (fun _ newState ->
-                    async {
-                        match _rabbitExchange, _stateQueue with
-                        | Some rabbitExchange, Some stateQueue ->
-                            match newState with
-                            | Server.Internal _ ->
-                                let oldState =
-                                    if stateQueue.IsEmpty () then
-                                        UIState.State.Default
-                                    else
-                                        stateQueue.Dequeue () |> Server.scopeToState
+                    match _rabbitExchange, _stateQueue with
+                    | Some rabbitExchange, Some stateQueue ->
+                        match newState with
+                        | Server.Internal _ ->
+                            let oldState =
+                                if stateQueue.IsEmpty () then
+                                    UIState.State.Default
+                                else
+                                    stateQueue.Dequeue () |> Server.scopeToState
 
-//                                uiServer.BroadcastState
+                            //                                uiServer.BroadcastState
 //                                    { oldState with
 //                                        SharedState = newState |> Server.scopeToState
 //                                    }
 
-                                stateQueue.Enqueue
-                                    (Server.Internal
-                                        { oldState with
-                                            SharedState = newState |> Server.scopeToState
-                                        })
+                            stateQueue.Enqueue
+                                (Server.Internal
+                                    { oldState with
+                                        SharedState = newState |> Server.scopeToState
+                                    })
 
-                            | Server.Remote state -> rabbitExchange.Post "" (SharedState.ClientStateUpdate state)
-                        | _ -> ()
-                    })
+                            Task.CompletedTask
+
+                        | Server.Remote state -> rabbitExchange.PostAsync "" (SharedState.ClientStateUpdate state)
+                    | _ -> Task.CompletedTask)
 
             use rabbitBus =
                 RabbitQueue.createBus
@@ -63,15 +62,15 @@ module Main =
                     configToml.RabbitMqPassword
 
             let rabbitHandlerAsync message __exchange =
-                async {
-                    match message with
-                    | SharedState.StateUpdate state ->
-                        Log.Debug ("State received. Track: {A}; Position: {B}", state.Track.Id, state.Track.Position)
+                match message with
+                | SharedState.StateUpdate state ->
+                    Log.Debug ("State received. Track: {A}; Position: {B}", state.Track.Id, state.Track.Position)
 
-                        stateBroadcastQueue.Enqueue (Server.Internal state)
+                    stateBroadcastQueue.Enqueue (Server.Internal state)
 
-                    | _ -> ()
-                }
+                | _ -> ()
+
+                Task.CompletedTask
 
             _rabbitExchange <-
                 let rabbitExchange = RabbitQueue.Exchange rabbitBus
@@ -81,16 +80,18 @@ module Main =
                         "#"
                     ]
                     rabbitHandlerAsync
+                    cancellationToken
+                |> ignore
 
                 Some rabbitExchange
 
             let stateQueue =
                 SafeQueue.SafeQueue<Server.StateScope<UIState.State>> (fun _ newState ->
-                    async {
-                        match newState with
-                        | Server.Remote newState -> stateBroadcastQueue.Enqueue (Server.Remote newState.SharedState)
-                        | _ -> ()
-                    })
+                    match newState with
+                    | Server.Remote newState -> stateBroadcastQueue.Enqueue (Server.Remote newState.SharedState)
+                    | _ -> ()
+
+                    Task.CompletedTask)
 
             _stateQueue <- Some stateQueue
 
@@ -103,11 +104,13 @@ module Main =
 
                 let newState = { state with TimeSyncMap = newTimeSyncMap }
                 stateQueue.Enqueue (Server.Internal newState))
+            |> ignore
 
             do! uiServer.HangAsync stateQueue
         }
 
     [<EntryPoint>]
     let main _ =
-        fun () -> startAsync |> Async.RunSynchronously
+        startAsync(CancellationToken.None).GetAwaiter()
+            .GetResult
         |> Startup.withLogging false

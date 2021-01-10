@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MechaHaze.CoreCLR\MechaHaze.CoreCLR.fsproj" />
+    <ProjectReference Include="..\MechaHaze.IO\MechaHaze.IO.fsproj" />
     <ProjectReference Include="..\MechaHaze.UI.Backend.ElmishBridge\MechaHaze.UI.Backend.ElmishBridge.fsproj" />
     <ProjectReference Include="..\MechaHaze.UI\MechaHaze.UI.fsproj" />
   </ItemGroup>

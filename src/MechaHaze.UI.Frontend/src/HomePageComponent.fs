@@ -364,12 +364,7 @@ module HomePageComponent =
                                 | Some activeBindingsPreset ->
                                     StormDiagramComponent.``default``
                                         {
-                                            BindingsPreset =
-                                                uiState.SharedState.BindingsPresetMap
-                                                |> ofPresetMap
-                                                |> Map.tryFind activeBindingsPreset
-                                                |> Option.defaultValue Preset.Default
-
+                                            BindingsPresetId = activeBindingsPreset
                                             OnLink = events.OnBindingLink
                                         }
                                 | None -> str "no activeBindingsPreset to render StormDiagramComponent"

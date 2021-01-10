@@ -1,6 +1,7 @@
 namespace MechaHaze.UI.Frontend
 
 open System
+open Feliz.Recoil
 open MechaHaze.Shared.Core
 open MechaHaze.UI.Frontend
 open MechaHaze.Shared
@@ -12,7 +13,7 @@ module StormDiagramComponent =
 
     type Props =
         {
-            BindingsPreset: Bindings.Preset
+            BindingsPresetId: Bindings.PresetId
             OnLink: obj -> unit
         }
 
@@ -24,7 +25,8 @@ module StormDiagramComponent =
         + ", 85%, 25%, 1)"
 
     let private createEngine props =
-        let bindings = Bindings.splitPreset props.BindingsPreset
+        let preset = Recoil.useValue (AtomFamilies.preset props.BindingsPresetId)
+        let bindings = Bindings.splitPreset preset
 
         match bindings with
         | [] -> None

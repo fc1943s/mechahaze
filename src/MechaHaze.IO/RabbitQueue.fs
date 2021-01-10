@@ -1,9 +1,11 @@
 namespace MechaHaze.IO
 
+open System.Threading.Tasks
 open RabbitMQ.Client
 open System
 open EasyNetQ
 open Serilog
+open FSharp.Control.Tasks
 
 module RabbitQueue =
 
@@ -53,25 +55,28 @@ module RabbitQueue =
     type Exchange<'T when 'T: not struct> (bus: IBus) =
         let exchange = bus.Advanced.ExchangeDeclare ($"@@Exchange-{typeof<'T>.FullName}", ExchangeType.Topic)
 
-        member _.Post routingKey message =
+        member _.PostAsync routingKey message =
             try
-                bus.Advanced.Publish<'T> (exchange, routingKey, false, Message message)
-            with ex -> Log.Error (ex, "Error while publishing message: {A}", message)
+                bus.Advanced.PublishAsync<'T> (exchange, routingKey, false, Message message)
+            with ex ->
+                Log.Error (ex, "Error while publishing message: {A}", message)
+                Task.CompletedTask
 
 
-        member this.RegisterConsumer bindingKeys (handler: 'T -> Exchange<'T> -> Async<unit>) =
-            let queue = bus.Advanced.QueueDeclare ()
+        member this.RegisterConsumer routingKeys (handler: 'T -> Exchange<'T> -> Task) cancellationToken =
+            task {
+                let! queue = bus.Advanced.QueueDeclareAsync ()
 
-            for bindingKey in bindingKeys do
-                bus.Advanced.Bind (exchange, queue, bindingKey)
-                |> ignore
+                let! _ =
+                    routingKeys
+                    |> Seq.map (fun routingKey ->
+                        bus.Advanced.BindAsync (exchange, queue, routingKey, cancellationToken))
+                    |> Task.WhenAll
 
-            async {
-                let onMessage (body: IMessage<'T>) (__info: MessageReceivedInfo) = handler body.Body this |> Async.Start
+                let onMessage (body: IMessage<'T>) (__info: MessageReceivedInfo) = handler body.Body this
 
                 use _ = bus.Advanced.Consume (queue, onMessage)
 
                 while true do
-                    do! Async.Sleep 1000
+                    do! Task.Delay 1000
             }
-            |> Async.Start

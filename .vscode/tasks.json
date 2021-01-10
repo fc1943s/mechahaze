@@ -5,9 +5,9 @@
 			"type": "shell",
 			"command": "dotnet fake build",
 			"options": {
-				"cwd": "src/MechaHaze.IO/Interactive"
+				"cwd": "src/MechaHaze.Daemon.AudioListener"
 			},
-			"label": "Mechahaze.IO/Interactive - dotnet fake build",
+			"label": "Mechahaze.Daemon.AudioListener - dotnet fake build",
 			"problemMatcher": []
 		}
 	]

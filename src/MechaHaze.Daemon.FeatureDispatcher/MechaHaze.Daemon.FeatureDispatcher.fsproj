@@ -11,7 +11,7 @@
     <Content Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MechaHaze.CoreCLR\MechaHaze.CoreCLR.fsproj" />
+    <ProjectReference Include="..\MechaHaze.IO\MechaHaze.IO.fsproj" />
     <ProjectReference Include="..\MechaHaze.Model\MechaHaze.Model.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />

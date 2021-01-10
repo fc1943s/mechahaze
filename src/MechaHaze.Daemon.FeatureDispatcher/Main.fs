@@ -1,18 +1,20 @@
 ﻿namespace MechaHaze.Daemon.FeatureDispatcher
 
+open System.Threading
+open System.Threading.Tasks
 open MechaHaze.Model
-open MechaHaze.Shared.Core
 open MechaHaze.CoreCLR.Core
 open MechaHaze.Daemon.FeatureDispatcher
 open MechaHaze.Shared
 open MechaHaze.CoreCLR
 open Serilog
 open MechaHaze.IO
+open FSharp.Control.Tasks
 
 
 module Main =
-    let startAsync =
-        async {
+    let startAsync cancellationToken =
+        task {
             let configToml = SharedConfig.loadTomlIo ()
 
             use rabbitBus =
@@ -25,24 +27,25 @@ module Main =
             let rabbitExchange = RabbitQueue.Exchange rabbitBus
 
             let rabbitHandlerAsync message __exchange =
-                async {
-                    match message with
-                    | SharedState.StateUpdate state ->
-                        Log.Debug ("State received. Track: {A}; Position: {B}", state.Track.Id, state.Track.Position)
+                match message with
+                | SharedState.StateUpdate state ->
+                    Log.Debug ("State received. Track: {A}; Position: {B}", state.Track.Id, state.Track.Position)
 
-                        OscDispatcher.updateState state
+                    OscDispatcher.updateState state
+                | _ -> ()
 
-                    | _ -> ()
-                }
+                Task.CompletedTask
 
             rabbitExchange.RegisterConsumer
                 [
                     "#"
                 ]
                 rabbitHandlerAsync
+                cancellationToken
+            |> ignore
 
 
-            let timeSyncMapState = SafeQueue.SafeQueue<SharedState.TimeSyncMap> (fun _ _ -> async { () })
+            let timeSyncMapState = SafeQueue.SafeQueue<SharedState.TimeSyncMap> (fun _ _ -> Task.CompletedTask)
             timeSyncMapState.Enqueue (Map.empty |> SharedState.TimeSyncMap)
 
             let onOffset offset =
@@ -56,17 +59,15 @@ module Main =
 
                 newTimeSyncMap |> timeSyncMapState.Enqueue
 
-            TimeSync.Client.start rabbitBus onOffset
+            TimeSync.Client.start rabbitBus onOffset |> ignore
 
             let stateQueue =
                 SafeQueue.SafeQueue<SharedState.SharedState> (fun oldState newState ->
-                    async {
-                        Log.Debug ("Sending state update.\nOld: {OldState} \nNew: {NewState}", oldState, newState)
+                    Log.Debug ("Sending state update.\nOld: {OldState} \nNew: {NewState}", oldState, newState)
 
-                        OscDispatcher.updateState newState
+                    OscDispatcher.updateState newState
 
-                        rabbitExchange.Post "" (SharedState.ClientStateUpdate newState)
-                    })
+                    rabbitExchange.PostAsync "" (SharedState.ClientStateUpdate newState))
 
             do! OscDispatcher.hangAsync stateQueue
         }
@@ -77,7 +78,9 @@ module Main =
 
         try
             try
-                startAsync |> Async.RunSynchronously
+                (startAsync CancellationToken.None)
+                    .GetAwaiter()
+                    .GetResult()
 
                 Log.Information ("Program end")
                 0

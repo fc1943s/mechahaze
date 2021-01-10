@@ -123,8 +123,8 @@ module BindingsSettingsDropdownComponent =
 
                         props.BindingsPresetMap
                         |> ofPresetMap
-                        |> Map.keys
-                        |> Seq.map (fun ((PresetId presetIdValue) as presetId) ->
+                        |> List.map fst
+                        |> List.map (fun ((PresetId presetIdValue) as presetId) ->
                             let active = (Some presetId) = props.ActiveBindingsPreset
 
                             Control.div [
@@ -161,7 +161,6 @@ module BindingsSettingsDropdownComponent =
                                                    ] []
                                 ]
                             ])
-                        |> Seq.toList
                         |> ofList
 
                         Dropdown.divider []

@@ -43,7 +43,7 @@ module Bindings =
         static member inline Default = { Bindings = [] }
 
 
-    type PresetMap = PresetMap of Map<PresetId, Preset>
+    type PresetMap = PresetMap of (PresetId * Preset) list
     let ofPresetMap (PresetMap x) = x
 
 

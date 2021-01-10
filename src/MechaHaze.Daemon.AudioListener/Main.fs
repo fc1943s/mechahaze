@@ -1,26 +1,27 @@
 ﻿namespace MechaHaze.Daemon.AudioListener
 
+open System.Threading
+open FSharp.Control.Tasks
+open System.Threading.Tasks
 open FSharpPlus
 open MechaHaze.Model
 open MechaHaze.Shared.Core
 open MechaHaze.IO
 open MechaHaze.Shared
 open Serilog
-open FSharp.Control
 open MechaHaze.Daemon.AudioListener
 open Elmish
 open MechaHaze.CoreCLR
 open Newtonsoft.Json
 open MechaHaze.CoreCLR.Core
-open FSharp.Control.Tasks
 
 
 module Main =
-    let start () =
+    let start cancellationToken =
         task {
             let configToml = SharedConfig.loadTomlIo ()
 
-            let eventInjectorQueue = SafeQueue.SafeQueue<LocalQueue.Event -> unit> (fun _ _ -> async { () })
+            let eventInjectorQueue = SafeQueue.SafeQueue<LocalQueue.Event -> unit> (fun _ _ -> Task.CompletedTask)
 
             let eventInjectorSub dispatch =
                 Log.Debug ("SUBSCRIPTION STARTED. CAN DISPATCH")
@@ -35,27 +36,28 @@ module Main =
                         configToml.RabbitMqUsername
                         configToml.RabbitMqPassword
 
-                TimeSync.Server.start rabbitBus
+                TimeSync.Server.startAsync rabbitBus |> ignore
 
                 let rabbitExchange = RabbitQueue.Exchange rabbitBus
 
                 let rabbitHandlerAsync message __exchange =
-                    async {
-                        match message with
-                        | SharedState.ClientStateUpdate state ->
-                            Log.Debug
-                                ("State received. Track: {A}; Position: {B}", state.Track.Id, state.Track.Position)
+                    match message with
+                    | SharedState.ClientStateUpdate state ->
+                        Log.Debug ("State received. Track: {A}; Position: {B}", state.Track.Id, state.Track.Position)
 
-                            let dispatch = eventInjectorQueue.Dequeue ()
-                            dispatch (LocalQueue.ClientSetState state)
-                        | _ -> ()
-                    }
+                        let dispatch = eventInjectorQueue.Dequeue ()
+                        dispatch (LocalQueue.ClientSetState state)
+                    | _ -> ()
+
+                    Task.CompletedTask
 
                 rabbitExchange.RegisterConsumer
                     [
                         "#"
                     ]
                     rabbitHandlerAsync
+                    cancellationToken
+                |> ignore
 
                 rabbitExchange
 
@@ -69,7 +71,7 @@ module Main =
                         .GetAwaiter()
                         .GetResult() with
                     | Ok state ->
-                        rabbitExchange.Post "" (SharedState.StateUpdate state)
+                        (rabbitExchange.PostAsync "" (SharedState.StateUpdate state)).GetAwaiter().GetResult()
                         state
 
                     | Error ex ->
@@ -157,7 +159,7 @@ module Main =
                                     }
 
                         // rabbitQueue.Post (SharedState.TrackUpdate newState.Track)
-                        rabbitExchange.Post "" (SharedState.StateUpdate newState)
+                        rabbitExchange.PostAsync "" (SharedState.StateUpdate newState)
 
                         newState, Cmd.none
 
@@ -166,7 +168,9 @@ module Main =
                         if newState.BindingsPresetMap
                            <> state.BindingsPresetMap then
                             //                    Log.Debug ("Setting new time sync offset: {A}", newState.TimeSync)
-                            rabbitExchange.Post "" (SharedState.StateUpdate newState)
+                            rabbitExchange.PostAsync "" (SharedState.StateUpdate newState)
+                        else
+                            Task.CompletedTask
 
                         newState, Cmd.none
 
@@ -188,11 +192,13 @@ module Main =
                 newState, newCmd
 
             let timerSub dispatch =
-                let timerEventAsync = async { dispatch LocalQueue.RecordingRequest }
+                let timerEventAsync () =
+                    dispatch LocalQueue.RecordingRequest
+                    Task.CompletedTask
 
                 timerEventAsync
                 |> Timer.hangAsync (int SharedState.sampleIntervalMs)
-                |> Async.Start
+                |> ignore
 
             let view __state __dispatch = ()
 
@@ -214,10 +220,11 @@ module Main =
             |> Program.run
 
             while true do
-                do! Async.Sleep 1000
+                do! Task.Delay 1000
         }
 
     [<EntryPoint>]
     let main _ =
-        start().GetAwaiter().GetResult
+        start(CancellationToken.None).GetAwaiter()
+            .GetResult
         |> Startup.withLogging false

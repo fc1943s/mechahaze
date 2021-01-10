@@ -7,7 +7,6 @@ open MechaHaze.CoreCLR.Core
 open MechaHaze.Model
 open MechaHaze.Shared.Bindings
 open MechaHaze.UI.Backend.ElmishBridge
-open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
 open Serilog
 open Thoth.Json.Giraffe
@@ -65,20 +64,21 @@ module ServerBridge =
             |> withClientDispatch Cmd.none
 
 
-        | SharedState.ToggleBinding (Bindings.BindingToggle (presetId, binding)) ->
+        | SharedState.ToggleBinding (BindingToggle (presetId, binding)) ->
 
             let preset =
                 state.SharedState.BindingsPresetMap
-                |> Bindings.ofPresetMap
+                |> ofPresetMap
+                |> Map.ofList
                 |> Map.tryFind presetId
                 |> Option.defaultValue Preset.Default
-                |> Bindings.applyBinding binding
+                |> applyBinding binding
 
             let presets =
                 state.SharedState.BindingsPresetMap
-                |> Bindings.ofPresetMap
-                |> Map.add presetId preset
-                |> Bindings.PresetMap
+                |> ofPresetMap
+                |> List.append [ presetId, preset ]
+                |> PresetMap
 
             SharedState.Response.StateUpdated
                 { state.SharedState with
@@ -90,16 +90,16 @@ module ServerBridge =
             let presets =
                 let presetMap =
                     state.SharedState.BindingsPresetMap
-                    |> Bindings.ofPresetMap
+                    |> ofPresetMap
+                    |> Map.ofList
 
                 presetMap
                 |> Map.containsKey presetId
                 |> function
                 | true -> presetMap |> Map.remove presetId
-                | false ->
-                    presetMap
-                    |> Map.add presetId Preset.Default
-                |> Bindings.PresetMap
+                | false -> presetMap |> Map.add presetId Preset.Default
+                |> Map.toList
+                |> PresetMap
 
             SharedState.Response.StateUpdated
                 { state.SharedState with
@@ -146,7 +146,7 @@ module UIServer =
 //            connections.InternalBroadcastToClients (InternalUI.InternalServerMessage.SetState state)
 
 
-        member this.HangAsync (stateQueue: SafeQueue.SafeQueue<Server.StateScope<UIState.State>>) =
+        member this.HangAsync (_stateQueue: SafeQueue.SafeQueue<Server.StateScope<UIState.State>>) =
             async {
 
                 //                let handleClientMessage message (state: UIState.State) __serverToClientDispatch =
