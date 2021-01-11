@@ -67,30 +67,28 @@ module ServerBridge =
         | SharedState.ToggleBinding (BindingToggle (presetId, binding)) ->
 
             let preset =
-                state.SharedState.BindingsPresetMap
-                |> ofPresetMap
+                state.SharedState.PresetList
+                |> List.map (fun preset -> preset.PresetId, preset)
                 |> Map.ofList
                 |> Map.tryFind presetId
                 |> Option.defaultValue Preset.Default
                 |> applyBinding binding
 
-            let presets =
-                state.SharedState.BindingsPresetMap
-                |> ofPresetMap
-                |> List.append [ presetId, preset ]
-                |> PresetMap
-
             SharedState.Response.StateUpdated
                 { state.SharedState with
-                    BindingsPresetMap = presets
+                    PresetList =
+                        state.SharedState.PresetList
+                        @ [
+                            preset
+                        ]
                 }
             |> withClientDispatch Cmd.none
 
         | SharedState.TogglePreset presetId ->
             let presets =
                 let presetMap =
-                    state.SharedState.BindingsPresetMap
-                    |> ofPresetMap
+                    state.SharedState.PresetList
+                    |> List.map (fun preset -> preset.PresetId, preset)
                     |> Map.ofList
 
                 presetMap
@@ -99,18 +97,15 @@ module ServerBridge =
                 | true -> presetMap |> Map.remove presetId
                 | false -> presetMap |> Map.add presetId Preset.Default
                 |> Map.toList
-                |> PresetMap
+                |> List.map snd
 
-            SharedState.Response.StateUpdated
-                { state.SharedState with
-                    BindingsPresetMap = presets
-                }
+            SharedState.Response.StateUpdated { state.SharedState with PresetList = presets }
             |> withClientDispatch Cmd.none
 
         | SharedState.SetActiveBindingsPreset presetName ->
             SharedState.Response.StateUpdated
                 { state.SharedState with
-                    ActiveBindingsPreset = presetName
+                    ActivePresetId = presetName
                 }
             |> withClientDispatch Cmd.none
 

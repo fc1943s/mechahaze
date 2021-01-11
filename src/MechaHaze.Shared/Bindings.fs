@@ -29,6 +29,7 @@ module Bindings =
 
 
     type PresetId = PresetId of presetId: string
+    let ofPresetId (PresetId presetId) = presetId
     type BindingSourceId = BindingSourceId of bindingSourceId: string
     type BindingDestId = BindingDestId of bindingDestId: string
     type Binding = Binding of source: BindingSourceId * dest: BindingDestId
@@ -38,13 +39,10 @@ module Bindings =
 
     type Preset =
         {
+            PresetId: PresetId
             Bindings: Binding list
         }
-        static member inline Default = { Bindings = [] }
-
-
-    type PresetMap = PresetMap of (PresetId * Preset) list
-    let ofPresetMap (PresetMap x) = x
+        static member inline Default = { PresetId = PresetId ""; Bindings = [] }
 
 
     let splitPreset (preset: Preset) =

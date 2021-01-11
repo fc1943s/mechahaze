@@ -340,7 +340,7 @@ module HomePageComponent =
 
                                             BindingsSettingsDropdownComponent.``default``
                                                 {
-                                                    BindingsPresetMap = uiState.SharedState.BindingsPresetMap
+                                                    PresetList = uiState.SharedState.PresetList
                                                     ActiveBindingsPreset = activeBindingsPreset
                                                     TogglePreset = events.OnPresetToggle
                                                     ToggleBindingsDestination = events.OnBindingsDestinationToggle

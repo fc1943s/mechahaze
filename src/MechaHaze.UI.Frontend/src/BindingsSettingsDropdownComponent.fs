@@ -12,7 +12,7 @@ module BindingsSettingsDropdownComponent =
 
     type Props =
         {
-            BindingsPresetMap: Bindings.PresetMap
+            PresetList: Preset list
             ActiveBindingsPreset: PresetId option
             TogglePreset: PresetId -> unit
             ToggleBindingsDestination: BindingDestId -> unit
@@ -121,10 +121,8 @@ module BindingsSettingsDropdownComponent =
                         ] [
 
 
-                        props.BindingsPresetMap
-                        |> ofPresetMap
-                        |> List.map fst
-                        |> List.map (fun ((PresetId presetIdValue) as presetId) ->
+                        props.PresetList
+                        |> List.map (fun { PresetId = (PresetId presetIdValue) as presetId } ->
                             let active = (Some presetId) = props.ActiveBindingsPreset
 
                             Control.div [
@@ -215,7 +213,7 @@ module BindingsSettingsDropdownComponent =
 
                                 AddBindingsPresetInputComponent.``default``
                                     {
-                                        BindingsPresetMap = props.BindingsPresetMap
+                                        PresetList = props.PresetList
                                         AddPreset = events.OnPresetAdd
                                         Options =
                                             [

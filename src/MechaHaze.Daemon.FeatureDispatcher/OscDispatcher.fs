@@ -35,10 +35,9 @@ module OscDispatcher =
             _state <- Some state
 
             _preset <-
-                state.BindingsPresetMap
-                |> ofPresetMap
-                |> List.tryFind (fun (presetId, _) -> Some presetId = state.ActiveBindingsPreset)
-                |> Option.map (fun (_, preset) ->
+                state.PresetList
+                |> List.tryFind (fun preset -> Some preset.PresetId = state.ActivePresetId)
+                |> Option.map (fun preset ->
                     splitPreset preset
                     |> Seq.filter (fun ((fullSource, _), _) -> fullSource <> ""))
 

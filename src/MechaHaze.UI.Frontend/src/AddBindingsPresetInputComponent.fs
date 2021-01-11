@@ -1,7 +1,6 @@
 namespace MechaHaze.UI.Frontend
 
 open Browser.Types
-open MechaHaze.Shared
 open Fable.React
 open Fable.React.Props
 open Fulma
@@ -11,7 +10,7 @@ module AddBindingsPresetInputComponent =
 
     type Props =
         {
-            BindingsPresetMap: Bindings.PresetMap
+            PresetList: Preset list
             AddPreset: PresetId -> unit
             Options: Input.Option list
             Style: CSSProp list
@@ -45,9 +44,9 @@ module AddBindingsPresetInputComponent =
                             fun (e: KeyboardEvent) ->
                                 if e.key = "Enter" then
                                     let valid =
-                                        props.BindingsPresetMap
-                                        |> ofPresetMap
-                                        |> List.exists (fun ((PresetId presetId), _) -> presetId = state.current.Text)
+                                        props.PresetList
+                                        |> List.exists (fun { PresetId = PresetId presetId } ->
+                                            presetId = state.current.Text)
                                         |> not
 
                                     if valid && state.current.Text.Length > 0 then

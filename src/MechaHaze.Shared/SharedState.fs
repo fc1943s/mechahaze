@@ -56,6 +56,7 @@ module SharedState =
             }
 
     type TrackId = TrackId of string
+    let ofTrackId (TrackId trackId) = trackId
 
     type Track =
         {
@@ -85,8 +86,8 @@ module SharedState =
             Track: Track
             AutoLock: bool
             RecordingMode: bool
-            ActiveBindingsPreset: PresetId option
-            BindingsPresetMap: Bindings.PresetMap
+            ActivePresetId: PresetId option
+            PresetList: Preset list
         }
 
         static member inline Default =
@@ -101,18 +102,18 @@ module SharedState =
                 AutoLock = true
                 RecordingMode = false
                 //                BindingsPresetMap = PresetMap Map.empty
-                BindingsPresetMap =
-                    PresetMap [
-                        PresetId "Simple",
+                PresetList =
+                    [
                         {
+                            PresetId = PresetId "Simple"
                             Bindings =
                                 [
                                     Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals")
                                     Binding (BindingSourceId "levels|vocals2", BindingDestId "magic|vocals2")
                                 ]
                         }
-                        PresetId "Advanced",
                         {
+                            PresetId = PresetId "Advanced"
                             Bindings =
                                 [
                                     Binding (BindingSourceId "levels|vocals", BindingDestId "magic|vocals")
@@ -121,7 +122,7 @@ module SharedState =
                                 ]
                         }
                     ]
-                ActiveBindingsPreset = None
+                ActivePresetId = None
             }
 
     let clean state =
@@ -129,8 +130,8 @@ module SharedState =
             Debug = state.Debug
             AutoLock = state.AutoLock
             RecordingMode = state.RecordingMode
-            ActiveBindingsPreset = state.ActiveBindingsPreset
-            BindingsPresetMap = state.BindingsPresetMap
+            ActivePresetId = state.ActivePresetId
+            PresetList = state.PresetList
         }
 
 

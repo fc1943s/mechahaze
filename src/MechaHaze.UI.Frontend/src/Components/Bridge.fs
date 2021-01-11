@@ -74,7 +74,7 @@ module Client =
             { state with
                 SharedState =
                     { state.SharedState with
-                        ActiveBindingsPreset = presetName
+                        ActivePresetId = presetName
                     }
             }
 

@@ -71,7 +71,10 @@ module Main =
                         .GetAwaiter()
                         .GetResult() with
                     | Ok state ->
-                        (rabbitExchange.PostAsync "" (SharedState.StateUpdate state)).GetAwaiter().GetResult()
+                        (rabbitExchange.PostAsync "" (SharedState.StateUpdate state))
+                            .GetAwaiter()
+                            .GetResult()
+
                         state
 
                     | Error ex ->
@@ -165,8 +168,7 @@ module Main =
 
                     | LocalQueue.ClientSetState newState ->
                         // TODO: this if...
-                        if newState.BindingsPresetMap
-                           <> state.BindingsPresetMap then
+                        if newState.PresetList <> state.PresetList then
                             //                    Log.Debug ("Setting new time sync offset: {A}", newState.TimeSync)
                             rabbitExchange.PostAsync "" (SharedState.StateUpdate newState)
                         else

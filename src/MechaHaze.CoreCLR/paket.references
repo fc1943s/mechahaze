@@ -1,5 +1,6 @@
 FSharp.Core
 
+Thoth.Json.Net
 FSharp.SystemTextJson
 Fable.Remoting.Json
 Newtonsoft.Json

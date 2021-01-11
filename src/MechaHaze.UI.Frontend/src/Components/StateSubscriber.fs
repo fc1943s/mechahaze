@@ -19,7 +19,7 @@ module StateSubscriber =
                 setter.set (Atoms.debug, state.SharedState.Debug)
                 setter.set (Atoms.autoLock, state.SharedState.AutoLock)
                 setter.set (Atoms.recordingMode, state.SharedState.RecordingMode)
-                setter.set (Atoms.activeBindingsPreset, state.SharedState.ActiveBindingsPreset)
+                setter.set (Atoms.activeBindingsPreset, state.SharedState.ActivePresetId)
 
                 setter.set (AtomFamilies.Track.locked state.SharedState.Track.Id, state.SharedState.Track.Locked)
                 setter.set (AtomFamilies.Track.offset state.SharedState.Track.Id, state.SharedState.Track.Offset)
@@ -31,18 +31,16 @@ module StateSubscriber =
                     (AtomFamilies.Track.durationSeconds state.SharedState.Track.Id,
                      state.SharedState.Track.DurationSeconds)
 
-                state.SharedState.BindingsPresetMap
-                |> ofPresetMap
-                |> List.iter (fun (presetId, preset) -> setter.set (AtomFamilies.preset presetId, preset))
+                state.SharedState.PresetList
+                |> List.iter (fun preset -> setter.set (AtomFamilies.preset preset.PresetId, preset))
 
                 state.TimeSyncMap
                 |> SharedState.ofTimeSyncMap
                 |> Map.iter (fun processId timeSync -> setter.set (AtomFamilies.timeSync processId, timeSync))
 
                 let presetIdList =
-                    state.SharedState.BindingsPresetMap
-                    |> ofPresetMap
-                    |> List.map fst
+                    state.SharedState.PresetList
+                    |> List.map (fun preset -> preset.PresetId)
 
                 setter.set (Atoms.presetIdList, presetIdList)
 

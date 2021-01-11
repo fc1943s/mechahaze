@@ -12,6 +12,7 @@ git https://github.com/fc1943s/soundfingerprinting.audio.bass.git develop
 git https://github.com/fc1943s/SoundFingerprinting.Extensions.LMDB.git master
 
 // MechaHaze.CoreCLR
+nuget Thoth.Json.Net ~> 5.0
 nuget Ply ~> 0.3
 nuget Newtonsoft.Json ~> 12.0
 nuget Destructurama.FSharp ~> 1.1 prerelease

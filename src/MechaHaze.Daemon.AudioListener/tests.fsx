@@ -13,7 +13,6 @@ open System.Threading.Tasks
 open System.Threading
 open FSharp.Control.Tasks
 
-
 let tests =
     testList
         "tests"
@@ -41,12 +40,14 @@ let tests =
                     test "Save then load state (current)" {
                         (task {
                             let stateUri = StatePersistence.stateUriMemoizedLazy ()
+
                             match! StatePersistence.read stateUri with
                             | Ok initialState ->
                                 let dir = FileSystem.ensureTempSessionDirectory ()
                                 let statePath = StatePersistence.StateUri (Uri (dir </> "state.json"))
                                 let! writeResult = initialState |> StatePersistence.write statePath
                                 writeResult |> Result.unwrap
+
                                 match! StatePersistence.read statePath with
                                 | Ok newState -> newState |> Expect.equal "" initialState
                                 | Error ex -> raise ex
