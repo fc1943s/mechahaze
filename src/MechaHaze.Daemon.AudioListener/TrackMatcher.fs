@@ -18,7 +18,7 @@ module TrackMatcher =
     let private saveTempSampleIoAsync (sample: LocalQueue.Sample) =
         async {
             let outputFilePath =
-                (SharedConfig.pathsLazyIo ()).tempSamples
+                (SharedConfig.pathsMemoizedLazy ()).mechaHaze.tempSamples
                 </> string (Random().Next()) + ".wav"
 
             use writer = new WaveFileWriter(outputFilePath, Audio.NAudio.waveFormat)
@@ -29,11 +29,11 @@ module TrackMatcher =
             return outputFilePath
         }
 
-    let private servicesLazyIo =
+    let private servicesMemoizedLazy =
         fun () ->
             {|
                 Audio = BassAudioService ()
-                Model = new LMDBModelService((SharedConfig.pathsLazyIo ()).dbFingerprints)
+                Model = new LMDBModelService((SharedConfig.pathsMemoizedLazy ()).mechaHaze.dbFingerprints)
             |}
         |> Core.memoizeLazy
 
@@ -45,7 +45,7 @@ module TrackMatcher =
                         .Instance
                         .BuildQueryCommand()
                         .From(path)
-                        .UsingServices((servicesLazyIo ()).Model, (servicesLazyIo ()).Audio)
+                        .UsingServices((servicesMemoizedLazy ()).Model, (servicesMemoizedLazy ()).Audio)
                         .Query(DateTime.UtcNow)
                     |> Async.AwaitTask
             with ex ->
@@ -55,7 +55,7 @@ module TrackMatcher =
 
     let queryTrackDurationIo id =
         let path =
-            (SharedConfig.pathsLazyIo ()).dbTracks
+            (SharedConfig.pathsMemoizedLazy ()).mechaHaze.dbTracks
             </> id
             </> id + ".mp3"
 

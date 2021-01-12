@@ -18,7 +18,8 @@ module StatePersistence =
 
     let stateUriMemoizedLazy =
         fun () ->
-            (SharedConfig.pathsLazyIo ()).dbState
+            (SharedConfig.pathsMemoizedLazy ())
+                .mechaHaze.dbState
             </> "main.json"
             |> Uri
             |> StateUri

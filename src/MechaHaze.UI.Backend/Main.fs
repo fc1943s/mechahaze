@@ -6,6 +6,7 @@ open FSharp.Control.Tasks
 open MechaHaze.IO
 open MechaHaze.Model
 open MechaHaze.Shared
+open MechaHaze.Shared.Core
 open MechaHaze.CoreCLR
 open MechaHaze.UI.Backend
 open MechaHaze.UI.Backend.ElmishBridge
@@ -19,7 +20,8 @@ open MechaHaze.UI
 module Main =
     let startAsync cancellationToken =
         task {
-            let configToml = SharedConfig.loadTomlIo ()
+            let! configToml = SharedConfig.loadToml ()
+            let configToml = configToml |> Result.unwrap
 
             let uiServer = UIServer.UIServer ()
 

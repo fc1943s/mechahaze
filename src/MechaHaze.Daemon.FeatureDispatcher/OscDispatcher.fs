@@ -56,7 +56,8 @@ module OscDispatcher =
                                 |> Tuple2.map (fun format ->
                                     let (SharedState.TrackId trackId) = state.Track.Id
 
-                                    (SharedConfig.pathsLazyIo ()).dbTracks
+                                    (SharedConfig.pathsMemoizedLazy ())
+                                        .mechaHaze.dbTracks
                                     </> trackId
                                     </> $"{trackId}.{layer}.peaks.{format}.dat")
 

@@ -23,7 +23,10 @@ module RecJob =
             Log.Debug ("Persisting fingerprint")
 
             let audioService = BassAudioService ()
-            use modelService = new LMDBModelService((SharedConfig.pathsLazyIo ()).dbFingerprints)
+
+            use modelService =
+                new LMDBModelService((SharedConfig.pathsMemoizedLazy ())
+                    .mechaHaze.dbFingerprints)
 
             let trackData = modelService.ReadTrackById id
 
@@ -50,7 +53,10 @@ module RecJob =
 
             let! exitCode, _ =
                 Runtime.executePowerShellAsync [
-                    $" {(SharedConfig.pathsLazyIo ()).extAudiowaveformExe} -i \"{sourcePath}\" -o \"{destPath}\" -b 8 --split-channels "
+                    $" {
+                            (SharedConfig.pathsMemoizedLazy ())
+                                .extAudiowaveformExe
+                    } -i \"{sourcePath}\" -o \"{destPath}\" -b 8 --split-channels "
                 ]
 
             if exitCode <> 0 then
@@ -154,7 +160,11 @@ module RecJob =
 
             let tempFolder = FileSystem.ensureTempSessionDirectory ()
 
-            let trackPath = (SharedConfig.pathsLazyIo ()).dbTracks </> id
+            let trackPath =
+                (SharedConfig.pathsMemoizedLazy ())
+                    .mechaHaze.dbTracks
+                </> id
+
             Directory.CreateDirectory trackPath |> ignore
 
             let (tempMp3Path, tempWavPath) =
@@ -259,12 +269,12 @@ module RecJob =
                                                                 let modelId = $"insanebrothers_{layer}_warm{warm}_v1"
 
                                                                 let modelPath =
-                                                                    (SharedConfig.pathsLazyIo ()).extOpenUnmix
+                                                                    (SharedConfig.pathsMemoizedLazy ()).openUnmixHome
                                                                     </> "states"
                                                                     </> modelId
 
                                                                 let inferenceScript =
-                                                                    (SharedConfig.pathsLazyIo ()).extOpenUnmix
+                                                                    (SharedConfig.pathsMemoizedLazy ()).openUnmixHome
                                                                     </> "test.py"
 
                                                                 let! unmixedPath =
@@ -380,7 +390,10 @@ module RecJob =
             Log.Debug ("TrackIngest listening start")
 
             while true do
-                do! Directory.GetFiles ((SharedConfig.pathsLazyIo ()).ingestTracks, "*.*")
+                do! Directory.GetFiles
+                        ((SharedConfig.pathsMemoizedLazy ())
+                            .mechaHaze.ingestTracks,
+                         "*.*")
                     |> Array.map ingestFileAsync
                     |> Async.sequentialForced
                     |> Async.Ignore
@@ -393,7 +406,9 @@ module RecJob =
             Log.Debug ("TrackIngest tracks health listening start")
 
             while true do
-                do! Directory.GetDirectories (SharedConfig.pathsLazyIo ()).dbTracks
+                do! Directory.GetDirectories
+                        (SharedConfig.pathsMemoizedLazy ())
+                            .mechaHaze.dbTracks
                     |> Array.map checkTrackHealthAsync
                     |> Async.Parallel
                     |> Async.Ignore

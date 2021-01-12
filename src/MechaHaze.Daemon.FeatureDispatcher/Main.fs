@@ -3,6 +3,7 @@
 open System.Threading
 open System.Threading.Tasks
 open MechaHaze.Model
+open MechaHaze.Shared.Core
 open MechaHaze.CoreCLR.Core
 open MechaHaze.Daemon.FeatureDispatcher
 open MechaHaze.Shared
@@ -15,7 +16,8 @@ open FSharp.Control.Tasks
 module Main =
     let startAsync cancellationToken =
         task {
-            let configToml = SharedConfig.loadTomlIo ()
+            let! configToml = SharedConfig.loadToml ()
+            let configToml = configToml |> Result.unwrap
 
             use rabbitBus =
                 RabbitQueue.createBus

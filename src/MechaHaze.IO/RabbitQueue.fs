@@ -1,9 +1,13 @@
 namespace MechaHaze.IO
 
 open System.Threading.Tasks
+open MechaHaze.CoreCLR
+open MechaHaze.CoreCLR.Core
+open MechaHaze.Shared.Core
 open RabbitMQ.Client
 open System
 open EasyNetQ
+open RabbitMQ.Client.Exceptions
 open Serilog
 open FSharp.Control.Tasks
 
@@ -50,10 +54,45 @@ module RabbitQueue =
         RabbitHutch.CreateBus (connectionString, registerServices)
 
 
+    let registerUser (bus: IBus) =
+        task {
+            try
+                let ctl =
+                    (SharedConfig.pathsMemoizedLazy ())
+                        .rabbitMQ.rabbitMQCtl
+
+                let! _ = Runtime.startProcessAsync ctl "add_user root root"
+                let! _ = Runtime.startProcessAsync ctl "set_user_tags root administrator"
+                let! _ = Runtime.startProcessAsync ctl "add_vhost mechahaze"
+                let! _ = Runtime.startProcessAsync ctl "set_permissions --vhost mechahaze root \".*\" \".*\" \".*\""
+
+                return Ok ()
+            with ex -> return Error ex
+        }
+
+    let rec declareExchange<'T> (bus: IBus) =
+        task {
+            try
+                let! exchange =
+                    bus.Advanced.ExchangeDeclareAsync ($"@@Exchange-{typeof<'T>.FullName}", ExchangeType.Topic)
+
+                return Ok exchange
+            with ex ->
+                Log.Error (ex, $"Error declaring exchange for {typeof<'T>.FullName}")
+
+                match ex with
+                | :? BrokerUnreachableException when ex.InnerException.Message.Contains "ACCESS_REFUSED" ->
+                    match! registerUser bus with
+                    | Ok () -> return! declareExchange bus
+                    | Error ex -> return Error ex
+                | _ -> return Error ex
+        }
 
 
     type Exchange<'T when 'T: not struct> (bus: IBus) =
-        let exchange = bus.Advanced.ExchangeDeclare ($"@@Exchange-{typeof<'T>.FullName}", ExchangeType.Topic)
+        let exchange =
+            (declareExchange<'T> bus).GetAwaiter().GetResult()
+            |> Result.unwrap
 
         member _.PostAsync routingKey message =
             try

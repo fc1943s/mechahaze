@@ -10,15 +10,13 @@ module Runtime =
     let getStackTrace () =
         Environment.StackTrace.Split (Environment.NewLine.ToCharArray (), StringSplitOptions.RemoveEmptyEntries)
 
-    let executePowerShellAsync (cmd: string list) =
+    let startProcessAsync fileName arguments =
         async {
-            let cmd = cmd |> String.concat "; "
-            let cmd = cmd.Replace ("\"", "\\\"\"")
             //  let cmd = if powershell then cmd.Replace ("\\", "\\\\") else cmd
             let startInfo =
                 ProcessStartInfo
-                    (FileName = "pwsh.exe",
-                     Arguments = $""" -c "{cmd}" """,
+                    (FileName = fileName,
+                     Arguments = arguments,
                      RedirectStandardOutput = true,
                      RedirectStandardError = true,
                      UseShellExecute = false,
@@ -49,6 +47,7 @@ module Runtime =
             proc.OutputDataReceived.Add (event false)
             proc.ErrorDataReceived.Add (event true)
 
+            let cmd = $"{fileName} {arguments}"
             Log.Debug ("Starting process: " + cmd)
 
             if not (proc.Start ()) then
@@ -67,6 +66,11 @@ module Runtime =
 
             return proc.ExitCode, result
         }
+
+    let executePowerShellAsync (cmd: string list) =
+        let cmd = cmd |> String.concat "; "
+        let cmd = cmd.Replace ("\"", "\\\"\"")
+        startProcessAsync "pwsh.exe" $" -c \"{cmd}\" "
 
 
     let executeCondaAsync env cmd =

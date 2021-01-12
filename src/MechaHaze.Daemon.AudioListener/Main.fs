@@ -19,7 +19,8 @@ open MechaHaze.CoreCLR.Core
 module Main =
     let start cancellationToken =
         task {
-            let configToml = SharedConfig.loadTomlIo ()
+            let! configToml = SharedConfig.loadToml ()
+            let configToml = configToml |> Result.unwrap
 
             let eventInjectorQueue = SafeQueue.SafeQueue<LocalQueue.Event -> unit> (fun _ _ -> Task.CompletedTask)
 

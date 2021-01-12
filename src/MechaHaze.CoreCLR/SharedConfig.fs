@@ -8,34 +8,55 @@ open System.IO
 open System.Reflection
 open Tomlyn
 open Tomlyn.Model
+open FSharp.Control.Tasks
 
 
 module SharedConfig =
 
-    let pathsLazyIo =
-        let envVars = {| RootPath = "MECHAHAZE_HOME" |}
+    let pathsMemoizedLazy =
+        let envVars =
+            {|
+                MechaHazeHome = "MECHAHAZE_HOME"
+                RabbitMQServer = "RABBITMQ_SERVER"
+                OpenUnmixHome = "OPENUNMIX_HOME"
+            |}
 
         fun () ->
-            let rootPath =
-                Environment.getRequiredEnvVar envVars.RootPath
+            let mechaHazeHome =
+                Environment.getRequiredEnvVar envVars.MechaHazeHome
+                |> Result.unwrap
+
+            let rabbitMQServer =
+                Environment.getRequiredEnvVar envVars.RabbitMQServer
+                |> Result.unwrap
+
+            let openUnmixHome =
+                Environment.getRequiredEnvVar envVars.OpenUnmixHome
                 |> Result.unwrap
 
             let paths =
                 {|
-                    configToml = rootPath </> "config.toml"
-                    dbFingerprints = rootPath </> "db-fingerprints"
-                    dbTracks = rootPath </> "db-tracks"
-                    dbState = rootPath </> "db-state"
+                    openUnmixHome = openUnmixHome
                     extAudiowaveformExe =
-                        rootPath
+                        mechaHazeHome
                         </> "ext-audiowaveform-mingw64"
                         </> "audiowaveform.exe"
-                    ingestTracks = rootPath </> "ingest-tracks"
-                    tempSamples = rootPath </> "temp-samples"
-                    extOpenUnmix = @"D:\kal\fs\git-repos\open-unmix-pytorch"
+                    rabbitMQ =
+                        {|
+                            rabbitMQCtl = rabbitMQServer </> "sbin/rabbitmqctl.bat"
+                        |}
+                    mechaHaze =
+                        {|
+                            configToml = mechaHazeHome </> "config.toml"
+                            dbFingerprints = mechaHazeHome </> "db-fingerprints"
+                            dbTracks = mechaHazeHome </> "db-tracks"
+                            dbState = mechaHazeHome </> "db-state"
+                            ingestTracks = mechaHazeHome </> "ingest-tracks"
+                            tempSamples = mechaHazeHome </> "temp-samples"
+                        |}
                 |}
 
-            Directory.CreateDirectory paths.tempSamples
+            Directory.CreateDirectory paths.mechaHaze.tempSamples
             |> ignore
 
             paths
@@ -49,17 +70,22 @@ module SharedConfig =
             RabbitMqPassword: string
         }
 
-    let loadTomlIo () =
-        Log.Debug ("Loading toml")
+    let loadToml () =
+        task {
+            Log.Debug ("Loading toml")
 
-        let toml = Toml.Parse (File.ReadAllText (pathsLazyIo ()).configToml)
+            try
+                let! text = File.ReadAllTextAsync (pathsMemoizedLazy ()).mechaHaze.configToml
+                let toml = Toml.Parse text
+                let table = toml.ToModel ()
+                let assemblyTable = table.[Assembly.GetEntryAssembly().GetName().Name] :?> TomlTable
 
-        let table = toml.ToModel ()
-
-        let assemblyTable = table.[Assembly.GetEntryAssembly().GetName().Name] :?> TomlTable
-
-        {
-            RabbitMqAddress = string assemblyTable.["rabbitmq_address"]
-            RabbitMqUsername = string assemblyTable.["rabbitmq_username"]
-            RabbitMqPassword = string assemblyTable.["rabbitmq_password"]
+                return
+                    Ok
+                        {
+                            RabbitMqAddress = string assemblyTable.["rabbitmq_address"]
+                            RabbitMqUsername = string assemblyTable.["rabbitmq_username"]
+                            RabbitMqPassword = string assemblyTable.["rabbitmq_password"]
+                        }
+            with ex -> return Error ex
         }
