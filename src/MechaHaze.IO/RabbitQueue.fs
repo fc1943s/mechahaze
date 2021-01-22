@@ -54,17 +54,32 @@ module RabbitQueue =
         RabbitHutch.CreateBus (connectionString, registerServices)
 
 
-    let registerUser (bus: IBus) =
+    let registerUser () =
         task {
             try
                 let ctl =
                     (SharedConfig.pathsMemoizedLazy ())
                         .rabbitMQ.rabbitMQCtl
 
-                let! _ = Runtime.startProcessAsync ctl "add_user root root"
-                let! _ = Runtime.startProcessAsync ctl "set_user_tags root administrator"
-                let! _ = Runtime.startProcessAsync ctl "add_vhost mechahaze"
-                let! _ = Runtime.startProcessAsync ctl "set_permissions --vhost mechahaze root \".*\" \".*\" \".*\""
+                let printResult statusCode result = printfn $"statusCode={statusCode}; result={result}"
+
+                let username = "root"
+                let password = "root"
+                let vhost = "mechahaze"
+
+                let! statusCode, result = Runtime.startProcessAsync ctl $"add_user {username} {password}"
+                printResult statusCode result
+
+                let! statusCode, result = Runtime.startProcessAsync ctl "set_user_tags root administrator"
+                printResult statusCode result
+
+                let! statusCode, result = Runtime.startProcessAsync ctl $"add_vhost {vhost}"
+                printResult statusCode result
+
+                let! statusCode, result =
+                    Runtime.startProcessAsync ctl $"set_permissions --vhost {vhost} {username} \".*\" \".*\" \".*\""
+
+                printResult statusCode result
 
                 return Ok ()
             with ex -> return Error ex
@@ -82,7 +97,7 @@ module RabbitQueue =
 
                 match ex with
                 | :? BrokerUnreachableException when ex.InnerException.Message.Contains "ACCESS_REFUSED" ->
-                    match! registerUser bus with
+                    match! registerUser () with
                     | Ok () -> return! declareExchange bus
                     | Error ex -> return Error ex
                 | _ -> return Error ex
